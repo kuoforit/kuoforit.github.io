@@ -1,0 +1,18 @@
+<p>
+    {{ $siteLanguages := .Site.Languages }}
+    {{ $pageLang := .Page.Lang }}
+
+    {{ range .Page.AllTranslations }}
+      {{ $translation := .}}
+      {{ range $siteLanguages }}
+          {{ if eq $translation.Lang .Lang }}
+            {{ if eq $pageLang .Lang }}
+                <br/><span class="active">{{ .Label }}</span><br/>
+            {{ else }}
+                <br/><a href="{{ $translation.Permalink }}">{{ .Label }}</a><br/>
+            {{ end }}
+          {{ end }}
+      {{ end }}
+    {{ end }}
+</p>
+<br /><br />
