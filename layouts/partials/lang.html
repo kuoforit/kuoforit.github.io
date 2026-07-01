@@ -1,18 +1,21 @@
 <p>
     {{ $siteLanguages := .Site.Languages }}
     {{ $pageLang := .Page.Lang }}
+    {{ $parts := slice }}
 
     {{ range .Page.AllTranslations }}
       {{ $translation := .}}
       {{ range $siteLanguages }}
           {{ if eq $translation.Lang .Lang }}
             {{ if eq $pageLang .Lang }}
-                <br/><span class="active">{{ .Label }}</span><br/>
+                {{ $parts = $parts | append (printf "<span class=\"active\">%s</span>" .Label) }}
             {{ else }}
-                <br/><a href="{{ $translation.Permalink }}">{{ .Label }}</a><br/>
+                {{ $parts = $parts | append (printf "<a href=\"%s\">%s</a>" $translation.Permalink .Label) }}
             {{ end }}
           {{ end }}
       {{ end }}
     {{ end }}
+
+    {{ delimit $parts "｜" | safeHTML }}
 </p>
 <br /><br />
