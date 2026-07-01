@@ -16,7 +16,7 @@ pagerSize = 10
 noindex = false
 
 [params.theme]
-palette = "windows-95"
+palette = "tokyo-night-light"
 
 [params.about]
 title = "TBD"
