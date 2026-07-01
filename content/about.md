@@ -3,6 +3,6 @@ title: "About"
 ---
 
 Believer<br>
-BC:ECE, Master:EE<br>
+BS:ECE, MS:EE<br>
 ex-TSMC, ex-Commercial Pilot<br>
 🇵🇭ing
