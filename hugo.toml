@@ -23,6 +23,16 @@ title = "TBD"
 description = "極簡文字部落格，時間軸與主題分類並行。"
 logo = "📝"
 
+[[params.socialLinks]]
+icon = "fa-brands fa-x-twitter"
+title = "X"
+url = "https://x.com/kuoforit"
+
+[[params.socialLinks]]
+icon = "fa-brands fa-instagram"
+title = "Instagram"
+url = "https://www.instagram.com/kuoforit/"
+
 [menu]
 
   [[menu.main]]
