@@ -2,4 +2,7 @@
 title: "About"
 ---
 
-這是一個測試中的極簡文字部落格，之後會補上正式的自我介紹。
+Believer<br>
+BC:ECE, Master:EE<br>
+ex-TSMC, ex-Commercial Pilot<br>
+🇵🇭ing
