@@ -3,11 +3,24 @@ theme = "risotto"
 title = "kuoforit"
 author = "TBD"
 copyright = "© kuoforit"
-locale = "zh-tw"
 enableInlineShortcodes = true
 ignoreErrors = ["error-remote-getjson"]
 
 sectionPagesMenu = "main"
+
+defaultContentLanguage = "zh-tw"
+defaultContentLanguageInSubdir = false
+
+[languages]
+  [languages.zh-tw]
+    label = "繁體中文"
+    weight = 1
+  [languages.en]
+    label = "English"
+    weight = 2
+  [languages.ja]
+    label = "日本語"
+    weight = 3
 
 [pagination]
 pagerSize = 10
