@@ -1,0 +1,46 @@
+baseURL = "https://kuoforit.github.io/"
+theme = "risotto"
+title = "TBD"
+author = "TBD"
+copyright = "© kuoforit"
+locale = "zh-tw"
+enableInlineShortcodes = true
+ignoreErrors = ["error-remote-getjson"]
+
+sectionPagesMenu = "main"
+
+[pagination]
+pagerSize = 10
+
+[params]
+noindex = false
+
+[params.theme]
+palette = "windows-95"
+
+[params.about]
+title = "TBD"
+description = "極簡文字部落格，時間軸與主題分類並行。"
+logo = "📝"
+
+[menu]
+
+  [[menu.main]]
+    identifier = "about"
+    name = "About"
+    url = "/about/"
+    weight = 10
+
+[taxonomies]
+category = "categories"
+tag = "tags"
+
+[markup.goldmark.renderer]
+unsafe = true
+
+[markup]
+
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel   = 3
+    ordered    = true
