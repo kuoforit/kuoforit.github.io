@@ -20,7 +20,7 @@ palette = "tokyo-night-light"
 
 [params.about]
 title = "kuoforit"
-description = "極簡文字部落格，時間軸與主題分類並行。"
+description = "Steven Kuo的文字檔案館<br>Steven Kuo's archive"
 logo = "📝"
 
 [[params.socialLinks]]
