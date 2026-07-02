@@ -1,8 +1,8 @@
 ---
 title: "做好人就夠了嗎？"
 date: 2026-07-02
-tags: ["信仰", "哲學", "John Lennox"]
-categories: ["閱讀與思考"]
+tags: ["faith", "christianity", "philosophy", "John Lennox", "Steven Bartlett"]
+categories: ["interviews"]
 ---
 
 Steven Bartlett 不是個容易相信任何事的人。他十八歲輟學，二十歲創業，二十七歲帶公司在納斯達克上市，主持的 Diary of a CEO 是全英國最多人收聽的 podcast。他習慣用數據做決定，習慣問到對方說不出話為止。他說過：「我和我哥哥數學極好，極度理性，科學界通常傾向無神論。所以當一個頂尖數學家說他信上帝，我很好奇。」
@@ -42,3 +42,7 @@ John 沒有說「不夠，你會下地獄」。他先說了一件事：大多數
 ---
 
 這些問題，John 一個都沒有閃躲，每一個他都直視它，給出你可以不同意、但沒辦法說他在迴避的答案。如果你也有這些問題，這場對話值得你去聽。
+
+---
+
+{{< youtube dLrvJeSugkM >}}
