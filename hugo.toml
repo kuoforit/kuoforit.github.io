@@ -50,7 +50,7 @@ url = "https://www.instagram.com/kuoforit/"
 
   [[menu.main]]
     identifier = "about"
-    name = "About"
+    name = "about"
     url = "/about/"
     weight = 10
 

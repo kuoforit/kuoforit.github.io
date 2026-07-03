@@ -1,3 +1,4 @@
 ---
 title: "Posts"
+linkTitle: "posts"
 ---
