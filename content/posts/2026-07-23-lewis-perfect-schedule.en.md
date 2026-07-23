@@ -39,4 +39,6 @@ Which of the habits you're holding onto right now is also waiting for a reason t
 
 ---
 
+{{< youtube X-fyCCv_otY >}}
+
 Original video: [I Tried C.S. Lewis's Strict Writing Routine for 1 Week | Writing Vlog — John Pattison](https://www.youtube.com/watch?v=X-fyCCv_otY)

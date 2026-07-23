@@ -39,4 +39,6 @@ categories: ["essays"]
 
 ---
 
+{{< youtube X-fyCCv_otY >}}
+
 元動画：[I Tried C.S. Lewis's Strict Writing Routine for 1 Week | Writing Vlog — John Pattison](https://www.youtube.com/watch?v=X-fyCCv_otY)

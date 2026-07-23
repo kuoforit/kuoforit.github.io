@@ -39,4 +39,6 @@ John 事後查了「obligation」這個字，發現它跟「ligament」韌帶同
 
 ---
 
+{{< youtube X-fyCCv_otY >}}
+
 原始影片：[I Tried C.S. Lewis's Strict Writing Routine for 1 Week | Writing Vlog — John Pattison](https://www.youtube.com/watch?v=X-fyCCv_otY)
