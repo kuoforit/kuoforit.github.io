@@ -5,7 +5,11 @@ tags: ["C.S. Lewis", "writing", "discipline", "obligation"]
 categories: ["essays"]
 ---
 
-八點準時吃早餐，九點坐到書桌前，十一點喝十分鐘的茶，一點吃午餐，兩點出門散步兩小時，五點回書桌寫到七點，十一點以前一定上床。這是 C.S. 路易斯在回憶錄《Surprised by Joy》裡，寫給自己的理想寫作日。路易斯自己緊接著補上一句，這種生活「幾乎完全是自私的」。
+八點準時吃早餐，九點坐到書桌前，十一點喝十分鐘的茶，一點吃午餐，兩點出門散步兩小時，五點回書桌寫到七點，十一點以前一定上床。這是 C.S. 路易斯在回憶錄《Surprised by Joy》裡，寫給自己的理想寫作日。路易斯自己緊接著補上一句：
+
+> "It is no doubt for my own good that I have been so generally prevented from leading it, for it is a life almost entirely selfish."
+>
+> 「我一直沒能過上這種生活，想必對我是件好事，因為這是一種幾乎完全自私的生活。」
 
 一份被無數寫作者奉為聖經的作息，作者本人親口說它是自私的產物。這句話值得停下來想一想。
 
@@ -31,7 +35,13 @@ John 事後查了「obligation」這個字，發現它跟「ligament」韌帶同
 
 答案藏在路易斯後來的人生裡。1956 年，五十七歲的路易斯娶了 Joy Davidman，多了兩個繼子。隨後幾年，他把大把時間用來照顧罹癌的妻子。那份他親手寫下、被後世寫作者反覆膜拜的完美作息，被他自己心甘情願地打碎了。沒有人逼他這麼做，他有能力繼續守住九點到七點，他選擇了不守。
 
-路易斯在另一本書《四種愛》裡，把這件事講得更直白。他寫道，一個人可以把心鎖進一具安全、黑暗、無風無氧的自私棺木裡，這樣心就不會破碎，但也會變得堅硬到無法穿透、無法救贖，除了地獄，沒有別的地方能讓一顆心徹底躲開愛帶來的騷動。《Surprised by Joy》裡那句「幾乎完全是自私的」，講的是他自己那套規劃，《四種愛》裡這具棺木，講的是任何一個想把自己保護得滴水不漏的人。兩本書、兩個比喻，指向同一件事，守住紀律能保護你的產出，但保護到極致，就是把心鎖進那具棺木。
+路易斯在另一本書《四種愛》裡，把這件事講得更直白：
+
+> "Lock it up safe in the casket or coffin of your selfishness. But in that casket—safe, dark, motionless, airless—it will change. It will not be broken; it will become unbreakable, impenetrable, irredeemable... The only place outside Heaven where you can be perfectly safe from all the dangers and perturbations of love is Hell."
+>
+> 「把心鎖進一具安全、黑暗、無風無氧的自私棺木裡。但在那具棺木裡，它會變質。它不會破碎，卻會變得堅不可摧、無法穿透、無法救贖⋯⋯除了天堂之外，唯一能讓你完全躲開愛帶來的一切危險與騷動的地方，就是地獄。」
+
+《Surprised by Joy》裡那句「幾乎完全是自私的」，講的是他自己那套規劃，《四種愛》裡這具棺木，講的是任何一個想把自己保護得滴水不漏的人。兩本書、兩個比喻，指向同一件事，守住紀律能保護你的產出，但保護到極致，就是把心鎖進那具棺木。
 
 路易斯那張理想寫作日的表，依然值得羨慕，八點吃早餐、九點坐下、十一點喝茶，這些畫面本身沒有錯，錯的是把它當成終點。路易斯自己都承認，這只是一個原型，一個很少發生，發生了也不見得該慶祝的東西。
 
