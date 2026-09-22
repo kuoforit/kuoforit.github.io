@@ -28,5 +28,3 @@ AIで日記を整理するのは「ズル」だと言う人もいる。本物の
 ---
 
 {{< youtube J5U3t6-zVz0 >}}
-
-元動画：[What I Actually Do When I'm Not Making YouTube Videos — Ali Abdaal](https://www.youtube.com/watch?v=J5U3t6-zVz0)

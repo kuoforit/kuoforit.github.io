@@ -28,5 +28,3 @@ After all this, I might wake up tomorrow doubting whether the whole method is to
 ---
 
 {{< youtube J5U3t6-zVz0 >}}
-
-Original video: [What I Actually Do When I'm Not Making YouTube Videos — Ali Abdaal](https://www.youtube.com/watch?v=J5U3t6-zVz0)

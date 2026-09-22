@@ -28,5 +28,3 @@ categories: ["essays"]
 ---
 
 {{< youtube J5U3t6-zVz0 >}}
-
-原始影片：[What I Actually Do When I'm Not Making YouTube Videos — Ali Abdaal](https://www.youtube.com/watch?v=J5U3t6-zVz0)
