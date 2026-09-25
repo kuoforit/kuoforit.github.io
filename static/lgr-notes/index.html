@@ -138,6 +138,32 @@
   .toc-sub-toggle[aria-expanded="false"]{ transform:rotate(-90deg); }
   .toc-sub{ flex-shrink:0; }
 
+  .lang-doc{ display:contents; }
+  .lang-doc[hidden]{ display:none !important; }
+  .lang-toggle{
+    position:fixed;
+    top:16px;
+    right:16px;
+    z-index:50;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:6px 12px;
+    border-radius:3px;
+    border:1px solid var(--line);
+    background:var(--surface);
+    color:var(--ink);
+    font-family:'Fira Mono', ui-monospace, monospace;
+    font-size:12px;
+    letter-spacing:.04em;
+    cursor:pointer;
+    box-shadow:var(--shadow);
+  }
+  .lang-toggle:hover{ color:var(--level); border-color:var(--level); }
+  @media (max-width:560px){
+    .lang-toggle{ top:8px; right:8px; padding:5px 10px; font-size:11px; }
+  }
+
   @media (max-width:900px){
     .layout{ grid-template-columns:1fr; padding-top:48px; }
     .toc{ display:none; }
@@ -493,6 +519,8 @@
 </style>
 </head>
 <body>
+<button id="lang-toggle" class="lang-toggle" type="button" aria-label="Switch to English">EN</button>
+<div id="doc-zh" class="lang-doc">
 <div class="layout">
 
 <nav class="toc" aria-label="目錄">
@@ -1395,7 +1423,7 @@
       <h2><span class="sec-num">19 /</span> <b>案例研究 — Flows與風控實測</b></h2>
       <span class="pill video">影片逐字稿</span>
     </div>
-    <p class="soft">四支案例，補齊「spike」的正式定義、部位風險規則、候盤直覺、以及兩則Q&A澄清——這批內容比單純換標的重複示範更貼近實戰細節。</p>
+    <p class="soft">四支案例，補齊「spike」的正式定義、部位風險規則、候盤直覺、以及兩則Q&amp;A澄清——這批內容比單純換標的重複示範更貼近實戰細節。</p>
 
     <div class="subhead" id="s19-1"><span class="subnum">19.1</span><h3>90天回測：spike的客觀定義與風險減碼</h3></div>
     <p class="soft" style="margin-bottom:10px;">BTCPERP，用Replay Mode回放約三個月（90天）走勢，刻意只停留在方向圖上標DT，不切進entry timeframe練習方向判斷。</p>
@@ -1620,7 +1648,1136 @@
 
 </div>
 </div>
+</div>
+<div id="doc-en" class="lang-doc" hidden>
+<div class="layout">
 
+<nav class="toc" aria-label="Contents">
+  <div class="toc-title">Contents</div>
+  <a href="#en-s01"><span class="num">01</span>Terminology Quick Reference</a>
+  <a href="#en-s02"><span class="num">02</span>Priority Order</a>
+
+  <button class="toc-group-toggle" type="button" aria-expanded="true" aria-controls="en-tg-direction">
+    <span>Direction · Module 1</span><span class="chev">▾</span>
+  </button>
+  <div class="toc-group-body" id="en-tg-direction">
+    <a href="#en-s03"><span class="num">03</span>Why the Market Moves</a>
+    <a href="#en-s04"><span class="num">04</span>Aggregation Model</a>
+    <a href="#en-s05"><span class="num">05</span>The 90/5/5 Rule</a>
+    <a href="#en-s06"><span class="num">06</span>LG to LG: Reading Direction</a>
+    <a href="#en-s07"><span class="num">07</span>Picking the Relevant Swing</a>
+    <a href="#en-s08"><span class="num">08</span>Judging LGR and LGC</a>
+    <div class="toc-item-wrap">
+      <div class="toc-item-row">
+        <a href="#en-s09"><span class="num">09</span>Flow Sequencing SOP</a>
+        <button class="toc-sub-toggle" type="button" aria-expanded="true" aria-controls="en-ts-09" aria-label="Expand/collapse Section 9 sub-items">▾</button>
+      </div>
+      <div class="toc-sub" id="en-ts-09">
+        <a href="#en-s09-1">9.1 The Three-Phase SOP</a>
+        <a href="#en-s09-2">9.2 DT Visual Colour Coding</a>
+        <a href="#en-s09-3">9.3 Candle-by-Candle Starting Point / Confidence Level</a>
+        <a href="#en-s09-4">9.4 Don't Over-Observe</a>
+        <a href="#en-s09-5">9.5 The LGC Four-Tier Framework</a>
+      </div>
+    </div>
+    <a href="#en-s10"><span class="num">10</span>5 Phase Cycle (Optional)</a>
+  </div>
+
+  <button class="toc-group-toggle" type="button" aria-expanded="true" aria-controls="en-tg-entry">
+    <span>Entry · Module 2</span><span class="chev">▾</span>
+  </button>
+  <div class="toc-group-body" id="en-tg-entry">
+    <a href="#en-s11"><span class="num">11</span>SSSL Entry Trigger</a>
+    <div class="toc-item-wrap">
+      <div class="toc-item-row">
+        <a href="#en-s12"><span class="num">12</span>Managing and Refining the Trade</a>
+        <button class="toc-sub-toggle" type="button" aria-expanded="true" aria-controls="en-ts-12" aria-label="Expand/collapse Section 12 sub-items">▾</button>
+      </div>
+      <div class="toc-sub" id="en-ts-12">
+        <a href="#en-s12-1">12.1 R-Multiple Trailing Stop</a>
+        <a href="#en-s12-2">12.2 Three DT Types</a>
+        <a href="#en-s12-3">12.3 Retest Refined Entry</a>
+        <a href="#en-s12-4">12.4 Multi-Timeframe Refinement</a>
+      </div>
+    </div>
+    <a href="#en-s13"><span class="num">13</span>LE Candle Filter</a>
+    <a href="#en-s14"><span class="num">14</span>We Hunt in LGCs</a>
+  </div>
+
+  <button class="toc-group-toggle" type="button" aria-expanded="true" aria-controls="en-tg-meta">
+    <span>Supplementary</span><span class="chev">▾</span>
+  </button>
+  <div class="toc-group-body" id="en-tg-meta">
+    <a href="#en-s15"><span class="num">15</span>Field Notes</a>
+    <a href="#en-s16"><span class="num">16</span>Daniel DeGuzman's Double-Confirmation Method</a>
+    <a href="#en-s17"><span class="num">17</span>Nested Structure Diagram</a>
+  </div>
+
+  <button class="toc-group-toggle" type="button" aria-expanded="true" aria-controls="en-tg-cases">
+    <span>Case Studies</span><span class="chev">▾</span>
+  </button>
+  <div class="toc-group-body" id="en-tg-cases">
+    <div class="toc-item-wrap">
+      <div class="toc-item-row">
+        <a href="#en-s18"><span class="num">18</span>BTC Live Chart Studies</a>
+        <button class="toc-sub-toggle" type="button" aria-expanded="true" aria-controls="en-ts-18" aria-label="Expand/collapse Section 18 sub-items">▾</button>
+      </div>
+      <div class="toc-sub" id="en-ts-18">
+        <a href="#en-s18-1">18.1 LG to LG Continuation + SSSL</a>
+        <a href="#en-s18-2">18.2 Weekly→Daily→4R Refinement</a>
+        <a href="#en-s18-3">18.3 Two Charts + Admitting Subjective Judgment</a>
+        <a href="#en-s18-4">18.4 Low-Entry Rules / One Trade a Day</a>
+      </div>
+    </div>
+    <div class="toc-item-wrap">
+      <div class="toc-item-row">
+        <a href="#en-s19"><span class="num">19</span>Flows and Risk Control in Practice</a>
+        <button class="toc-sub-toggle" type="button" aria-expanded="true" aria-controls="en-ts-19" aria-label="Expand/collapse Section 19 sub-items">▾</button>
+      </div>
+      <div class="toc-sub" id="en-ts-19">
+        <a href="#en-s19-1">19.1 90-Day Backtest: Defining the Spike</a>
+        <a href="#en-s19-2">19.2 partial vs full rebalance</a>
+        <a href="#en-s19-3">19.3 Reading Order-Book Pressure from Wicks</a>
+        <a href="#en-s19-4">19.4 Two Q&amp;A Clarifications</a>
+      </div>
+    </div>
+    <div class="toc-item-wrap">
+      <div class="toc-item-row">
+        <a href="#en-s20"><span class="num">20</span>EURUSD and the Spot Strategy</a>
+        <button class="toc-sub-toggle" type="button" aria-expanded="true" aria-controls="en-ts-20" aria-label="Expand/collapse Section 20 sub-items">▾</button>
+      </div>
+      <div class="toc-sub" id="en-ts-20">
+        <a href="#en-s20-1">20.1 EURUSD: Multi-Timeframe Alignment</a>
+        <a href="#en-s20-2">20.2 Spot Long-Only + Reclaim</a>
+      </div>
+    </div>
+    <div class="toc-item-wrap">
+      <div class="toc-item-row">
+        <a href="#en-s21"><span class="num">21</span>Homework Training Methods</a>
+        <button class="toc-sub-toggle" type="button" aria-expanded="true" aria-controls="en-ts-21" aria-label="Expand/collapse Section 21 sub-items">▾</button>
+      </div>
+      <div class="toc-sub" id="en-ts-21">
+        <a href="#en-s21-1">21.1 Reverse Engineering</a>
+        <a href="#en-s21-2">21.2 Forward Swing-by-Swing Training</a>
+      </div>
+    </div>
+    <a href="#en-s22"><span class="num">22</span>Deliberate Practice with Replay Mode</a>
+  </div>
+
+  <button class="toc-group-toggle" type="button" aria-expanded="true" aria-controls="en-tg-synthesis">
+    <span>Synthesis Toolkit</span><span class="chev">▾</span>
+  </button>
+  <div class="toc-group-body" id="en-tg-synthesis">
+    <div class="toc-item-wrap">
+      <div class="toc-item-row">
+        <a href="#en-s23"><span class="num">23</span>Risk Control, Consolidated</a>
+        <button class="toc-sub-toggle" type="button" aria-expanded="true" aria-controls="en-ts-23" aria-label="Expand/collapse Section 23 sub-items">▾</button>
+      </div>
+      <div class="toc-sub" id="en-ts-23">
+        <a href="#en-s23-1">23.1 Structural Trailing Stop</a>
+        <a href="#en-s23-2">23.2 Full Risk With Flows / Half Risk Against</a>
+        <a href="#en-s23-3">23.3 Fixed Multiple vs. Locking the Outer Range</a>
+      </div>
+    </div>
+    <a href="#en-s24"><span class="num">24</span>Entry Decision Checklist</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <p class="eyebrow">Study Notes · candle-by-candle · TraderxB, LGR Traders 2022</p>
+  <h1>LGR System<br>Field Notes</h1>
+  <p class="lede">Compiled from the Syllabus materials, the SSSL supplement, local transcripts of 9 videos, and a 2022-11-30 Discord Q&amp;A transcript. Every rule is sourced — <b>if we couldn't find a basis for it, it isn't in here</b>. Sections follow the teaching order: Direction (Module 1) before Entry (Module 2), matching the priority xB himself repeatedly stresses.</p>
+
+  <div class="epigraph">
+    "Market Movement is a Function of Liquidity."
+    <span>MODULE 1.1 — THE AGGREGATION MODEL</span>
+  </div>
+
+  <div class="legend">
+    <div class="legend-title">Source Key</div>
+    <div class="legend-item"><span class="pill pdf">PDF</span> Official Syllabus/Supps course text</div>
+    <div class="legend-item"><span class="pill video">Video</span> Locally transcribed (mlx-whisper) teaching video + screenshots</div>
+    <div class="legend-item"><span class="pill discord">Discord</span> 2022-11-30 xB &amp; student live Q&amp;A transcript</div>
+    <div class="legend-item"><span class="pill unverified">Unverified</span> Personal method / inference not covered in the course materials</div>
+  </div>
+
+  <div class="card" style="margin-bottom:40px;">
+    <div class="card-head"><h3 style="margin:0;">If you're a total beginner: a suggested reading path</h3><span class="pill unverified">Guide</span></div>
+    <p class="soft" style="margin-bottom:10px;">The contents are organized by topic, not by learning difficulty. If you're starting from zero, we suggest reading out of order rather than straight through from Section 1:</p>
+    <ol style="margin:0 0 14px; padding-left:20px; color:var(--ink-soft); font-size:14px; line-height:1.7;">
+      <li>Start with <b style="color:var(--ink)">Section 1's glossary</b> and <b style="color:var(--ink)">Section 2's priority list</b> to build a vocabulary map — don't memorize, just get familiar.</li>
+      <li>Read <b style="color:var(--ink)">Sections 3-6</b> to grasp "why the market moves" and "reading direction with LG to LG" — these two sections are the backbone of the whole system; everything else is an extension of them.</li>
+      <li>Skip the details in 7-10 for now and go straight to <b style="color:var(--ink)">Section 11's SSSL</b>, to understand "once you have direction, how do you actually enter."</li>
+      <li>Read <b style="color:var(--ink)">Section 23's risk-management roundup</b> and <b style="color:var(--ink)">Section 24's entry decision checklist</b>, to string direction → entry → stop/target → position size into one line.</li>
+      <li>Then go back and fill in the details in <b style="color:var(--ink)">Sections 7-10 and 12-14</b>.</li>
+      <li>Use <b style="color:var(--ink)">the case studies in Sections 18-21</b> to practice by comparison — 18.1-18.3 are the gentlest cases to start with.</li>
+      <li>Follow the method in <b style="color:var(--ink)">Section 22's Replay Mode</b> and start drilling it yourself — that's how the author himself trained into this.</li>
+    </ol>
+    <div class="rule-box" style="margin-top:0;"><b>No need to grind through these yet:</b> Section 10's 5 Phase Expansion Cycle and Sections 16-17 (Discord notes / the nested-structure diagram) are advanced or meta-level content — reading them too early is an easy way to get tangled up in over-refined detail. <b>What the course materials don't cover, which you'll need to build yourself:</b> funding rates, leverage selection, order-execution slippage — this exchange-execution knowledge is completely untouched by the original materials; see Section 23.</div>
+  </div>
+
+  <!-- 1 -->
+  <section id="en-s01">
+    <div class="sec-head">
+      <h2><span class="sec-num">01 /</span> <b>Terminology Quick Reference</b></h2>
+      <span class="pill pdf">PDF</span>
+    </div>
+    <div class="gloss">
+      <div class="gloss-row"><div class="gloss-term">LG</div><div class="gloss-def">Liquidity Gap — a price gap created by an imbalance of buying/selling force, which will eventually get filled back in. Every LG has three layers: <b>High / Low / EQ</b>. <b>Tied to its timeframe</b> — never mix across charts.</div></div>
+      <div class="gloss-row"><div class="gloss-term">LGR</div><div class="gloss-def">Liquidity Gap Reversal — a spike that creates an LG and is immediately reclaimed back above/below it; it's the last LG before a swing point forms. <b>On its own it means nothing</b> — it's only a hint that "a rebalance might be starting." Its precise location = <b>one candle below (or above) the swing EQ</b> (see Section 9, Flow Sequencing).</div></div>
+      <div class="gloss-row"><div class="gloss-term">LGC</div><div class="gloss-def">Liquidity Gap Confirmation, step 3 of the Aggregation Model: the expansion candle that creates a large LG, internally nicknamed the "fuck off candle" by the author. It confirms the spike toward the next level of imbalanced flow. Convention is to mark it by body only, not wick (see Section 8).</div></div>
+      <div class="gloss-row"><div class="gloss-term">SSSL</div><div class="gloss-def">Entry Trigger 1 — four letters for four steps: <b>S</b>pike → <b>S</b>weep → <b>S</b>wing → <b>L</b>GC.</div></div>
+      <div class="gloss-row"><div class="gloss-term">DT</div><div class="gloss-def">Directional Trigger — the trigger on the direction chart used to confirm "which way we're going now," on a separate chart from the entry trigger.</div></div>
+      <div class="gloss-row"><div class="gloss-term">EQ</div><div class="gloss-def"><b>Two different uses — don't mix them up:</b> ① <b>The swing's EQ</b> — the midpoint from a fib drawn across the whole swing's high/low, used in Section 9's Flow Sequencing Phase 2 to judge whether a sweep is valid; ② <b>A single candle's EQ</b> — the midpoint of that candle's own high/low, used by the Section 13 LE Candle rule. The two are computed on different bases — don't apply one where the other belongs.</div></div>
+      <div class="gloss-row"><div class="gloss-term">LE Candle</div><div class="gloss-def">Lose the Equilibrium — a candle that closes through its own range's EQ after a sweep, used as a stronger filter on SSSL.</div></div>
+      <div class="gloss-row"><div class="gloss-term">Sweep</div><div class="gloss-def">Sweeping past an internal swing, or the high/low of some candle in the previous swing.</div></div>
+      <div class="gloss-row"><div class="gloss-term">Swing</div><div class="gloss-def">The three-point structure of a directional turn (low-high-low, or high-low-high). Judging LG, LGR, and EQ all require first pinning down "which swing are we in right now" — Section 7 is devoted to how to pick the "relevant swing."</div></div>
+      <div class="gloss-row"><div class="gloss-term">Rebalance</div><div class="gloss-def">The phase where the market pulls back from inefficient (imbalanced/expansion) and fills its gap in — small bodies, low volume. Alternates with expansion (imbalanced), and is step 2 of the Aggregation Model.</div></div>
+      <div class="gloss-row"><div class="gloss-term">OE</div><div class="gloss-def">Origin of Expansion — the candle where momentum first kicks off and creates the first LG; when the market later rebalances, it's coming back to fill in this spot (Section 3).</div></div>
+      <div class="gloss-row"><div class="gloss-term">HH / LL</div><div class="gloss-def">Higher High / Lower Low — abbreviations used by the LE Candle rule to judge the sweep candle's direction: for shorts look at HH, for longs look at LL (Section 13).</div></div>
+      <div class="gloss-row"><div class="gloss-term">Flows</div><div class="gloss-def">The market's current overall directional intent ("flows are up/down"). A flow reversal only counts once a full Aggregation Model or 5 Phase Cycle has completed — not something a single candle can decide.</div></div>
+      <div class="gloss-row"><div class="gloss-term">LG Level N</div><div class="gloss-def">A near-to-far numbering system within the same swing: LGR = LG Level 1, the first untested LG after the LGR = <b>LG Level 2</b>, and so on. Closing through LG2 isn't just a signal — it means "things have genuinely changed" — more important than the LGR itself (Section 8).</div></div>
+      <div class="gloss-row"><div class="gloss-term">Reclaim</div><div class="gloss-def">Closing through an LG level, then dropping back below it, then closing through that same level again — this "second reclaim" can be treated as a stronger directional confirmation than the first close-through (Section 8).</div></div>
+      <div class="gloss-row"><div class="gloss-term">Confluence</div><div class="gloss-def">Several independent levels (an LG level, the EQ of the previous LGC, internal swing structure) all pointing at the same price at once, meaning the signal is stronger. The core criterion of Section 9.5's "four-layer framework."</div></div>
+      <div class="gloss-row"><div class="gloss-term">VC</div><div class="gloss-def">Volatility Candle — a candle with a large wick showing violent back-and-forth, commonly seen near a sweep, meaning "fuel" is being consumed to set up the next leg. One of the refinement conditions for the Sweep DT in Section 12.2.</div></div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section id="en-s02">
+    <div class="sec-head">
+      <h2><span class="sec-num">02 /</span> <b>Priority Order</b></h2>
+      <span class="pill pdf">PDF</span>
+    </div>
+    <p class="soft">In a 2022-12-04 Discord message, xB explicitly said he regrets publishing the "5 Phase Expansion Cycle" too early — too many students took it too seriously. What you should genuinely rely on at all times is LG to LG and the Aggregation Model.</p>
+    <div class="ladder">
+      <div class="rung"><div class="rung-rank">1</div><div><div class="rung-name">LG to LG + Aggregation Model</div><div class="rung-desc">"take precedent at all times" — the backbone of direction-reading</div></div><div class="rung-tag">Required</div></div>
+      <div class="rung"><div class="rung-rank">2</div><div><div class="rung-name">SSSL Entry Trigger</div><div class="rung-desc">"entries are relatively easy once you know where price is going"</div></div><div class="rung-tag">Required</div></div>
+      <div class="rung"><div class="rung-rank">3</div><div><div class="rung-name">5 Phase Expansion Cycle</div><div class="rung-desc">"the phase model is just a observatory concept... not essential"</div></div><div class="rung-tag">Optional · see Section 10</div></div>
+    </div>
+  </section>
+
+  <div class="module-band">Direction Module <span class="arrow">→</span> <b>Module 1 — Direction</b> <span class="arrow">·</span> Sections 3-10</div>
+
+  <!-- 3 -->
+  <section id="en-s03">
+    <div class="sec-head">
+      <h2><span class="sec-num">03 /</span> <b>Why the Market Moves</b></h2>
+      <span class="pill video">Video transcript</span>
+    </div>
+    <p class="soft">The most fundamental worldview underlying the whole system. The core thesis: <b>market movement is a function of liquidity</b>. Exchanges are not neutral matchmakers — they profit off spread and internal liquidity, and once they detect momentum, they run a "price engine" that pushes bid/ask along until it's eaten enough orders — this is why you get big wicks and gaps.</p>
+    <ul class="plain">
+      <li>The market only cycles between two states: <b>efficient (balanced/consolidating)</b> — small bodies, gaps filled quickly; <b>inefficient (imbalanced/expanding)</b> — large bodies, gaps left unfilled. balanced → imbalanced → rebalance → balanced, on an endless loop.</li>
+      <li>Don't trade inside consolidation (a balanced, consolidating stretch) — that's a low-volume, low-liquidity environment with no clear direction. Enter at <b>"the end of consolidation"</b> instead — the exact moment momentum kicks off.</li>
+      <li>The candle where momentum begins = <b>the origin of the expansion</b>; whenever the market later rebalances, it's coming back to fill in this origin's position.</li>
+    </ul>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · from the video transcript</div>
+      <div class="quote-text">"Market movement is a function of liquidity."</div>
+    </div>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · from the video transcript</div>
+      <div class="quote-text">"The exchanges are not there to work for you. They're there to work against you."</div>
+      <div class="quote-note">News (e.g. Elon Musk tweets, Twitter narratives) only accelerates volatility — it doesn't change direction. This is a stance he repeats throughout.</div>
+    </div>
+    <div class="figure"><img src="assets/772106be1d3035611e17f1b8585a0857.jpg" alt="Line chart with a box marking the rebalance zone"><div class="figure-cap">The chart switches to a line rendering (not candles); the box marks the area that should get filled back in after the "origin of expansion."</div></div>
+    <div class="figure"><img src="assets/fd2d9db344e3e3105fe76aa6c9259cdd.jpg" alt="The rebalance box extended on the same line chart"><div class="figure-cap">The same logic extended: efficient (inside the box) and inefficient (the spike outside the box) alternate.</div></div>
+  </section>
+
+  <!-- 4 -->
+  <section id="en-s04">
+    <div class="sec-head">
+      <h2><span class="sec-num">04 /</span> <b>Aggregation Model</b></h2>
+      <span class="pill pdf">PDF</span>
+    </div>
+    <p>A four-step rhythm controller that decides whether you should "react now or keep observing." <b>It is not a fractal, and it is not itself a market-reversal signal</b> — all four steps must run their course before it counts.</p>
+    <div class="sequence">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body"><div class="step-label mono">LGR</div><div class="step-gloss">Turn-warning signal — the last LG before a swing forms</div></div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body"><div class="step-label mono">REBALANCE (SWEEP)</div><div class="step-gloss">Where price consolidates and shakes out positions</div></div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body"><div class="step-label mono">LGC FORMATION</div><div class="step-gloss">origin of expansion — confirms where the expansion begins</div></div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body"><div class="step-label mono">INEFFICIENT EXPANSION</div><div class="step-gloss">The real spike toward the next level of imbalanced flow — react</div></div>
+      </div>
+    </div>
+    <div class="rule-box"><b>Hard rule:</b> All steps must be complete to fulfill the criteria — the Aggregation Model isn't complete until all four steps have run.</div>
+  </section>
+
+  <!-- 5 -->
+  <section id="en-s05">
+    <div class="sec-head">
+      <h2><span class="sec-num">05 /</span> <b>The 90/5/5 Rule + a Full-Cycle Walkthrough</b></h2>
+      <span class="pill video">Video transcript</span>
+    </div>
+    <p class="soft">Spells out the weighting behind direction-reading in numbers, and walks a complete live cycle of "LGR → sweep → LGC → expansion" start to finish.</p>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · from the video transcript</div>
+      <div class="quote-text">"90% of any trading system, in my opinion... 90% of the system is direction, you have 5% for triggers and entries, so each."</div>
+      <div class="quote-note">Direction-reading carries 90% of the weight of the whole system, with triggers and entries splitting the remaining 5% each — this is also why the whole course spends so much of its length on direction, and doesn't touch entries until Module 2.</div>
+    </div>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · from the video transcript</div>
+      <div class="quote-text">"It is not a fractal, and it should not be used as such."</div>
+      <div class="quote-note">The reason: we can't see order-book depth, so we can only judge by "conceptual definitions" — we're not actually hunting for a repeating geometric shape.</div>
+    </div>
+    <p class="soft">Walking one complete live cycle: LGR (step 1) → sweep (step 2) → LGC formation (step 3) → inefficient expansion (step 4); once complete, go back to LG to LG to find the next target. He estimates his own accuracy at <b>85-90%</b>.</p>
+    <div class="figure"><img src="assets/23ad1601a344c8fd42aa636658ed57eb.jpg" alt="Example of stacked grey LGC blocks"><div class="figure-cap">A stack of LGCs mid-cycle — each grey block is one partial rebalance.</div></div>
+    <div class="figure"><img src="assets/66512e7f7c72552ad40e11b3435da068.jpg" alt="The stacked blocks extended further"><div class="figure-cap">The stack continuing to push in the same direction.</div></div>
+    <div class="figure"><img src="assets/212763815ace893554fcd656718c6682.jpg" alt="Diagonal dashed lines marking the proportional relationship between swings"><div class="figure-cap">Using a diagonal line to measure the proportional relationship between swings, to judge how long the second expansion leg should run — the same technique used in Section 10's "5 Phase."</div></div>
+  </section>
+
+  <!-- 6 -->
+  <section id="en-s06">
+    <div class="sec-head">
+      <h2><span class="sec-num">06 /</span> <b>Reading Direction with LG to LG</b></h2>
+      <span class="pill pdf">PDF + video transcript</span>
+    </div>
+    <ul class="plain">
+      <li>First find the <code class="term">swing</code> you're currently in, and mark every LG inside it</li>
+      <li>Prioritize LGs <b>untested within the same swing</b> — most sensitive, highest probability</li>
+      <li>Once everything in the current swing is tested, look for the next target in the previous swing</li>
+      <li>LG is tied to its timeframe — reading direction <b>always uses the same single chart</b>, never mixed across timeframes</li>
+    </ul>
+    <p class="soft">For candle-by-candle work, the mnemonic that drills this rule into muscle memory is <b>"close through it, go to the next one"</b>: the LG created by a big expansion candle is an "objective level," and within a given swing, the <b>untested</b> LG is the most sensitive; once every untested LG in a swing has been tested, drop back to the <b>previous swing</b> for the next target — this is the same idea as the next section's "picking the relevant swing," just phrased two ways. A bigger distance means a more expansive move — the size of the distance is itself information worth factoring into your read.</p>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · from the video transcript</div>
+      <div class="quote-text">"We never front run levels."</div>
+      <div class="quote-note">A warning repeated throughout: without a close-through, you can't treat it as having already happened.</div>
+    </div>
+    <div class="rule-box"><b>The inertia mindset (from the SXPPERP DT Practice video):</b> "by the theory of inertia we need a serious force to slow the momentum of this move and then reverse it — we have no reason to not continue [shorting] until we see something that we want to see." The market has inertia — until you see a clear reversal signal, the default assumption is "the current direction continues," not "if it fails to break through, it must be about to turn."</div>
+    <div class="figure"><img src="assets/152a735f7e2fc3a2740cd909419f6703.jpg" alt="Live example marking multiple LG horizontal levels"><div class="figure-cap">The process of marking objective LG levels live, candle by candle.</div></div>
+    <div class="figure"><img src="assets/79fbf9175da0227cfbefd26656feb275.jpg" alt="Continued LG marking on the same swing"><div class="figure-cap">Continuing to mark downward, demonstrating the rhythm of "once tested, move to the next one."</div></div>
+    <div class="rule-box" style="margin-top:24px;"><b>Levels not levels:</b> these levels aren't the traditional "buy support, sell resistance" concept — they're pure <b>price points</b>. Even once tested, they don't lose validity, because their sensitivity comes from the liquidity gap itself, not from whether the price has touched it before. "I've tested it through nearly every chart that TradingView has to offer" — this rule wasn't picked subjectively; it was verified across a huge number of charts.</div>
+  </section>
+
+  <!-- 7 -->
+  <section id="en-s07">
+    <div class="sec-head">
+      <h2><span class="sec-num">07 /</span> <b>How to Pick the "Relevant Swing"</b></h2>
+      <span class="pill video">Video transcript</span>
+    </div>
+    <p class="soft">How to decide <b>which swing to use for marking LG</b>. Zooming all the way out often turns up an LG that will take weeks to reach, which has no practical use for short-term trading — so you need to pick the swing that's "meaningful relative to the current price."</p>
+    <div class="rule-box"><b>Core rule:</b> "The most important thing on the chart is the swing just <b>before</b> the one we're currently in" — this swing is what you trade off of, the previous swing is what you reference against. Consistency matters more than which swing you pick: as long as you use the same logic to pick a swing every time, the rule holds up reliably across every chart.</div>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · from the video transcript</div>
+      <div class="quote-text">"This move is the move we trade, this move is the move we reference."</div>
+    </div>
+    <div class="figure"><img src="assets/b382e2a0da9c452d8ca3e4ec84122e97.jpg" alt="Zigzag diagonal lines marking a multi-layer swing structure"><div class="figure-cap">Demonstrating how to recognize "a swing within a swing" in the same stretch of price action, and decide which layer to use.</div></div>
+    <div class="figure"><img src="assets/a956af4c5a1ac2785ea32196f296ffd1.jpg" alt="Horizontal reference lines marking the high/low range"><div class="figure-cap">After settling on the relative swing, marking its high/low as the boundary of the range.</div></div>
+  </section>
+
+  <!-- 8 -->
+  <section id="en-s08">
+    <div class="sec-head">
+      <h2><span class="sec-num">08 /</span> <b>Judging LGR and LGC</b></h2>
+      <span class="pill video">Video transcript</span>
+    </div>
+    <p class="soft">Two judgment details: the <b>marking convention</b> for LGC, and the fact that LGC is itself <b>proportionate</b>.</p>
+    <ul class="plain">
+      <li>When marking an LGC, use only the <b>body, not the wick</b>: "from the high to the close... I don't want the wicks, the wicks are unimportant to me, I want to play within the LGC" — the point is to avoid mixing several days' worth of price action into a single candle.</li>
+      <li>LGC itself is proportionate too: every LGC is internally running its own expansion and rebalance, just at a smaller scale — this detail already foreshadows Section 10's 5 Phase Expansion Cycle.</li>
+      <li>A reminder that LGR is always <b>the last LG before a swing forms</b>, not just any LG within a swing.</li>
+    </ul>
+
+    <div class="card">
+      <div class="card-head"><h3 style="margin:0;">The LG Level Numbering System</h3><span class="pill video">Defining your Swing and your LG Levels</span></div>
+      <p class="soft" style="margin-bottom:10px;">Names the layers after the LGR precisely: <b>LGR = LG Level 1</b>, the first untested LG after the LGR = <b>LG Level 2</b>, then LG Level 3, 4... This numbering lets you refer to "which layer we're tracking now" explicitly, instead of vaguely saying "the next level."</p>
+      <p class="soft" style="margin:0;"><b style="color:var(--ink)">A key difference in standing:</b> "LGR signals a rebalance, but closing through LG Level 2 doesn't signal a rebalance — it signals that something has changed." LGR only hints that a rebalance might be coming; LG Level 2 is what actually determines whether a directional reversal is confirmed — the single most important level in the whole system.</p>
+    </div>
+
+    <div class="rule-box"><b>Reclaim (from Let's Talk LGCs):</b> closing through an LG, dropping back below it, then closing through that same level again — this "second reclaim" signal is more trustworthy than the first close-through, and can serve as an extra confirming point for SSSL/DT.</div>
+
+    <div class="figure"><img src="assets/84bfa8524591d84c68ba8239f4b43e87.jpg" alt="Multiple horizontal lines marking a stacked LG structure"><div class="figure-cap">A continuous stack of LGR/LGC, each layer marked body-to-close.</div></div>
+    <div class="figure"><img src="assets/ba07a1e7c504eb7f0fbbfbb3e07b10a3.jpg" alt="The same stacked-LG logic extended further"><div class="figure-cap">The same logic extended over a longer stretch.</div></div>
+    <div class="figure"><img src="assets/692dc487ea03614d8d256c984292b0c8.jpg" alt="Chart with a vertical DT marker"><div class="figure-cap">The red vertical lines mark DT (Directional Trigger) points.</div></div>
+  </section>
+
+  <!-- 9 -->
+  <section id="en-s09">
+    <div class="sec-head">
+      <h2><span class="sec-num">09 /</span> <b>LGR System Flow Sequencing — the Three-Phase SOP</b></h2>
+      <span class="pill video">Video transcript</span>
+    </div>
+    <p class="soft">The summation of the direction module — turning "what you need to see before acting" into an explicit three-phase SOP, where Phase 2's <b>EQ rule is the only place it appears anywhere in the materials</b>, and this is the most information-dense section in the whole book.</p>
+
+    <div class="subhead" id="en-s09-1"><span class="subnum">9.1</span><h3>The Three-Phase SOP</h3></div>
+
+    <div class="sequence">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-label mono">PHASE 1 — CLOSING THROUGH THE LG LEVEL</div>
+          <div class="step-gloss">Wait for the previous LG level to be closed through by an expansion candle in the <b>opposite</b> direction (e.g. the market has been falling, yet closes through an upward-facing LG) — this only confirms direction, and doesn't count until the rebalance phase is complete. Signals are cleaner on higher timeframes; re-evaluate every time you reach a level.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-label mono">PHASE 2 — THE REBALANCE</div>
+          <div class="step-gloss">Requires seeing all of the following at once: ① a spike into an LG or LGC within the internal swing ② <b>this spike's location must sit below the whole swing's EQ (for longs) or above it (for shorts)</b> — the EQ here is drawn from a fib across the whole swing's high/low, not a single candle's EQ ③ a sweep of the previous swing point/LGC/candle's high or low ④ failure to continue after the sweep — only then does the SSSL actually complete.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-label mono">PHASE 3 — THE EXPANSION</div>
+          <div class="step-gloss">Once the expansion is confirmed underway, switch to the entry timeframe and work candle by candle — every higher low/lower high is an opportunity, until you hit the next level of flows, at which point you re-evaluate.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-box">
+      <b>Points to Note (from the original slide's checklist):</b> the larger the spike into an internal level, the higher the odds of a reversal; if you can't find an LG level, go up a timeframe; the <b>size of an LG/LGC is itself information</b> — a bigger expansion needs a longer rebalance afterward; <b>the precise definition of the LGR level = one candle below (or above) the swing EQ</b>, which is the location of the origin of expansion; once swept, price shouldn't linger — expect a brief aggregation followed by a quick expansion.
+    </div>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · from the video transcript</div>
+      <div class="quote-text">"We don't hunt for setups... if you're patient the setups will come to you. If we're trying to force a trade, we're trying to mold our criteria into something that looks like a trade — it's not a trade, and you're an idiot if you enter."</div>
+    </div>
+
+    <div class="figure"><img src="assets/e71ea7119aad4464f709ff5179871328.jpg" alt="Phase 1 slide with example chart"><div class="figure-cap">Phase 1 — Closing through the LG level, with an example candle chart on the right.</div></div>
+    <div class="figure"><img src="assets/73addd8cc6bf400a18ba3b663ba74f34.jpg" alt="Phase 2 slide with example chart and EQ marking"><div class="figure-cap">Phase 2 — The Rebalance, with the EQ and sweep/LGC marked on the chart.</div></div>
+    <div class="figure"><img src="assets/131d77a0a3cd02d044563d9d57645c49.jpg" alt="Phase 3 slide with example chart"><div class="figure-cap">Phase 3 — The Expansion — "Candle by Candle until we reach the next level of flows. LG to LG baby!"</div></div>
+
+    <div class="card" id="en-s09-2" style="margin-top:24px;">
+      <div class="card-head"><h3><span class="subnum">9.2</span>How to Visually Execute "Re-evaluate at Every Level"</h3><span class="pill pdf">PDF · Market Navigation - Directional Triggers</span></div>
+      <p class="soft" style="margin-bottom:12px;">Draw a vertical line at every candle-close judged "actionable," using three colors for three states:</p>
+      <ul class="plain">
+        <li><b style="color:var(--confirm)">Green / red vertical line</b> — this close triggers switching to the entry/trigger timeframe to hunt for an SSSL. Everything to the right of the line is the range you should be watching.</li>
+        <li><b style="color:var(--pending)">Grey vertical line</b> — entering observation: still in rebalance/aggregation, stay on the direction chart and wait, don't switch timeframes, don't enter.</li>
+      </ul>
+      <p class="soft" style="margin:0;"><b style="color:var(--ink)">A flaw in the original text:</b> the PDF's explanations for green and red are word-for-word identical, and never state which corresponds to longs vs. shorts. Here we're inferring from the course's usual color convention (green up, red down), <b>but the PDF itself never says so — this is an inference, not the original text</b>.</p>
+    </div>
+
+    <div class="card" id="en-s09-3" style="margin-top:16px;">
+      <div class="card-head"><h3><span class="subnum">9.3</span>Where Does Candle by Candle Actually Start</h3><span class="pill video">Why Lower Highs and Higher Lows are so Damn Important</span></div>
+      <p class="soft" style="margin-bottom:10px;">Phase 3 says "switch to the entry timeframe and go candle by candle" — easy to misread as starting from the whole swing. The real starting point is more precise:</p>
+      <div class="quote" style="margin-bottom:10px;">
+        <div class="quote-meta"><span class="who">TraderxB</span> · from the video transcript</div>
+        <div class="quote-text">"I'm candle by candle from here, on the lower high. I'm not candle by candle on the swing."</div>
+      </div>
+      <p class="soft" style="margin:0;">The clock starts on <b>the candle that confirms the higher low/lower high</b>, not where the swing first formed. He puts his own confidence level at: <b>"85 to 90%... if you can glean 75 to 80% of the direction then you're good to go"</b> — you don't need 100% certainty before acting.</p>
+    </div>
+
+    <div class="card" id="en-s09-4" style="margin-top:16px;">
+      <div class="card-head"><h3><span class="subnum">9.4</span>Don't Overwatch</h3><span class="pill video">Ramblings on Logic, LG to LG, and Candle by Candle</span></div>
+      <p class="soft" style="margin-bottom:10px;">The most common mistake: seeing an LGR against the current direction and immediately going full observation, waiting all the way for an LGC in the same direction before coming back — and missing the real entry along the way.</p>
+      <div class="quote" style="margin-bottom:10px;">
+        <div class="quote-meta"><span class="who">TraderxB</span> · from the video transcript</div>
+        <div class="quote-text">"LGRs are not of any importance other than to tell you rebalance is coming... we don't observe until we get this candle [the candle that failed to continue]. What you've done [jumping into observation too early] is you've missed the opportunity within this candle."</div>
+      </div>
+      <p class="soft" style="margin:0;">His own ratio: <b>"I take 80% of my setups at an LGC"</b>. The concrete method is called "Parallel EQ" — set an alert at the LGR's low/EQ and enter as soon as it triggers, instead of passively waiting for a full reversal LGC to form.</p>
+    </div>
+
+    <div class="card" id="en-s09-5" style="margin-top:16px;">
+      <div class="card-head"><h3><span class="subnum">9.5</span>The Four-Layer LGC Framework</h3><span class="pill video">Bringing it All Together</span></div>
+      <p class="soft" style="margin-bottom:10px;">The whole system can be boiled down to one sentence: <b>you only ever trade at one of four levels</b> — ① the LGC's High ② the LGC's EQ ③ the LGC's Low ④ the LG level itself. Price action outside these four layers basically isn't worth your attention.</p>
+      <p class="soft" style="margin:0;"><b style="color:var(--ink)">Confluence (multi-layer overlap):</b> when several of these four layers point to the same price at once — say the "LG level" happens to sit right on top of "the previous LGC's EQ" — signal strength goes up markedly. This is the single most useful test for "is this entry good enough."</p>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section id="en-s10">
+    <div class="sec-head">
+      <h2><span class="sec-num">10 /</span> <b>5 Phase Expansion Cycle (optional)</b></h2>
+      <span class="pill video">Video transcript</span>
+    </div>
+    <p class="soft">The only section in the Syllabus explicitly flagged "optional, feel free to skip for now" — <b>the method hasn't changed at all</b>; this just pulls back one more level above LG to LG and the Aggregation Model, helping you see "what stage of the cycle is this swing at right now." This layer of cycle is itself <b>fractal</b> by nature — the same 5-phase structure keeps showing up on every timeframe, even at smaller proportions inside a single expansion.</p>
+
+    <div class="rule-box" style="margin-top:0; margin-bottom:24px;">Cycle structure: <b>3 Expansions + 2 Rebalances</b> interleaved — Expansion 1 → Rebalance 1 → <b>Expansion 2</b> → Rebalance 2 → Expansion 3 → triggers the next reversal</div>
+
+    <div class="sequence">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <span class="tag-mini expansion">Expansion 1</span>
+          <div class="step-label mono">REVERSAL OF FLOWS (LGR)</div>
+          <div class="step-gloss">An LGR has just appeared — flows are starting to reverse, but nothing is confirmed yet.</div>
+          <div class="step-trade">Don't trade this phase itself — betting the whole reversal on one LGR is too risky. Trade <b>Rebalance 1</b> instead: the pullback toward the LGR level while direction is still the old one.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <span class="tag-mini rebalance">Rebalance 1</span>
+          <div class="step-label mono">EFFICIENT MOVE, FUELING PHASE 2</div>
+          <div class="step-gloss">The efficient move within the previous swing, fueling Expansion 2.</div>
+          <div class="step-trade">This is the one place you need to see a <b>complete</b> Aggregation Model (LGR→sweep→rebalance→LGC formation) — because you need to confirm flows have genuinely changed direction.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <span class="tag-mini expansion">Expansion 2</span>
+          <div class="step-label mono">THE BIG BOY</div>
+          <div class="step-gloss">The least efficient, biggest leg of the cycle — the phase you actually want to be fully in.</div>
+          <div class="step-trade">Once confirmed, <b>you don't need to wait for a full aggregation every time</b> — a partial rebalance (one sweep + LGC) is enough to keep adding. "We hunt in LGCs" — 95-100% of entries happen inside LGC zones, hitting one target after another; drop to a lower timeframe to find entries.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <span class="tag-mini rebalance">Rebalance 2</span>
+          <div class="step-label mono">FULL REVERSAL BEFORE THE FINAL LEG</div>
+          <div class="step-gloss">The full reversal of flows right before Expansion 2 ends, running against Expansion 2 for a stretch — this is where most people get stopped out.</div>
+          <div class="step-trade">Same logic as Rebalance 1 (requires a complete aggregation), just happening on the other side, setting up for the Expansion 3 blast-off.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <span class="tag-mini expansion">Expansion 3</span>
+          <div class="step-label mono">THE SPIKE THAT REVERSES FLOWS</div>
+          <div class="step-gloss">The last leg of the cycle, usually a spike straight into a level.</div>
+          <div class="step-trade">"the spike to get people offside" — used to flush out the other side, while also triggering Expansion 1 of the next cycle (flows officially reverse).</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quote" style="margin-top:8px;">
+      <div class="quote-meta"><span class="who">TraderxB</span> · from the video transcript</div>
+      <div class="quote-text">"When I know I've seen expansion two finish I immediately go into a more conservative trading mode... when I'm in expansion two I'm balls deep."</div>
+    </div>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · from the video transcript</div>
+      <div class="quote-text">"Every single thing we do has to be exactly the same each and every time... I don't give a fuck [what Twitter says]."</div>
+    </div>
+
+    <h3 style="margin-top:32px;">Chart Screenshots</h3>
+    <p class="soft" style="margin-bottom:16px;">The following maps onto one complete BTCPERP 4H case, marking each Expansion/Rebalance phase step by step.</p>
+
+    <div class="figure">
+      <img src="assets/6a368a030e94764a4de2e41d4f986b48.jpg" alt="Two swings marked with a blue oval showing their proportional relationship">
+      <div class="figure-cap">Blue ellipses circle two swings, illustrating <b>proportional relationship</b>: judging an expansion's proportion means measuring the previous swing's length/magnitude against the next one.</div>
+    </div>
+
+    <div class="figure">
+      <img src="assets/4def79e230d7fd9b9f400cfffd973419.jpg" alt="Multiple LG horizontal levels marked across one swing">
+      <div class="figure-cap">Basic LG to LG example: multiple LG horizontal lines marked across the whole swing, small red marks are sweep points — this is the skeleton for reading Expansion 1/Rebalance 1.</div>
+    </div>
+
+    <div class="figure">
+      <img src="assets/f0e537e746e775649028f334af5da2f6.jpg" alt="Three stacked grey LGC blocks in an uptrend">
+      <div class="figure-cap"><b>"We hunt in LGCs"</b>: mid-Expansion 2, three consecutive gray rectangles are stacked LGC zones — each one is a spot to keep adding to longs after a partial rebalance, without waiting for a full aggregation every time.</div>
+    </div>
+
+    <div class="figure">
+      <img src="assets/1e585d25488df58459d5f7a03ba909f8.jpg" alt="LGC stack continuing to extend, candle closing near the high">
+      <div class="figure-cap">The same Expansion 2 continuing: LGC stacks keep piling upward ("stack stack stack") — xB's own words describe this kind of move, where every LGC holds, as "such a strong market."</div>
+    </div>
+
+    <div class="figure">
+      <img src="assets/05f46c7e6637c47c0135ab2b7fc184b1.jpg" alt="Purple diagonal trendline marking the swing's proportional relationship">
+      <div class="figure-cap">A purple diagonal line measures the swing's proportional relationship, echoing his words "must be five times the length of one which is why we want to take it" — used to judge how long Expansion 2 should run.</div>
+    </div>
+
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · Expansion Phases, Rebalancing Phases...</div>
+      <div class="quote-text">"We won't see flow reversals all the fucking time because the market doesn't reverse all the time. If I'm on a four hour chart, the flows would reverse twice a week max... if we're in a big expansive phase, it'll be once a week if even."</div>
+      <div class="quote-note">A concrete frequency reference: on the 4H chart, flows reverse at most twice a week — and maybe less than once a week if you're deep inside a big Expansion 2. This explains why "patience" matters so much: you don't reassess direction on just any counter-candle.</div>
+    </div>
+    <div class="rule-box"><b>Even the author admits this part is subjective (from Expansions and Proportions):</b> this section is flagged by Navigating_the_Content.pdf as "optional, potentially confusing" — it uses Fibonacci ratios (like 1.618) to measure the proportional relationship between expansions. xB himself admits: <b>"It seems far too subjective for me to make rules around... I never did make any rules about them because I found it very hard to try and objectively identify these expansions."</b> That's a real gap from the "fully objective" identity the whole system claims — proportion analysis stays at the level of his personal gut feel, with no concrete rule to teach.</div>
+    <div class="rule-box"><b>A small tension with The_Aggregation_Model.pdf's own wording:</b> that PDF states plainly that the 4-step Aggregation Model "is NOT a 'fractal'" — yet the 5 Phase Expansion Cycle is described as happening "due to the fractal nature of the market... on every timeframe." These aren't the same mechanism (one's a rhythm controller, the other's a macro cycle), but the wording does clash a bit — maybe part of why xB later said on Discord he regretted publishing this material, since too many people gave the phases too much weight.</div>
+  </section>
+
+  <div class="module-band">Entry Module <span class="arrow">→</span> <b>Module 2 — Entry</b> <span class="arrow">·</span> Sections 11-14</div>
+
+  <!-- 11 -->
+  <section id="en-s11">
+    <div class="sec-head">
+      <h2><span class="sec-num">11 /</span> <b>SSSL Entry Trigger</b></h2>
+      <span class="pill pdf">PDF + video transcript</span>
+    </div>
+    <div class="sequence">
+      <div class="step">
+        <div class="step-num">S</div>
+        <div class="step-body"><div class="step-label mono">SPIKE</div><div class="step-gloss">Spikes into an LGC/LG</div></div>
+      </div>
+      <div class="step">
+        <div class="step-num">S</div>
+        <div class="step-body"><div class="step-label mono">SWEEP</div><div class="step-gloss">Sweeps the high/low of an internal swing, or of a candle in the previous swing</div></div>
+      </div>
+      <div class="step">
+        <div class="step-num">S</div>
+        <div class="step-body"><div class="step-label mono">SWING</div><div class="step-gloss">Let the swing fully form — don't pre-judge it</div></div>
+      </div>
+      <div class="step">
+        <div class="step-num">L</div>
+        <div class="step-body"><div class="step-label mono">LGC</div><div class="step-gloss">Closes through the swing candle's high/low → market entry on close</div></div>
+      </div>
+    </div>
+    <div class="rule-box">
+      <b>Stop</b> — a few ticks above/below the swing 　<b>Target</b> — fixed multiple, 2:1 / 3:1 (6:1 is more aggressive; the author doesn't recommend it)
+    </div>
+
+    <div class="card" style="margin-top:24px;">
+      <div class="card-head"><h3 style="margin:0;">The Double Confirmation Hidden in the Actual Code</h3><span class="pill pdf">Pine source</span></div>
+      <p class="soft" style="margin-bottom:12px;">"LGC closing through the swing candle high/low" sounds like one sentence, but the real Pine v6 source code splits it into two closing conditions that must <b>both hold</b> (AND):</p>
+      <ul class="plain">
+        <li><span class="mono" style="color:var(--level)">Confirmation A</span> — close &gt; the previous candle's high (qualifies this candle as an LGC/gap-close pattern)</li>
+        <li><span class="mono" style="color:var(--level)">Confirmation B</span> — close ≥ the body-high of the candle that got swept (confirms it truly broke through that specific structure)</li>
+      </ul>
+      <p class="soft" style="margin:0;">Once a sweep happens, the setup goes "armed" — if a deeper sweep shows up during that armed window, the reference point keeps updating, and entry only triggers once A+B are both satisfied.</p>
+    </div>
+
+    <div class="rule-box" style="margin-top:24px;"><b>Field note:</b> the same target zone can throw off <b>several SSSL signals</b> in a row — one example fired 5 times in 2.5 days, every one of them "hit or quit" (either it hits target or it hits stop, no dithering in between); as long as your risk parameters allow it, you can take all of them. There are two ways to test this: ① mark all the DTs on 4H first, then go back and mark SSSLs on the 30-minute chart; ② split-screen 4H on the left, 30-minute on the right, watched in sync. <b>If your directional read is shaky, stay away from SSSL</b> — otherwise you'll keep hunting for entries in the wrong direction.</div>
+
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · from the video transcript</div>
+      <div class="quote-text">"Two to one, three to one a day, you'll never work again."</div>
+    </div>
+    <div class="figure"><img src="assets/3d4846cc771c8d40ed786f80be893661.jpg" alt="Diagram of SPIKE SWEEP SWING LGC"><div class="figure-cap">SSSL four-step diagram: Spike → Sweep → Swing → LGC.</div></div>
+    <div class="figure"><img src="assets/c01d0b51f1b68c239ff5cee1f1461548.jpg" alt="Red block marking the SSSL entry zone"><div class="figure-cap">The red rectangle marks the SSSL entry zone.</div></div>
+    <div class="figure"><img src="assets/c5d2a8635b87710fea86aad516f2c9b6.jpg" alt="SSSL example with a grey target zone"><div class="figure-cap">Red entry zone and gray target zone both marked, showing the risk/reward side by side.</div></div>
+  </section>
+
+  <!-- 12 -->
+  <section id="en-s12">
+    <div class="sec-head">
+      <h2><span class="sec-num">12 /</span> <b>Managing and Refining After Entry</b></h2>
+      <span class="pill video">Video transcript</span>
+    </div>
+    <p class="soft">Risk management and Directional Trigger refinement are merged into one section, because both are really about "what do you do after an SSSL entry" — one manages risk, the other manages picking and refining DTs.</p>
+
+    <div class="subhead" id="en-s12-1"><span class="subnum">12.1</span><h3>R-Multiple Trailing Stop</h3></div>
+    <p class="soft" style="margin-bottom:10px;">From <b>Managing Risk Parameters on a Live SSSL entry</b>. After entry, you don't grind it out on the original stop the whole way — instead, every time price closes through another R-multiple, you move the stop to "the swing that caused that close-through". It's not a fixed-percentage trailing stop; the structure itself is the reference.</p>
+    <div class="quote" style="margin-bottom:10px;">
+      <div class="quote-meta"><span class="who">TraderxB</span> · from the video transcript</div>
+      <div class="quote-text">"If I can guarantee 3R per trade, then my strike rate all it has to be is above 35%, and I'm making money."</div>
+    </div>
+    <div class="rule-box"><b>His own trade-off:</b> he's a "hit and quit" trader, with a fixed 3R target and no scaling out — the trailing stop is what locks in the gain. If a system's win rate has already been verified at 60-65%, you don't really need this trailing-stop approach; while it's still in the data-gathering stage, you should trail aggressively to cut risk.</div>
+
+    <div class="subhead" id="en-s12-2"><span class="subnum">12.2</span><h3>Three Types of DT</h3></div>
+    <p class="soft" style="margin-bottom:10px;">From <b>Defining your DTs</b> and <b>Homework - The Sweep DT</b>. He's narrowed the DTs he actually uses down to three, ranked here by difficulty and win rate:</p>
+    <div class="gloss" style="margin-bottom:12px;">
+      <div class="gloss-row"><div class="gloss-term">Flow Continuation LGC</div><div class="gloss-def">Easiest to spot: the LGC simply continues the existing flows, closing through the previous LG level. Of the three, this is the safest and the easiest to pick up.</div></div>
+      <div class="gloss-row"><div class="gloss-term">LGC Reversal</div><div class="gloss-def">The LGC doesn't just continue flows — it <b>closes through the previous LGC itself</b> (not just through the LG level). He rates this the <b>most profitable</b> of the three, but also the hardest to read.</div></div>
+      <div class="gloss-row"><div class="gloss-term">Sweep DT（4R Sweep）</div><div class="gloss-def">The most complex DT type, and the <b>only one that runs against the current flows</b> — in a downtrend, a lower-high sweep is the "bread and butter", a higher-high sweep is much lower-odds. Refinement rule: without a prior LGR, or without a VC (Volatility Candle, a big wick showing violent back-and-forth), don't be too quick to call a sweep a DT.</div></div>
+    </div>
+
+    <div class="subhead" id="en-s12-3"><span class="subnum">12.3</span><h3>Refining Entries with a Retest</h3></div>
+    <p class="soft" style="margin-bottom:10px;">From <b>Refining DTs and Entries using the same DT</b>. Standard SSSL enters at market the moment the LGC closes; the refined version waits for the LGC to form, then enters only on a <b>retest</b> of that LGC's high/EQ/low, trading a better price for a better risk/reward.</p>
+    <div class="rule-box"><b>The actual payoff:</b> "Half your entry-to-stop distance means double position size for same risk" — the closer the entry sits to the stop, the bigger the position you can run for the same dollar risk. The cost is you won't always get the retest — if you miss it, just enter at market per the original SSSL rule; don't force it.</div>
+
+    <div class="subhead" id="en-s12-4"><span class="subnum">12.4</span><h3>Multi-Timeframe Refinement: Weekly → Daily → 4H</h3></div>
+    <p class="soft" style="margin-bottom:10px;">From <b>Refining your Levels for Higher Accuracy</b>. The concrete workflow: spend 10 minutes every Sunday marking levels on Weekly, mark levels on Daily every day, then "transcribe" those higher-timeframe levels onto the 4H chart — wherever a 4H level happens to line up with a Weekly/Daily level is where confluence is strongest, and that usually lands near a 4H LGC's EQ.</p>
+    <div class="rule-box"><b>Extra intel:</b> he mentions also running a "spot cycle-trading" approach — direction from Daily, entries at 4R — which only produced about 20 signals across all of 2021, held for roughly 2 weeks 9 days on average (shortest 3 days, longest over a month). The higher the timeframe, the fewer the signals — but the bigger the risk/reward gets too.</div>
+    <div class="rule-box"><b>A variant:</b> the same Daily→4H refinement technique, but this one describes the LGC's three layers as <b>Open / EQ / Close</b> instead of the High/EQ/Low used elsewhere. He points out that whichever layer overlaps the LG level is usually the most sensitive one — consistent with the four-layer framework in Section 9.5, just described here with a different cut through the same set of layers.</div>
+  </section>
+
+  <!-- 13 -->
+  <section id="en-s13">
+    <div class="sec-head">
+      <h2><span class="sec-num">13 /</span> <b>The LE Candle Filter</b></h2>
+      <span class="pill pdf">PDF</span>
+    </div>
+    <p>SSSL's stronger filter, screening out false signals from "sweeps of sweeps" (getting swept over and over).</p>
+    <ul class="plain">
+      <li>The sweep candle's high must be <b>higher than the previous candle's high</b> (for shorts, look for HH; for longs, flip it and look for LL)</li>
+      <li>That candle's close must cross through <b>its own range's EQ</b> (not the swing's EQ — the midpoint of that candle's own high and low)</li>
+      <li>After that you should see the swing form as normal, then expand into the next tier of imbalanced flows</li>
+    </ul>
+    <div class="rule-box">"It's a completely objective metric" — fully objective, used to make SSSL entry selection more consistent.</div>
+  </section>
+
+  <!-- 14 -->
+  <section id="en-s14">
+    <div class="sec-head">
+      <h2><span class="sec-num">14 /</span> <b>"We Hunt in LGCs" — Live in the Field</b></h2>
+      <span class="pill video">Video transcript</span>
+    </div>
+    <p class="soft">xB says this is the first time he's really shown "what I actually do" instead of just the concepts. Using the real weekly price action from Oct 1-6, 2021, he demonstrates how to keep hunting LGCs through a confirmed Expansion 2.</p>
+    <div class="rule-box"><b>Track record:</b> <b>5 setups in a row, all winners</b>, in the same direction over about 2.5 days — his own comment is "pretty good week if I don't say so myself". A separate one-week Replay Mode run on XRP also went <b>4-for-4, 12R total</b>, using the same LG to LG + SSSL logic on repeat.</div>
+    <ul class="plain">
+      <li>When multiple SSSL candidates show up inside the same LGC zone, pick the "most obvious" one first (the cleanest, the one with the most decisive wick failure) — rank candidates by "order of magnitude" (the scale of the move that produced them).</li>
+      <li>He explicitly does not recommend refining a 4H LGC down into a 30-minute LGC to find entries: <b>"I think it's a good method, but sometimes it gets too almost too refined. I prefer looking at these big levels."</b> — an interesting contrast with Daniel DeGuzman's "wait for two strikes" approach in Section 16: xB himself actually leans toward not over-refining.</li>
+    </ul>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · from the video transcript</div>
+      <div class="quote-text">"I talk a lot about the conceptual process, but I never talk about what I actually do."</div>
+    </div>
+    <div class="figure"><img src="assets/5c7a8c4c1b59785d6734ba4fbe2472ed.jpg" alt="Red markers framing the LGC hunting zone"><div class="figure-cap">The red marking frames the LGC "hunting zone."</div></div>
+    <div class="figure"><img src="assets/b61253ed210790352a9051c67a4ce0d1.jpg" alt="Multiple stacked LGCs in red boxes"><div class="figure-cap">The process of hunting one LGC after another — every red box is one entry consideration.</div></div>
+    <div class="figure"><img src="assets/a6ad599bd475f61e80b745e41217e4e1.jpg" alt="More examples of stacked red boxes"><div class="figure-cap">Stacking continues until it hits the target zone.</div></div>
+    <div class="figure"><img src="assets/75b3dad9bbfa02c191264f2525980e3d.jpg" alt="LGR marking after a large advance"><div class="figure-cap">After a big push, an LGR shows up, signaling it may be time to go back into observation and re-evaluate.</div></div>
+  </section>
+
+  <div class="module-band">Supplementary <span class="arrow">→</span> <b>Meta / Cross-cutting</b> <span class="arrow">·</span> Sections 15-17</div>
+
+  <!-- 15 -->
+  <section id="en-s15">
+    <div class="sec-head">
+      <h2><span class="sec-num">15 /</span> <b>Notes From the Field</b></h2>
+      <span class="pill discord">Discord · 2022-11-30</span>
+    </div>
+    <p class="soft">xB and student Skadedrengen go back and forth on real charts for a whole afternoon, exposing gray areas the material never spells out.</p>
+
+    <div class="quote">
+      <div class="quote-meta"><span class="who">Skadedrengen</span> · 14:10</div>
+      <div class="quote-text">"Closing through your LG level can not override the larger, more prominent level we just closed through and you even had marked."</div>
+      <div class="quote-note">An internal small LG getting closed through can't override the larger, more prominent swing structure that was just marked.</div>
+    </div>
+
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 15:00</div>
+      <div class="quote-text">"If we're going to continue to expand with the flows, a test of a LG level means nothing until we aggregate at it."</div>
+      <div class="quote-note">Simply touching an LG level means nothing by itself — unless price genuinely starts to aggregate there, you shouldn't flip into observation the moment it's tagged.</div>
+    </div>
+    <div class="figure"><img src="assets/778f66991aac52c920fa5a1dc788f4a0.png" alt="AVAXUSDT 4H chart marking Swing we're in, Close through, LGR level, LG Level, and AM completion"><div class="figure-cap">The actual chart used in the discussion at the time: marked with "Swing we're in," "Close through," "LGR level," "LG Level," and "AM completion" relative to each other.</div></div>
+    <div class="figure"><img src="assets/f5f2e2e3924c0a6b9ccda832f753cc78.png" alt="4H chart marking the position of 4H OE LGC"><div class="figure-cap">Another chart from the same discussion, marked "4H OE LGC" — the concrete position of the origin of expansion on a real chart.</div></div>
+
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 15:28</div>
+      <div class="quote-text">"If we close through the 2nd LG IN THE SWING WE ARE IN, we go to the next."</div>
+      <div class="quote-note">A more precise version of the progression rule than the usual phrasing: it's specifically the 2nd LG <b>within the swing you're currently judging</b> — an LG from a different swing doesn't count.</div>
+    </div>
+    <div class="figure"><img src="assets/7b45f1a534a35b104047124d4ef0fa55.png" alt="AVAX 4H chart with a Close through the 2nd LG callout"><div class="figure-cap">The actual chart being discussed at the time: the tooltip reads "Close through the 2nd LG = I am looking for HL's" — that's exactly the picture behind this quote.</div></div>
+
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 15:17</div>
+      <div class="quote-text">"Properly my biggest flaw in utilizing this system. Being 100% confident in when we are expanding, and in which direction."</div>
+      <div class="quote-note">Even the author admits: the hardest part of this system isn't the rules — it's whether you dare to be 100% confident about the current direction of expansion.</div>
+    </div>
+
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 15:16</div>
+      <div class="quote-text">"Expansion down is rebalancing up... we want a LH to take it down."</div>
+      <div class="quote-note">Direction pairing: expansion up ↔ rebalance down; expansion down ↔ rebalance up. In a downtrend's pullback leg, you're waiting for an <b>LH</b>, not an HL.</div>
+    </div>
+    <div class="figure"><img src="assets/ada5f89865c9410f91fe83a2ca6df18b.png" alt="Chart marked "This is the swing we're in if we've confirmed expansion down""><div class="figure-cap">The chart matching the discussion: "This is the swing we're in if we've confirmed expansion down."</div></div>
+    <div class="figure"><img src="assets/ec9a132d6a500529e8642c9c0a5664a0.png" alt=""LH below here" chart with yellow highlighting marking the candles that form the LH"><div class="figure-cap">"LH below here" — the yellow highlight marks exactly which candles make up that LH.</div></div>
+  </section>
+
+  <!-- 16 -->
+  <section id="en-s16">
+    <div class="sec-head">
+      <h2><span class="sec-num">16 /</span> <b>Daniel DeGuzman's Double-Confirmation Method</b></h2>
+      <span class="pill unverified">Unverified</span>
+    </div>
+    <p>Only act after the Day chart shows two consecutive strikes (D1, D2), then switch to 4H to find two more strikes (H1, H2), entering on H2 — don't take the first green cross.</p>
+    <div class="card">
+      <p class="soft" style="margin-bottom:10px;"><b style="color:var(--ink)">Partially grounded:</b> the notes on page 102, example 31 read "the setup is just a SSSL within a SSSL (30m and 5m setup here)" — a drill-down structure where a higher-timeframe SSSL frames a zone and you go hunt for another SSSL on a lower timeframe does genuinely appear in the official material.</p>
+      <p class="soft" style="margin:0;"><b style="color:var(--ink)">Not grounded:</b> the counting rule "you must collect two strikes before acting" — combing through all 7 PDFs and the 103-page example set turns up nothing. It's logically sound (the same trade-off as the LE Candle: fewer signals for a higher win rate), but for now this can only be treated as Daniel DeGuzman's own execution discipline layered on top of the official framework, not a rule xB's original material actually specifies. In Section 15, xB himself actually leans toward not over-refining timeframes — the two men's instincts don't fully agree.</p>
+    </div>
+  </section>
+
+  <!-- 17 -->
+  <section id="en-s17">
+    <div class="sec-head">
+      <h2><span class="sec-num">17 /</span> <b>The Nested Structure, Diagrammed</b></h2>
+      <span class="pill unverified">Unverified</span>
+    </div>
+    <p class="soft">Section 4's Aggregation Model and Section 11's SSSL are often mistaken for the same four-step process — both happen to be four steps, and both use the words sweep and LGC. The diagram below shows how the two are actually nested: on the direction chart you run one complete Aggregation Model (LGR→Rebalance→LGC Formation→Expansion), <b>only switching to the entry timeframe once it expands</b>, then trigger SSSL (Spike→Sweep→Swing→LGC) repeatedly within that same Expansion — one outer cycle typically contains several inner entries, echoing the run of 5 back-to-back setups in Section 14's "we hunt in LGCs." <b>This nested framework is a cross-section synthesis — no single passage states it this way verbatim.</b></p>
+
+    <div class="figure">
+      <svg viewBox="0 0 1040 600" role="img" aria-label="The Aggregation Model as the outer directional container, holding four stages: LGR, Rebalance, LGC Formation, Expansion. Once the Expansion stage unfolds it connects to the inner SSSL container, which repeatedly runs the Spike-Sweep-Swing-LGC four steps, each round producing a separate entry, until it hits the next level of flows and returns to the outer layer to find the next LGR." style="display:block;width:100%;height:auto;">
+        <defs>
+          <marker id="en-s19-arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="context-stroke"/>
+          </marker>
+        </defs>
+
+        <rect x="30" y="40" width="980" height="520" rx="16"
+              fill="var(--level-soft)" stroke="var(--level)" stroke-width="2" stroke-dasharray="7 5"/>
+        <text x="54" y="76" class="mono" font-size="15" font-weight="700" fill="var(--level)" letter-spacing="0.04em">AGGREGATION MODEL</text>
+        <text x="54" y="95" class="mono" font-size="12" fill="var(--ink-soft)">Direction chart · higher timeframe · only counts once a full cycle completes</text>
+
+        <rect x="89" y="118" width="190" height="78" rx="10" fill="var(--surface)" stroke="var(--line)" stroke-width="1.5"/>
+        <text x="184" y="152" text-anchor="middle" class="mono" font-size="15" font-weight="700" fill="var(--ink)">LGR</text>
+        <text x="184" y="171" text-anchor="middle" class="mono" font-size="12" fill="var(--ink-soft)">Reversal signal</text>
+
+        <rect x="313" y="118" width="190" height="78" rx="10" fill="var(--surface)" stroke="var(--line)" stroke-width="1.5"/>
+        <text x="408" y="152" text-anchor="middle" class="mono" font-size="15" font-weight="700" fill="var(--ink)">REBALANCE</text>
+        <text x="408" y="171" text-anchor="middle" class="mono" font-size="12" fill="var(--ink-soft)">(SWEEP)</text>
+
+        <rect x="537" y="118" width="190" height="78" rx="10" fill="var(--surface)" stroke="var(--line)" stroke-width="1.5"/>
+        <text x="632" y="152" text-anchor="middle" class="mono" font-size="14.5" font-weight="700" fill="var(--ink)">LGC FORMATION</text>
+        <text x="632" y="171" text-anchor="middle" class="mono" font-size="12" fill="var(--ink-soft)">Origin confirmed</text>
+
+        <rect x="761" y="118" width="190" height="78" rx="10" fill="var(--confirm-soft)" stroke="var(--confirm)" stroke-width="2"/>
+        <text x="856" y="152" text-anchor="middle" class="mono" font-size="15" font-weight="700" fill="var(--confirm)">EXPANSION</text>
+        <text x="856" y="171" text-anchor="middle" class="mono" font-size="12" fill="var(--ink-soft)">The real breakout</text>
+
+        <line x1="281" y1="157" x2="311" y2="157" stroke="var(--level)" stroke-width="2" marker-end="url(#en-s19-arrow)"/>
+        <line x1="505" y1="157" x2="535" y2="157" stroke="var(--level)" stroke-width="2" marker-end="url(#en-s19-arrow)"/>
+        <line x1="729" y1="157" x2="759" y2="157" stroke="var(--level)" stroke-width="2" marker-end="url(#en-s19-arrow)"/>
+
+        <line x1="856" y1="196" x2="856" y2="247" stroke="var(--ink-soft)" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#en-s19-arrow)"/>
+        <text x="770" y="222" text-anchor="end" class="mono" font-size="12" fill="var(--ink-soft)">Switch to the entry timeframe once it unfolds</text>
+
+        <rect x="90" y="250" width="850" height="262" rx="14" fill="var(--surface-2)" stroke="var(--confirm)" stroke-width="2"/>
+        <text x="114" y="280" class="mono" font-size="14.5" font-weight="700" fill="var(--confirm)" letter-spacing="0.03em">SSSL — entry chart, triggers repeatedly</text>
+        <text x="114" y="298" class="mono" font-size="12" fill="var(--ink-soft)">Repeated hunting while the Expansion unfolds, without waiting for a full Aggregation Model each time</text>
+
+        <g>
+          <line x1="187" y1="345" x2="214" y2="345" stroke="var(--confirm)" stroke-width="1.75" marker-end="url(#en-s19-arrow)"/>
+          <line x1="240" y1="345" x2="267" y2="345" stroke="var(--confirm)" stroke-width="1.75" marker-end="url(#en-s19-arrow)"/>
+          <line x1="293" y1="345" x2="320" y2="345" stroke="var(--confirm)" stroke-width="1.75" marker-end="url(#en-s19-arrow)"/>
+          <circle cx="174" cy="345" r="13" fill="var(--surface)" stroke="var(--ink-faint)" stroke-width="1.5"/>
+          <text x="174" y="349" text-anchor="middle" class="mono" font-size="12" font-weight="600" fill="var(--ink-soft)">S</text>
+          <circle cx="227" cy="345" r="13" fill="var(--surface)" stroke="var(--ink-faint)" stroke-width="1.5"/>
+          <text x="227" y="349" text-anchor="middle" class="mono" font-size="12" font-weight="600" fill="var(--ink-soft)">S</text>
+          <circle cx="280" cy="345" r="13" fill="var(--surface)" stroke="var(--ink-faint)" stroke-width="1.5"/>
+          <text x="280" y="349" text-anchor="middle" class="mono" font-size="12" font-weight="600" fill="var(--ink-soft)">S</text>
+          <circle cx="333" cy="345" r="13" fill="var(--confirm)" stroke="var(--confirm)" stroke-width="1.5"/>
+          <text x="333" y="349" text-anchor="middle" class="mono" font-size="12" font-weight="700" fill="var(--surface)">L</text>
+          <text x="333" y="384" text-anchor="middle" class="mono" font-size="11" fill="var(--confirm)">entry ✓</text>
+        </g>
+
+        <line x1="346" y1="345" x2="401" y2="345" stroke="var(--ink-soft)" stroke-width="1.75" stroke-dasharray="4 4" marker-end="url(#en-s19-arrow)"/>
+
+        <g>
+          <line x1="427" y1="345" x2="454" y2="345" stroke="var(--confirm)" stroke-width="1.75" marker-end="url(#en-s19-arrow)"/>
+          <line x1="480" y1="345" x2="507" y2="345" stroke="var(--confirm)" stroke-width="1.75" marker-end="url(#en-s19-arrow)"/>
+          <line x1="533" y1="345" x2="560" y2="345" stroke="var(--confirm)" stroke-width="1.75" marker-end="url(#en-s19-arrow)"/>
+          <circle cx="414" cy="345" r="13" fill="var(--surface)" stroke="var(--ink-faint)" stroke-width="1.5"/>
+          <text x="414" y="349" text-anchor="middle" class="mono" font-size="12" font-weight="600" fill="var(--ink-soft)">S</text>
+          <circle cx="467" cy="345" r="13" fill="var(--surface)" stroke="var(--ink-faint)" stroke-width="1.5"/>
+          <text x="467" y="349" text-anchor="middle" class="mono" font-size="12" font-weight="600" fill="var(--ink-soft)">S</text>
+          <circle cx="520" cy="345" r="13" fill="var(--surface)" stroke="var(--ink-faint)" stroke-width="1.5"/>
+          <text x="520" y="349" text-anchor="middle" class="mono" font-size="12" font-weight="600" fill="var(--ink-soft)">S</text>
+          <circle cx="573" cy="345" r="13" fill="var(--confirm)" stroke="var(--confirm)" stroke-width="1.5"/>
+          <text x="573" y="349" text-anchor="middle" class="mono" font-size="12" font-weight="700" fill="var(--surface)">L</text>
+          <text x="573" y="384" text-anchor="middle" class="mono" font-size="11" fill="var(--confirm)">entry ✓</text>
+        </g>
+
+        <line x1="586" y1="345" x2="641" y2="345" stroke="var(--ink-soft)" stroke-width="1.75" stroke-dasharray="4 4" marker-end="url(#en-s19-arrow)"/>
+
+        <g>
+          <line x1="667" y1="345" x2="694" y2="345" stroke="var(--confirm)" stroke-width="1.75" marker-end="url(#en-s19-arrow)"/>
+          <line x1="720" y1="345" x2="747" y2="345" stroke="var(--confirm)" stroke-width="1.75" marker-end="url(#en-s19-arrow)"/>
+          <line x1="773" y1="345" x2="800" y2="345" stroke="var(--confirm)" stroke-width="1.75" marker-end="url(#en-s19-arrow)"/>
+          <circle cx="654" cy="345" r="13" fill="var(--surface)" stroke="var(--ink-faint)" stroke-width="1.5"/>
+          <text x="654" y="349" text-anchor="middle" class="mono" font-size="12" font-weight="600" fill="var(--ink-soft)">S</text>
+          <circle cx="707" cy="345" r="13" fill="var(--surface)" stroke="var(--ink-faint)" stroke-width="1.5"/>
+          <text x="707" y="349" text-anchor="middle" class="mono" font-size="12" font-weight="600" fill="var(--ink-soft)">S</text>
+          <circle cx="760" cy="345" r="13" fill="var(--surface)" stroke="var(--ink-faint)" stroke-width="1.5"/>
+          <text x="760" y="349" text-anchor="middle" class="mono" font-size="12" font-weight="600" fill="var(--ink-soft)">S</text>
+          <circle cx="813" cy="345" r="13" fill="var(--confirm)" stroke="var(--confirm)" stroke-width="1.5"/>
+          <text x="813" y="349" text-anchor="middle" class="mono" font-size="12" font-weight="700" fill="var(--surface)">L</text>
+          <text x="813" y="384" text-anchor="middle" class="mono" font-size="11" fill="var(--confirm)">entry ✓</text>
+        </g>
+
+        <line x1="826" y1="345" x2="862" y2="345" stroke="var(--ink-faint)" stroke-width="1.75" stroke-dasharray="2 4" marker-end="url(#en-s19-arrow)"/>
+        <text x="885" y="349" text-anchor="middle" class="mono" font-size="15" fill="var(--ink-faint)">⋯</text>
+
+        <text x="515" y="423" text-anchor="middle" class="mono" font-size="12.5" fill="var(--ink-soft)">The same Spike → Sweep → Swing → LGC sequence triggers repeatedly, each round a separate entry</text>
+
+        <text x="515" y="490" text-anchor="middle" class="mono" font-size="12.5" fill="var(--ink-soft)">→ Only once it hits the next level of imbalanced flows does it break out of this loop, back to the outer layer to find the next LGR</text>
+      </svg>
+      <div class="figure-cap">The <b>outer layer</b> (blue dashed) is the Aggregation Model's four steps, running on the direction chart to judge whether flows have truly reversed; the <b>inner layer</b> (green solid) is SSSL, triggering repeatedly on the entry timeframe once Expansion unfolds — one outer cycle can contain several inner entries.</div>
+    </div>
+  </section>
+
+  <div class="module-band">Case Studies <span class="arrow">→</span> <b>Case Studies</b> <span class="arrow">·</span> Sections 18-22</div>
+
+  <!-- 18 -->
+  <section id="en-s18">
+    <div class="sec-head">
+      <h2><span class="sec-num">18 /</span> <b>Case Studies — BTC Live on the Charts</b></h2>
+      <span class="pill video">Video transcript</span>
+    </div>
+    <p class="soft">Four live BTC chart-reading sessions, each demonstrating a full or partial LG to LG/SSSL pass. Unlike the abstract rules in earlier sections, the point here is "what the rules actually look like on a real, noisy chart."</p>
+
+    <div class="subhead" id="en-s18-1"><span class="subnum">18.1</span><h3>Consecutive LG to LG Pushes + the Full SSSL Sequence</h3></div>
+    <p class="soft" style="margin-bottom:10px;">A live BTC chart read where a single session runs a complete "direction call → entry call" pass start to finish.</p>
+    <p>He opens with a gut-check you can run before you've even drawn a line: small body with a long wick = efficient (consolidating), big body = inefficient (expanding). Then he marks a big LGR spiking off a high; once it closes through, price runs efficient all the way to the high — because there's no untested LG above the high, all the resting orders are up there, so price simply goes to get them. At the high, a candle takes out both sides of the range, then spikes hard through the previous LGC to form a new LGR — this candle, he says plainly, "has to be a DT, no ambiguity about it," a demonstration of what an unmistakable signal looks like.</p>
+    <p>Then it demonstrates concretely how "LG size itself is information": the bigger the LGC, the longer the aggregation (consolidation) period the resulting LG level needs afterward — big level = big order volume = needs more time to digest. It also uses "books are thin" to explain why a level's sensitivity drops after being tested once: the one-sided orders that were stacked there get cleared out once swept, so even if price comes back, there won't be the same volume waiting. The most concrete passage in the video is a single candle that simultaneously satisfies "failure to continue after breaking the prior high," "crossing the LG level," "forms an LGC on close after an inside bar," and "is also an LGR" — multiple confluences at once — so this candle's entire high-low range is treated as a tradeable zone, hunting for an SSSL entry inside it with the target set at the LGC high.</p>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · from the video transcript</div>
+      <div class="quote-text">"The bigger the LGC, the larger the move that precedes it and also the larger the aggregation."</div>
+      <div class="quote-note">LG/LGC size itself carries information: the bigger the expansion, the longer the consolidation period needed afterward.</div>
+    </div>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · from the video transcript</div>
+      <div class="quote-text">"I take 85% of my trades as LGC sweeps... I just have to wait. I save more money from just not trading than working on my strike rate."</div>
+      <div class="quote-note">The key to trading performance isn't picking skill — it's the discipline of "not trading": over 80% of orders only get entered after an LGC sweep.</div>
+    </div>
+
+    <div class="subhead" id="en-s18-2"><span class="subnum">18.2</span><h3>Weekly → Daily → 4R: A Live Layered Refinement</h3></div>
+    <p class="soft" style="margin-bottom:10px;">A routine Monday-open update spanning three timeframes — Weekly / Daily / 4R — the only complete, real, hands-on demonstration of the abstract "multi-timeframe refinement" workflow in Section 12.4.</p>
+    <p>First look at Weekly to grab the major high/EQ/low, then switch to Daily to find finer levels, then "transcribe" those Daily levels onto the 4R chart for execution. Partway through, a large Weekly-level LGC is used to forecast that "the next three to four weeks will be expansive price action," giving the trader confidence when operating on lower timeframes so short-term noise doesn't shake them. The middle section gives a complete demonstration of how to locate the "origin of expansion" on a real chart: a stretch of expansion has no ready-made LG to mark, so the candle that caused that expansion is directly defined as the origin, with the emphasis that "this will be the single most important level on the chart right now — it will decide our fate." The end lists five DT-trigger scenarios for an unclear, ranging chart (① spike+sweep ② failure to continue + break below EQ ③ wait for a lower high after an LGR ④ a full reversal expand-down ⑤ close through with continuing flows) — the most complete "exhaustive list of DT scenarios" in the material so far.</p>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · from the video transcript</div>
+      <div class="quote-text">"This will decide our fate."</div>
+      <div class="quote-note">Multi-timeframe analysis ultimately always converges on a single key level (the origin of expansion).</div>
+    </div>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · from the video transcript</div>
+      <div class="quote-text">"I am in absolutely no rush to long Bitcoin. I'm still on short watch."</div>
+      <div class="quote-note">Demonstrates that "flows technically up" and "the direction you actually want to trade" can disagree — wait for the higher-probability signal instead of forcing the surface-level flows.</div>
+    </div>
+
+    <div class="subhead" id="en-s18-3"><span class="subnum">18.3</span><h3>Dual-Chart Comparison and an Honest Admission of Subjectivity</h3></div>
+    <p class="soft" style="margin-bottom:10px;">Watching two charts at once (the spot chart only marks LG levels for the big-picture direction; the Perp chart is where the actual entry is found), with price stuck in a long, unclear range.</p>
+    <p>This case's biggest distinguishing feature is a rare, honest admission of how origin of expansion gets judged subjectively when there's no ready-made LG to use: "because there's no LG forming there, I've just decided for myself what the origin of this expansion down is going to be... I've moulded that slightly to fit my own narrative." This confession points straight at the most opaque part of the system — how the author actually judges things when the rules can't be applied mechanically — echoing the two "even the author admits it's subjective" rule-boxes in Section 10, and can be treated as a third instance of the same theme. The video also demonstrates a judgment framework not stated explicitly anywhere else: asking "does this move have any 'fuel' left to keep running" — if price has already moved into a relatively tight range and the volume has been fully digested, then it's ready to spike on the next trigger; if it hasn't consolidated enough yet, you need to wait longer. Near the end it states plainly, "these aren't high probability trades in either direction, so maybe the best move is to not trade," echoing the rule from Section 03 about not trading inside consolidation, but giving a more honest, live example of it.</p>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · from the video transcript</div>
+      <div class="quote-text">"I've just taken what I would decide is the origin of the expansion down... I've moulded that slightly to fit my narrative."</div>
+      <div class="quote-note">An honest admission that when there's no ready-made LG to use, judging the origin of expansion involves a degree of subjective shaping.</div>
+    </div>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · from the video transcript</div>
+      <div class="quote-text">"These aren't high probability trades in either direction. So maybe best to stay out."</div>
+      <div class="quote-note">When the range is unclear, the best move is often not to trade.</div>
+    </div>
+
+    <div class="subhead" id="en-s18-4"><span class="subnum">18.4</span><h3>Two Quick Cases: Two Rules for Entering at the Low, and the Discipline of One Trade a Day</h3></div>
+    <p class="soft" style="margin-bottom:10px;">Two quick-take videos three days apart, covering the same roughly two-week range — the first sets out a rule, the second shows what the discipline actually looks like in practice.</p>
+    <p>The first video demonstrates a detail the material never states outright: there are two different rules for waiting to enter at an LGC low, depending on the scale of the swing you're referencing — most of the time you wait for a "higher low sweep" to appear on the entry timeframe before entering; but if it's at the EQ, you can be more lenient, because the reference point there is the relationship of "this swing against that swing." The video also demonstrates the mindset of "holding two scenarios at once": laying out both "short if it closes through this low" and "long if it closes through that high" side by side, while admitting, "I don't really like the anticipation of waiting for both scenarios, but at least now you know my thought process." The second video, three days later, adds almost no new rules — its value is a very down-to-earth confession about discipline: the next hour and 47 minutes require zero screen-watching, "I rarely take more than one trade a day if I've already got a winner, because I just don't need or want more" — a nice contrast with Section 14's aggressive demonstration of five straight winning setups, showing that the same system can either stack entries hard through Expansion 2, or call it a day after one trade, depending on which phase of the cycle you're in and personal choice.</p>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · from the video transcript</div>
+      <div class="quote-text">"Most of the time I just wait for the higher low sweep on the entry timeframe. Whereas if it's at the EQ, we don't have to worry too much about that."</div>
+      <div class="quote-note">Two different standards for waiting to enter at the LGC low, depending on the level of the swing being referenced.</div>
+    </div>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · from the video transcript</div>
+      <div class="quote-text">"I don't really take more than one trade a day if I take a winner, because I just don't need nor want to. That's the beauty of it — I don't need to be at the computer."</div>
+      <div class="quote-note">A down-to-earth demonstration of trading discipline: stop once you've won, not because a rule demands it but as a deliberate choice — the whole point of the system's design is that a trader shouldn't need to stay glued to the screen.</div>
+    </div>
+  </section>
+
+  <!-- 19 -->
+  <section id="en-s19">
+    <div class="sec-head">
+      <h2><span class="sec-num">19 /</span> <b>Case Studies — Flows and Risk-Control Field Tests</b></h2>
+      <span class="pill video">Video transcript</span>
+    </div>
+    <p class="soft">Four cases that fill in a formal definition of "spike," a position-risk rule, some screen-time intuition, and two Q&amp;A clarifications — this batch sits closer to real trading detail than a mere repeat of the playbook on a different symbol.</p>
+
+    <div class="subhead" id="en-s19-1"><span class="subnum">19.1</span><h3>A 90-Day Backtest: An Objective Definition of Spike and Reduced-Risk Sizing</h3></div>
+    <p class="soft" style="margin-bottom:10px;">BTCPERP, replaying roughly three months (90 days) via Replay Mode, deliberately staying on the direction chart to mark DTs without cutting to the entry timeframe — practicing direction-reading alone.</p>
+    <p>It opens by collapsing the whole direction-reading logic into one binary question: for any given close, ask only "is this a reversal or a continuation of flows" — there's no third state. To answer that, the video gives the first-ever clear, objective definition of "spike": <b>a spike is an LGC whose close direction opposes the current flows</b> (e.g. the overall trend is down, yet the close prints an LGC to the upside) — and it's stated plainly that this is the hardest piece of the whole system to pin down objectively. It then restates the trading discipline: 90% of setups should be traded inside an LGC, and only a clearly counter-trend sweep DT should be considered for anything more aggressive — with counter-flow positions recommended at half risk, and with-flow positions given full risk. Across the whole 90-day backtest, the author deliberately never marks a single standalone sweep as a DT, counting only LGCs, and ends up with 43 directional triggers total, roughly one every two days; at an estimated 60-65% win rate winning 3R and losing 1R, that's a long-run positive-expectancy strategy.</p>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · from the video transcript</div>
+      <div class="quote-text">"So how do we define a spike? For me... I'm going to define it clearly and objectively as an LGC [that opposes the current direction]."</div>
+      <div class="quote-note">The first clear definition of "spike" as "an LGC whose close direction opposes the current flows," rather than a vague notion of a "spike out."</div>
+    </div>
+    <div class="rule-box"><b>Position-risk rule:</b> "maybe half risk on counter flows, full risk on with the flows" — counter-trend positions get half risk, with-trend positions get full risk. Other sections of the material (Section 12.1, R-multiple trailing stops) only cover exit management, not how position size before entry should scale with signal strength — this fills that gap. The frequency of 43 signals in 90 days also cross-checks nicely against Section 9.2's claim of "at most twice a week on the 4H."</div>
+
+    <div class="subhead" id="en-s19-2"><span class="subnum">19.2</span><h3>An Example of Partial vs. Full-Cycle Rebalance</h3></div>
+    <p class="soft" style="margin-bottom:10px;">BTCPERP, an LG-to-LG drill running start to finish on a single swing — the core of it is the layered relationship between internal flows and external flows.</p>
+    <p>A large LGC forms its own internal swing inside itself; the internal flows can reverse slightly first, but that's not yet enough to confirm that the external swing has truly reversed — only a close through the external LG level counts. Near the end, the whole move is rewound and summarized into a complete Expansion Cycle recap, drawing a clear distinction between <b>partial rebalance</b> (a single sweep+LGC, used to keep adding within an expansion) and <b>full cycle rebalance</b> (the full 3-Expansion + 2-Rebalance cycle running to completion) — this is the abstract cyclical structure from Section 10's "5 Phase Expansion Cycle," here given its first candle-by-candle example that actually shows the difference between the two.</p>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · from the video transcript</div>
+      <div class="quote-text">"Rebalance complete again — we know we're expanding there so it's partial rebalance, it's not full cycle rebalance. Full cycle rebalance comes after the full expansion phase."</div>
+      <div class="quote-note">A clear distinction between partial rebalance and full cycle rebalance.</div>
+    </div>
+
+    <div class="subhead" id="en-s19-3"><span class="subnum">19.3</span><h3>Learning as a Group: Reading Resting-Order Pressure from Wicks</h3></div>
+    <p class="soft" style="margin-bottom:10px;">A community co-learning livestream, 4-hour direction chart cut to a 30-minute entry chart — live teaching in the style of "everyone comparing answers together."</p>
+    <p>The core of it is two screen-reading details. First, repeatedly reading resting-order pressure from whether a wick is present: if a candle that closes at a new high has almost no upper wick, that means there's basically nothing resting above this price — because if there were, it would already have printed a longer wick; conversely, if a wickless candle later gets eaten through, that means real size was actually sitting there waiting to unload, and that candle itself shouldn't be used as grounds for continuation to the upside. Second, it points out a specific geometric regularity: <b>the LGR level tends to sit at roughly 85-90% of the LGC's EQ</b>, stressing that this is no coincidence. The whole video also emphasizes that "only efficient price action (clean, without much wick) produces a clean sweep" — choppy, wick-heavy price action usually doesn't produce a trustworthy sweep signal.</p>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · from the video transcript</div>
+      <div class="quote-text">"The LGR level is 85 to 90 percent the EQ of the LGC. And... it's no coincidence."</div>
+      <div class="quote-note">The specific geometric ratio between where the LGR sits and the LGC's EQ.</div>
+    </div>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · from the video transcript</div>
+      <div class="quote-text">"It's in the efficiency that we want to trade, because the efficient price is what gives us a sweep."</div>
+      <div class="quote-note">Explicitly links "efficient price action" to "how trustworthy a sweep signal is."</div>
+    </div>
+
+    <div class="subhead" id="en-s19-4"><span class="subnum">19.4</span><h3>Two Q&amp;A Clarifications: A Caveat on Short-Term Flows, and Why an LGR in Isolation Is Meaningless</h3></div>
+    <p class="soft" style="margin-bottom:10px;">Two short BTCUSD review/Q&amp;A videos, each clarifying one easily-misread rule.</p>
+    <p>The first gives an explicit caveat to the "only trade with flows" principle: the market's short-term internal flows have turned up, but the overall longer-term direction is still down, and the video states plainly, "short term they're 100% up, long term they're not — but we can take the short term flows as long as we know it's [counter to] the overall market if we just get quick moves" — short-term flows can be traded independently of the long-term flows, so long as you're clear you're going against the larger trend and your target is just a quick, small move, without needing the long-term direction to actually reverse. The second breaks down, candle by candle, a flows reversal that's easy to misjudge: the market prints a candle that has the flavor of an LGR, but the author deliberately ignores it, because what actually matters is whether this candle tested the EQ — "LGRs mean fuck all in isolation. It's that the candle tested the EQ." It goes on to explain the mechanical reason the LGC three-tier structure works: a large LGC represents one imbalanced expansion, and when it rebalances afterward there's usually enough liquidity near the EQ to complete the refill — but sometimes there isn't enough liquidity at the EQ, so price has to dip a little deeper, all the way down to the LGC's Low, to find enough liquidity — which fills in the mechanical reason, missing from Section 9.5's "LGC four-tier framework," for "why sometimes it has to dip deeper."</p>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · from the video transcript</div>
+      <div class="quote-text">"It's not that it was the LGR because LGRs mean fuck all in isolation. It's that the candle tested the EQ."</div>
+      <div class="quote-note">An LGR in isolation is meaningless — testing the EQ is what actually matters — echoing a similar line from the Discord notes in Section 15, but here the "why" is made far more concrete with an actual chart.</div>
+    </div>
+  </section>
+
+  <!-- 20 -->
+  <section id="en-s20">
+    <div class="sec-head">
+      <h2><span class="sec-num">20 /</span> <b>Case Studies — EURUSD and a Spot Strategy</b></h2>
+      <span class="pill video">Video transcript</span>
+    </div>
+    <p class="soft">Almost every other section in this book is a crypto perpetual future — these two are the exceptions: one swaps the asset class, the other swaps the entire trading framework.</p>
+
+    <div class="subhead" id="en-s20-1"><span class="subnum">20.1</span><h3>EURUSD Live: Multi-Timeframe Alignment</h3></div>
+    <p class="soft" style="margin-bottom:10px;">EURUSD, 30-minute chart as the direction chart, 2-minute chart as the entry chart, replaying roughly a week of price action via Replay Mode — the book's only complete non-crypto case.</p>
+    <p>Direction is first marked at the highest proportion (the long-term swing), then a level down (the 30-minute) marks the short-term swing, then it cuts down to the 2-minute to hunt for an SSSL entry — three layers of proportion running at once. The whole video keeps returning to one core criterion: <b>"long term flows meet short term flows — all the flows line and it just runs like a river"</b> — the moment the long-term swing direction truly aligns with the short-term swing direction is the only trade in the video marked a "runner" (worth holding the longest, with the best risk/reward), with the final stop set at the swing low and the position held for over a week. This is exactly the logic of Section 12.4's "multi-timeframe refinement," but that section only describes the workflow in words — this video is the only time it's demonstrated completely, step by step, on a non-crypto asset, which is itself direct proof that the system is asset-agnostic.</p>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · from the video transcript</div>
+      <div class="quote-text">"Long term flows meet short term flows. All the flows line and it just runs like a river."</div>
+      <div class="quote-note">The core mindset of multi-timeframe alignment.</div>
+    </div>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · from the video transcript</div>
+      <div class="quote-text">"Understanding the proportions becomes a tool to have serious, serious upside in the profitability of this, if you play your card right."</div>
+    </div>
+
+    <div class="subhead" id="en-s20-2"><span class="subnum">20.2</span><h3>A Spot Long-Only Strategy, and a Four-Step Definition of Reclaim</h3></div>
+    <p class="soft" style="margin-bottom:10px;">BTC and ETH spot, long-only ("if I want to short, I'll just do it on a perp instead"), using only the Weekly to grab levels and the Daily to find entries — an independent side strategy that makes up about 30% of overall trading volume.</p>
+    <p>This case's biggest contribution is the first time the community's word-of-mouth, never-clearly-defined "Reclaim" gets pinned down into an explicit four-step sequence: ① a Daily close crosses through the Weekly LG level; ② a higher low subsequently forms (bounded specifically within the high-low range of the candle that caused that close-through); ③ that higher low gets swept or raided once; ④ a Daily close crosses through the same Weekly level again — all four conditions have to be met at once to count as a reclaim, no exceptions. Beyond that, this spot strategy has several execution details that differ from other sections: the stop is "soft" — it isn't sitting in the exchange's order book, but is instead an alert set at the key level, manually evaluated once triggered; the take-profit only locks in the external range's LG rather than watching a fixed R-multiple, though because "the market tends to move in threes," the realized RR in practice tends to land around 2.75-3.25R; and one hard rule is stated plainly: "only take longs that are a higher low, only take shorts that are a lower high — never touch a lower low or a higher high."</p>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · from the video transcript</div>
+      <div class="quote-text">"People were talking about reclaim of levels and no one objectively defining what that is... I'm going to give you a reclaim of a level tutorial."</div>
+      <div class="quote-note">Points out explicitly that the term "reclaim" has no formal definition in the community right now, and that this video is going to nail it down for good.</div>
+    </div>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · from the video transcript</div>
+      <div class="quote-text">"[Rule:] you will not take anything that's not a higher low or a lower high. Your profitability goes through the roof."</div>
+    </div>
+    <div class="rule-box"><b>Relation to the Reclaim definition in Section 8:</b> the glossary (Section 01) and Section 8's Reclaim currently amount to only one sentence ("a close crosses through an LG, then breaks back below it, then closes through the same level again") — the four-step version given in this video is noticeably more rigorous and specific, worth cross-referencing.</div>
+  </section>
+
+  <!-- 21 -->
+  <section id="en-s21">
+    <div class="sec-head">
+      <h2><span class="sec-num">21 /</span> <b>Case Studies — Homework-Style Training Methods</b></h2>
+      <span class="pill video">Video transcript</span>
+    </div>
+    <p class="soft">Two weekend-assignment demonstrations that run in exactly opposite directions, which together form one complete training loop: one trains "how to see it," the other trains "how to define a DT."</p>
+
+    <div class="subhead" id="en-s21-1"><span class="subnum">21.1</span><h3>Reverse Engineering: Working Backward from Winners to Define a DT</h3></div>
+    <p class="soft" style="margin-bottom:10px;">BTC, 4-hour direction chart plus a 30-minute entry timeframe.</p>
+    <p>The standard workflow is "find a DT on the direction chart first, then cut to the entry timeframe to hunt for an SSSL entry" (top-down). This assignment runs it backward: first, on the 30-minute entry timeframe alone, mark out every "winning" setup across an entire month that met the SSSL rules and actually hit its take-profit target (regardless of direction, and without marking any losers — "we only focus on the winners, not the losers"), then go back to the 4-hour direction chart and look at which DT on the direction chart each of those winning setups corresponds to, and what that DT actually looks like. The video walks through a concrete example: a DT was first defined simply as "an LGC crossing through the previous level," but checking it back against the entry-timeframe setups showed it actually corresponded to a loser; so the DT gets redefined as "the LGC's EQ must have been retested for it to count," and checking again this time lines up with a genuine winner. This repeated cycle of "define → check backward → find it's a loser → tighten the definition → check again" is the core method this assignment teaches, which the author calls "reverse engineering."</p>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · from the video transcript</div>
+      <div class="quote-text">"We don't try and guess the ending of a book if we haven't read the book. So wait, read the ending and then you can go and do what you want because you know the storyline."</div>
+      <div class="quote-note">Uses "read the ending first, then go back and understand the story" as a metaphor for the spirit of the reverse-engineering training method.</div>
+    </div>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · from the video transcript</div>
+      <div class="quote-text">"You could almost just trade at the LGC EQ for the rest of your life. I swear to Christ."</div>
+      <div class="quote-note">Tightening the DT definition down to "the LGC's EQ must have been retested" is what finally filters out the true winners, underscoring how central the EQ is when refining a DT.</div>
+    </div>
+
+    <div class="subhead" id="en-s21-2"><span class="subnum">21.2</span><h3>Forward Training: An Exhaustive, Swing-by-Swing Breakdown</h3></div>
+    <p class="soft" style="margin-bottom:10px;">BTC, 4-hour direction chart, a swing-by-swing breakdown drill across three months of price action.</p>
+    <p>A "forward" training method that complements 21.1: take the past three months of price action and box off every individual swing using a "low-high-higher low" (or "high-low-lower high") structure, then do a candle-by-candle analysis of each swing on its own — rather than looking at the whole chart at once, you pull apart the relationship between long-term and short-term flows and practice recognizing it one stretch at a time. The concrete method: first pin down what "the swing we're in now" and "the previous swing" each are (echoing Section 7's "how to pick the relevant swing"), mark every LG level within that swing's range, and narrate candle by candle what's happening — close through, fail to continue, swing forms, LGC, origin of expansion — then move to the next swing once one is done, all the way through the three months. The point isn't "just get it done" — it's that repeating the drill turns "the proportional relationship between long-term flows and short-term flows" into intuition.</p>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · from the video transcript</div>
+      <div class="quote-text">"I still feel this is where people are struggling — it's the proportional relationship between the long term flows and the shorter term flows."</div>
+      <div class="quote-note">Points out where students most often get stuck: the proportional relationship between long-term and short-term flows.</div>
+    </div>
+  </section>
+
+  <!-- 22 -->
+  <section id="en-s22">
+    <div class="sec-head">
+      <h2><span class="sec-num">22 /</span> <b>Replay Mode: Deliberate Practice</b></h2>
+      <span class="pill video">Video transcript</span>
+    </div>
+    <p class="soft">The second half of a quick EURUSD case, where the topic shifts entirely — this isn't teaching rules, it's teaching "how to train your intuition," the only place in the whole book that touches on a concrete practice method and hard performance numbers.</p>
+    <p>The first half is a typical LG to LG / Aggregation Model chart walkthrough, highly repetitive with the other cases — the only detail worth noting is a self-reminder about "hindsight cheating": looking back at a chart after the fact, everything always makes sense, but that doesn't mean you'd actually have seen it in the moment, which is why you should train with Replay Mode instead of just reviewing historical charts. The second half discloses concrete training numbers: 20 months of practicing with Replay Mode, 19 of which were profitable, averaging 60% accuracy; and it describes going from "nearly throwing the laptop across the room" the first time using Replay after learning this system, to "doing one replay a day, every day, for three months straight" and coming out "a completely different trader."</p>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · from the video transcript</div>
+      <div class="quote-text">"I've done replay mode for 20 months prior, and out of the 20 months I made money in 19 of them. My average accuracy was 60% over the 20 months."</div>
+      <div class="quote-note">Concrete training-outcome numbers, disclosed only this one time in the whole book.</div>
+    </div>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · from the video transcript</div>
+      <div class="quote-text">"I did replay once a day, every day, for three months. All of a sudden I was a completely different trader."</div>
+      <div class="quote-note">A concrete practice frequency and duration.</div>
+    </div>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · from the video transcript</div>
+      <div class="quote-text">"Don't be afraid to fuck up. The first time I did replay after learning this system, I nearly threw the laptop out of the house."</div>
+    </div>
+  </section>
+
+  <div class="module-band">Synthesis Toolkit <span class="arrow">→</span> <b>Synthesis</b> <span class="arrow">·</span> Sections 23-24</div>
+
+  <!-- 23 -->
+  <section id="en-s23">
+    <div class="sec-head">
+      <h2><span class="sec-num">23 /</span> <b>Risk Management, Consolidated</b></h2>
+      <span class="pill unverified">Synthesis</span>
+    </div>
+    <p class="soft">This section isn't a new rule — it's the risk-management details originally scattered across Sections 12.1, 19.1, and 20.2, pulled together so they can be read in one pass. This is a cross-section synthesis; no single video maps word-for-word onto how this section is organized.</p>
+
+    <div class="subhead" id="en-s23-1"><span class="subnum">23.1</span><h3>Stop-Loss: Structural Trailing Stops</h3></div>
+    <p class="soft" style="margin-bottom:10px;">From Section 12.1. After entry, don't just white-knuckle the original stop — instead, every time price closes through an R-multiple, move the stop to "the swing that caused that close-through" — not a fixed-percentage trailing stop, but one that references the structure itself.</p>
+    <div class="rule-box"><b>The trade-off:</b> once a system's win rate has been validated at 60-65%, this trailing-stop scheme isn't really necessary; while the win rate is still being proven out with accumulating data, you should trail the stop aggressively to cut risk. An alternative soft-stop approach (Section 20.2's spot strategy): rather than sitting in the exchange's order book, it's an alert set at the key level, manually evaluated once triggered.</div>
+
+    <div class="subhead" id="en-s23-2"><span class="subnum">23.2</span><h3>Position Size: Full Risk With the Trend, Half Risk Against It</h3></div>
+    <p class="soft" style="margin-bottom:10px;">From Section 19.1's 90-day backtest case. Counter-trend positions (signals going against the current flows, like a sweep DT) should get half risk; with-trend positions (a flow-continuation LGC, the safest of the three DT types in Section 12.2) get full risk.</p>
+
+    <div class="subhead" id="en-s23-3"><span class="subnum">23.3</span><h3>Take-Profit: A Fixed Multiple vs. Locking In the Outer Range</h3></div>
+    <p class="soft" style="margin-bottom:10px;">Two approaches coexist depending on the strategy: the standard SSSL approach (Section 11) is a fixed 2:1/3:1 multiple (6:1 is more aggressive and not recommended by the author); the spot long-only strategy (Section 20.2) only locks in the external range's LG rather than watching a fixed R-multiple, though in practice the realized RR tends to land around 2.75-3.25R, because "the market tends to move in threes."</p>
+
+    <div class="rule-box" style="margin-top:24px;"><b>What the material doesn't cover, and you need to build yourself:</b> how much of an account to risk per trade, how many concurrent positions is safe, how to adjust after a losing streak — none of this account-level money-management guidance appears anywhere in the material or the case studies, no matter how thoroughly you search. Perpetual-futures-specific concerns — how to handle the funding rate, how to choose leverage, how to deal with market-order slippage — are also completely untouched by the material. These are exchange-execution-level considerations you'll need to build your own rules for; they're outside the scope of what this system teaches.</div>
+  </section>
+
+  <!-- 24 -->
+  <section id="en-s24">
+    <div class="sec-head">
+      <h2><span class="sec-num">24 /</span> <b>Entry Decision Checklist</b></h2>
+      <span class="pill unverified">Synthesis</span>
+    </div>
+    <p class="soft">Direction judgment → DT trigger → SSSL entry → filter → stop/take-profit → position size, strung together into an actionable checklist. This is a cross-section synthesis; no single video maps word-for-word onto this checklist, and real screen judgment still requires the intuition built up through practice (see Section 10 and 18.3's "even the author admits it's subjective").</p>
+
+    <div class="sequence">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-label mono">Confirm Direction</div>
+          <div class="step-gloss">Use LG to LG (Section 6) to mark the swing you're currently in and every LG inside it, prioritizing any untested LG within the same swing. Confirm you've picked the right "relevant swing" (Section 7).</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-label mono">Confirm the DT Trigger</div>
+          <div class="step-gloss">Which of the three DT types (Section 12.2) is this: Flow Continuation LGC (safest), LGC Reversal (most profitable but hardest to read), or Sweep DT (most complex, counter-trend)? Is there confluence (Section 9.5's four-tier framework) pointing at the same price at once?</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-label mono">The SSSL Four Steps</div>
+          <div class="step-gloss">Has Spike → Sweep → Swing → LGC (Section 11) appeared in sequence? LE Candle filter (Section 13): is the sweep candle's high/low more extreme than the previous one, and has the close crossed its own range's EQ?</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-label mono">Refinement (Optional)</div>
+          <div class="step-gloss">Is it worth waiting for a retest of the LGC for a better risk/reward (Section 12.3)? Does a higher-timeframe level show confluence here (Section 12.4's multi-timeframe refinement)?</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <div class="step-label mono">Stop-Loss, Take-Profit, and Position Size</div>
+          <div class="step-gloss">Set the stop a few ticks above/below the swing, targeting 2:1/3:1 (Section 11). Is this a with-trend or counter-trend position? Has the position risk been adjusted per the rule in Section 23.2?</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <div class="step-label mono">Post-Trade Check</div>
+          <div class="step-gloss">Was this trade forced? "If you're patient the setups will come to you" (Section 9) — until you see a clear signal, the answer is always to wait, never to go looking for a reason to enter.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-box"><b>A reminder:</b> this checklist helps you confirm you've checked everything you should — it doesn't do the subjective judgment for you. Where to mark the origin of expansion, whether the market is "really aggregating" right now — those still depend on the intuition built up practicing the cases in Sections 18-21. There's no shortcut.</div>
+  </section>
+
+
+  <footer>
+    Compiled from: <b>The_Liquidity_Gap-The_LG</b> / <b>LGRs_and_LGCs</b> / <b>The_Aggregation_Model</b> / <b>SSSL_Supplement</b> / <b>SSSL_Filtering-The_LE_Candle</b> / <b>LGR_System-Navigating_the_Content</b> / <b>Market_Navigation-Directional_Triggers</b> / <b>Defining your Swing and your LG Levels to Maximise Trading Reversals in Flows</b> / <b>Levels are NOT levels</b> / <b>Why Lower Highs and Higher Lows are so Damn Important to the LGR system</b> / <b>Expansion Phases, Rebalancing Phases, Flow Reversals, and Proportionate Relationships</b> / <b>Expansions and Proportions</b> / <b>Let's Talk LGCs</b> / <b>Ramblings on Logic, LG to LG, and Candle by Candle</b> / <b>Bringing it All Together</b> (Supplementary) (all TraderxB, LGR Traders 2022) / the <b>lgr-discussion</b> Discord transcript (2022-11-30) / locally transcribed via mlx-whisper, with screenshots, from: <b>5 Phase Expansion Cycle and Price Behaviour</b> / <b>The Aggregation Model - Aggregation 101</b> / <b>The Liquidity Gap- The LG</b> / <b>Module 1.2 Assignment</b> / <b>Module 1 - The LGR and The LGC</b> / <b>Module 1.4 - The Aggregation Model</b> / <b>LGR System Flow Sequencing</b> / <b>Entry Trigger 1 - The SSSL</b> / <b>Navigating Expansions with LGCs for SSSL Triggers</b> / <b>Managing Risk Parameters on a Live SSSL entry</b> / <b>Defining your DTs - SSSL LGC Reversal</b> / <b>Homework Assignment - The Sweep DT</b> / <b>Refining DTs and Entries using the same DT</b> / <b>Refining your Levels for Higher Accuracy</b> (all TraderxB, LGR Traders 2022). Module 1.3 Assignment, Flows Discussion and LGCs, Quick Note on Data Collection, Ramblings on Price and DTs, and Navigating DTs and LG to LG for short term and long term flows — five videos were transcribed and read, but their content overlaps too heavily with videos already covered and contributes no independent concepts, so they weren't written into this document; kept only for future reference. The content of ltf_sensitivity_around_htf_price_points has been folded into Section 12.4. Category D (BTCPERP / FTM / XAUUSD — LG to LG Concept, three videos) and Category E (Directional Trigger Practice: 1INCHPERP/ETHPERP/SOLUSDT/SXPPERP, four videos, plus Replay Mode 1 week of XRPPERP) have all been transcribed and read; six of the eight videos are pure repeat live demonstrations of the same LG to LG/SSSL logic on different instruments, contributing no independent concepts. SXPPERP's "inertia mindset" quote was folded into Section 6, and XRPPERP's week-long track record into Section 14; the rest weren't written up individually. Category F (15 daily-chart-analysis videos) has now all been transcribed, read, and written up as the case studies in Sections 18-22: <b>BTC analysis June 3rd</b> / <b>BTC analysis from 1W to 4H - June 6th</b> / <b>BTC Analysis - June 10th</b> / <b>Quick BTC Analysis - May 23rd</b> / <b>Quick BTC Analysis - May 26th</b> / <b>Flows Practice for Directional Confidence</b> / <b>Flows Practice BTCPERP</b> / <b>Flows Talk Friday</b> / <b>Quick Flow Analysis - BTCUSD</b> / <b>Price Discussion on BTCUSD</b> / <b>EURUSD Replay and Discussion</b> / <b>Spot Trading Walkthrough</b> / <b>Weekend Assignment - June 10th</b> / <b>Weekend Assignment - June 4th</b> / <b>Rambles on EURUSD - May 27th</b> (all TraderxB, LGR Traders 2022). This batch was not pure repetition: the formal definition of a spike, counter-trend risk reduction, the four-step definition of Reclaim, the only complete live walkthrough of multi-timeframe alignment, and the concrete track-record numbers from deliberate Replay Mode practice are all content not found in any other section.
+    <br><br>
+    Sections are ordered by teaching logic (Direction Module 1 → Entry Module 2 → Supplementary → Case Studies), not by processing order; reordered 2026-09-25. Section 17's nested structure diagram is a cross-section synthesis worked out in conversation, not original course material; added 2026-09-25. Adjusted again on 2026-09-25: the former Sections 6/7 (LG to LG) and 12/13 (SSSL) were sibling PDF-plus-video-deep-dive sections that have been merged into single sections with the narrative voice rewritten so the whole document can be read independently without needing to check the original videos; each section's pill/quote/end-of-document source list still keeps its provenance for verification; the original 19 sections were trimmed to 17. Added Sections 18-22 on 2026-09-25: all 15 Category F videos have been transcribed and read, and each was assessed individually and written up as a case study rather than assumed to be highly redundant. Added Sections 23-24 and the beginner's guide box at the top on 2026-09-25: consolidated the risk-control rules that were scattered across Sections 12.1, 19.1, and 20.2, and strung them into a single entry decision checklist; also honestly flagged what the course material does not cover (account-level money management, funding rates, leverage selection, order slippage) rather than guessing at it. Added figures to Section 15 on 2026-09-25: the Discord transcript originally had text only; five images were pulled from the web export of that day's conversation (2022-11-30, the lgr-discussion.html_Files folder) showing the actual charts being debated at the time, each matched to a quote already in the document; the remaining 20-odd images were repeats of the same base chart template with different labels pasted on, plus one hand-drawn red-circle screenshot of unclear meaning — judged not valuable enough, or not confidently matchable to content, so they weren't included.
+  </footer>
+
+</div>
+</div>
+</div>
 <script>
   try{
     var links = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
@@ -1669,6 +2826,31 @@
 
     Array.prototype.slice.call(document.querySelectorAll('.toc-group-toggle, .toc-sub-toggle')).forEach(wireToggle);
   }catch(e){}
+</script>
+
+<script>
+  (function(){
+    try{
+      var LANG_KEY = 'lgr-field-notes-lang';
+      var btn = document.getElementById('lang-toggle');
+      var docZh = document.getElementById('doc-zh');
+      var docEn = document.getElementById('doc-en');
+      function apply(lang){
+        docZh.hidden = (lang === 'en');
+        docEn.hidden = (lang !== 'en');
+        btn.textContent = (lang === 'en') ? '\u4e2d\u6587' : 'EN';
+        btn.setAttribute('aria-label', lang === 'en' ? '\u5207\u63db\u70ba\u4e2d\u6587' : 'Switch to English');
+      }
+      var saved = 'zh';
+      try{ saved = localStorage.getItem(LANG_KEY) || 'zh'; }catch(e){}
+      apply(saved);
+      btn.addEventListener('click', function(){
+        var next = docZh.hidden ? 'zh' : 'en';
+        apply(next);
+        try{ localStorage.setItem(LANG_KEY, next); }catch(e){}
+      });
+    }catch(e){}
+  })();
 </script>
 </body>
 </html>
