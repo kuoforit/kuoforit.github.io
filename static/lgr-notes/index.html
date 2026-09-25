@@ -1,0 +1,1716 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>LGR Field Notes</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+  :root{
+    --ground:      #EEF0F3;
+    --surface:     #FFFFFF;
+    --surface-2:   #F5F6F8;
+    --line:        #DBDFE5;
+    --ink:         #1B1F27;
+    --ink-soft:    #565D6B;
+    --ink-faint:   #8A90A0;
+
+    --level:       #2F6FE0;   /* structural: LG / EQ / rule */
+    --level-soft:  #2F6FE022;
+    --confirm:     #2F8F5C;   /* verified in source (PDF / Pine / Discord) */
+    --confirm-soft:#2F8F5C1e;
+    --pending:     #B4791A;   /* unverified / personal method */
+    --pending-soft:#B4791A20;
+    --reaction:    #C24C3D;   /* failure / invalidation examples */
+    --reaction-soft:#C24C3D1c;
+
+    --shadow: 0 1px 2px rgba(20,23,30,.06), 0 8px 24px -12px rgba(20,23,30,.12);
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ground:      #14171C;
+      --surface:     #1B1F27;
+      --surface-2:   #20242D;
+      --line:        #2B303B;
+      --ink:         #E7E7E2;
+      --ink-soft:    #9AA0AC;
+      --ink-faint:   #666D7B;
+
+      --level:       #6C9BFA;
+      --level-soft:  #6C9BFA26;
+      --confirm:     #57B37E;
+      --confirm-soft:#57B37E24;
+      --pending:     #D99A3D;
+      --pending-soft:#D99A3D24;
+      --reaction:    #E2685A;
+      --reaction-soft:#E2685A22;
+
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 32px -16px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:      #14171C;
+    --surface:     #1B1F27;
+    --surface-2:   #20242D;
+    --line:        #2B303B;
+    --ink:         #E7E7E2;
+    --ink-soft:    #9AA0AC;
+    --ink-faint:   #666D7B;
+
+    --level:       #6C9BFA;
+    --level-soft:  #6C9BFA26;
+    --confirm:     #57B37E;
+    --confirm-soft:#57B37E24;
+    --pending:     #D99A3D;
+    --pending-soft:#D99A3D24;
+    --reaction:    #E2685A;
+    --reaction-soft:#E2685A22;
+
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 32px -16px rgba(0,0,0,.6);
+  }
+
+  *{box-sizing:border-box;}
+  html{ scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
+  body{
+    margin:0;
+    background:var(--ground);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', -apple-system, "PingFang TC", "Noto Sans TC", sans-serif;
+    font-size:15.5px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{ font-family:'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+  .layout{
+    display:grid;
+    grid-template-columns:196px minmax(0,760px);
+    gap:56px;
+    max-width:1012px;
+    margin:0 auto;
+    padding:72px 24px 120px;
+    align-items:start;
+  }
+  .wrap{ min-width:0; }
+
+  .toc{
+    position:sticky;
+    top:48px;
+    display:flex;
+    flex-direction:column;
+    gap:1px;
+    max-height:calc(100vh - 96px);
+    overflow-y:auto;
+  }
+  .toc-title{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10.5px;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    color:var(--ink-faint);
+    margin-bottom:6px;
+  }
+  .toc-group-toggle{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    width:100%;
+    background:none;
+    border:none;
+    padding:0;
+    margin:14px 0 4px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:9.5px;
+    text-transform:uppercase;
+    letter-spacing:.07em;
+    color:var(--ink-faint);
+    opacity:.75;
+    cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .toc-group-toggle:hover{ opacity:1; color:var(--ink-soft); }
+  .toc-group-toggle:first-of-type{ margin-top:4px; }
+  .toc-group-toggle .chev{
+    font-size:8px;
+    transition:transform .15s ease;
+    flex:0 0 auto;
+    margin-left:6px;
+  }
+  .toc-group-toggle[aria-expanded="false"] .chev{ transform:rotate(-90deg); }
+  .toc-group-body{ display:flex; flex-direction:column; gap:1px; flex-shrink:0; }
+  .toc a{
+    display:block;
+    padding:4px 0 4px 12px;
+    margin-left:-13px;
+    border-left:2px solid transparent;
+    font-size:12.5px;
+    line-height:1.4;
+    color:var(--ink-soft);
+    text-decoration:none;
+  }
+  .toc a:hover{ color:var(--ink); }
+  .toc a.active{ color:var(--level); border-left-color:var(--level); font-weight:600; }
+  .toc .num{
+    font-family:'IBM Plex Mono', monospace;
+    color:var(--ink-faint);
+    margin-right:6px;
+  }
+  .toc a.active .num{ color:var(--level); }
+  .toc-item-wrap{ display:flex; flex-direction:column; }
+  .toc-item-row{ display:flex; align-items:center; }
+  .toc-item-row a{ flex:1; min-width:0; }
+  .toc-sub-toggle{
+    flex:0 0 auto;
+    background:none;
+    border:none;
+    padding:4px 8px;
+    margin:0;
+    color:var(--ink-faint);
+    cursor:pointer;
+    font-size:8px;
+    line-height:1;
+    transition:transform .15s ease;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .toc-sub-toggle:hover{ color:var(--ink-soft); }
+  .toc-sub-toggle[aria-expanded="false"]{ transform:rotate(-90deg); }
+  .toc-sub{ flex-shrink:0; }
+
+  @media (max-width:900px){
+    .layout{ grid-template-columns:1fr; padding-top:48px; }
+    .toc{ display:none; }
+  }
+
+  section{ scroll-margin-top:24px; }
+
+  /* ---------- header ---------- */
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    margin:0 0 14px;
+  }
+  h1{
+    font-size:36px;
+    font-weight:700;
+    letter-spacing:-0.01em;
+    line-height:1.14;
+    margin:0 0 14px;
+    text-wrap:balance;
+  }
+  .lede{
+    color:var(--ink-soft);
+    font-size:16px;
+    line-height:1.6;
+    max-width:60ch;
+    margin:0 0 8px;
+  }
+  .lede b{ color:var(--ink); font-weight:600; }
+
+  .epigraph{
+    margin:32px 0 40px;
+    padding:18px 22px;
+    border-left:3px solid var(--level);
+    background:var(--level-soft);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13.5px;
+    letter-spacing:.01em;
+    color:var(--ink);
+  }
+  .epigraph span{ display:block; margin-top:6px; color:var(--ink-faint); font-size:11px; text-transform:uppercase; letter-spacing:.08em; }
+
+  /* ---------- legend ---------- */
+  .legend{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    padding:16px 18px;
+    border:1px solid var(--line);
+    border-radius:10px;
+    background:var(--surface);
+    margin-bottom:40px;
+  }
+  .legend-title{
+    width:100%;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    color:var(--ink-faint);
+    margin-bottom:4px;
+  }
+  .legend-item{ display:flex; align-items:center; gap:8px; font-size:13px; color:var(--ink-soft); }
+
+  .module-band{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin:0 0 40px;
+    padding:10px 16px;
+    border-radius:8px;
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:.04em;
+    color:var(--ink-soft);
+    flex-wrap:wrap;
+  }
+  .module-band b{ color:var(--ink); }
+  .module-band .arrow{ color:var(--ink-faint); }
+
+  .pill{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10px;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    padding:3px 9px 3px 8px;
+    border-radius:999px;
+    border:1px solid currentColor;
+    white-space:nowrap;
+    flex:0 0 auto;
+  }
+  .pill::before{ content:""; width:6px; height:6px; border-radius:50%; background:currentColor; flex:0 0 auto; }
+  .pill.pdf{     color:var(--level);    background:var(--level-soft); }
+  .pill.video{   color:var(--level);    background:var(--level-soft); }
+  .pill.discord{ color:var(--confirm);  background:var(--confirm-soft); }
+  .pill.unverified{ color:var(--pending); background:var(--pending-soft); }
+
+  .tag-mini{
+    display:inline-block;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:9.5px;
+    font-weight:600;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    padding:2px 7px;
+    border-radius:4px;
+    margin-bottom:6px;
+  }
+  .tag-mini.expansion{ color:var(--confirm); background:var(--confirm-soft); }
+  .tag-mini.rebalance{ color:var(--pending); background:var(--pending-soft); }
+
+  .step-trade{
+    margin-top:6px;
+    padding-left:14px;
+    border-left:2px solid var(--line);
+    font-size:13px;
+    color:var(--ink-soft);
+  }
+  .step-trade b{ color:var(--ink); font-weight:500; }
+
+  .figure{
+    margin:18px 0;
+    border:1px solid var(--line);
+    border-radius:10px;
+    overflow:hidden;
+    background:var(--surface);
+  }
+  .figure img{ display:block; width:100%; height:auto; }
+  .figure-cap{
+    padding:10px 14px;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    border-top:1px solid var(--line);
+    line-height:1.5;
+  }
+  .figure-cap b{ color:var(--ink); font-weight:600; }
+  .figure-cap .ts{ font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--ink-faint); }
+
+  /* ---------- section scaffolding ---------- */
+  section{ margin-bottom:64px; }
+  .sec-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:16px;
+    border-bottom:1px solid var(--line);
+    padding-bottom:10px;
+    margin-bottom:24px;
+  }
+  h2{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:.07em;
+    color:var(--ink-soft);
+    margin:0;
+  }
+  h2 b{ color:var(--ink); }
+  .sec-num{ font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--ink-faint); }
+
+  h3{ font-size:17px; font-weight:600; margin:0 0 8px; letter-spacing:-.005em; }
+  p{ margin:0 0 14px; max-width:68ch; color:var(--ink); }
+  p.soft{ color:var(--ink-soft); }
+  ul.plain{ margin:0 0 14px; padding-left:20px; }
+  ul.plain li{ margin-bottom:6px; max-width:64ch; }
+
+  code.term{
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:600;
+    color:var(--level);
+    background:var(--level-soft);
+    padding:1px 6px;
+    border-radius:4px;
+    font-size:.92em;
+  }
+
+  /* ---------- glossary ---------- */
+  .gloss{
+    display:grid;
+    grid-template-columns:1fr;
+    border:1px solid var(--line);
+    border-radius:10px;
+    overflow:hidden;
+    background:var(--surface);
+  }
+  .gloss-row{
+    display:grid;
+    grid-template-columns:112px 1fr;
+    gap:16px;
+    padding:14px 18px;
+    border-bottom:1px solid var(--line);
+  }
+  .gloss-row:last-child{ border-bottom:none; }
+  .gloss-term{
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:600;
+    font-size:13px;
+    color:var(--ink);
+    padding-top:1px;
+  }
+  .gloss-def{ font-size:14px; color:var(--ink-soft); line-height:1.55; }
+  .gloss-def b{ color:var(--ink); font-weight:500; }
+
+  /* ---------- sequence / timeline ---------- */
+  .sequence{ display:flex; flex-direction:column; }
+  .step{
+    display:grid;
+    grid-template-columns:32px 1fr;
+    gap:16px;
+    position:relative;
+    padding-bottom:26px;
+  }
+  .step:last-child{ padding-bottom:0; }
+  .step-num{
+    width:32px; height:32px;
+    border-radius:50%;
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px; font-weight:600;
+    color:var(--level);
+    position:relative;
+    z-index:1;
+  }
+  .step:not(:last-child)::before{
+    content:"";
+    position:absolute;
+    left:15px; top:32px; bottom:0;
+    width:1px;
+    background:var(--line);
+  }
+  .step-body{ padding-top:4px; }
+  .step-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:600;
+    font-size:14px;
+    color:var(--ink);
+    margin-bottom:3px;
+  }
+  .step-gloss{ font-size:13.5px; color:var(--ink-soft); max-width:56ch; }
+
+  .rule-box{
+    margin-top:18px;
+    padding:14px 16px;
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    border-radius:8px;
+    font-size:13.5px;
+    color:var(--ink-soft);
+  }
+  .rule-box b{ color:var(--ink); }
+
+  /* ---------- cards ---------- */
+  .card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:20px 22px;
+    margin-bottom:16px;
+  }
+  .card:last-child{ margin-bottom:0; }
+  .card-head{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px; }
+  .card-head h3{ display:flex; align-items:baseline; gap:8px; }
+
+  .subnum{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    font-weight:600;
+    color:var(--level);
+    flex:0 0 auto;
+  }
+  .subhead{
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+    margin:8px 0 14px;
+    scroll-margin-top:24px;
+  }
+  .subhead h3{ margin:0; }
+
+  .toc-sub{
+    display:flex;
+    flex-direction:column;
+    margin:0 0 2px 12px;
+    border-left:1px solid var(--line);
+    padding-left:8px;
+  }
+  .toc-sub a{ font-size:11.5px; padding:3px 0 3px 8px; color:var(--ink-faint); }
+  .toc-sub a:hover{ color:var(--ink-soft); }
+  .toc-sub a.active{ color:var(--level); }
+
+  /* ---------- quote / field notes ---------- */
+  .quote{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:8px;
+    padding:16px 18px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-left:3px solid var(--confirm);
+    border-radius:0 8px 8px 0;
+    margin-bottom:14px;
+  }
+  .quote:last-child{ margin-bottom:0; }
+  .quote-meta{
+    display:flex; align-items:center; gap:8px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:var(--ink-faint);
+    text-transform:uppercase;
+    letter-spacing:.05em;
+  }
+  .quote-meta .who{ color:var(--confirm); font-weight:600; text-transform:none; letter-spacing:0; }
+  .quote-text{ font-style:italic; font-size:14.5px; color:var(--ink); line-height:1.6; }
+  .quote-note{ font-size:13px; color:var(--ink-soft); font-style:normal; margin-top:2px; }
+
+  /* ---------- priority ladder ---------- */
+  .ladder{ display:flex; flex-direction:column; gap:0; border:1px solid var(--line); border-radius:10px; overflow:hidden; background:var(--surface); }
+  .rung{ display:grid; grid-template-columns:44px 1fr auto; gap:14px; align-items:center; padding:14px 18px; border-bottom:1px solid var(--line); }
+  .rung:last-child{ border-bottom:none; opacity:.6; }
+  .rung-rank{ font-family:'IBM Plex Mono', monospace; font-size:18px; font-weight:700; color:var(--ink-faint); }
+  .rung-name{ font-weight:600; font-size:14.5px; }
+  .rung-desc{ font-size:12.5px; color:var(--ink-soft); margin-top:2px; }
+  .rung-tag{ font-family:'IBM Plex Mono', monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-faint); white-space:nowrap; }
+
+  footer{
+    margin-top:80px;
+    padding-top:24px;
+    border-top:1px solid var(--line);
+    font-size:12.5px;
+    color:var(--ink-faint);
+    line-height:1.7;
+  }
+  footer b{ color:var(--ink-soft); }
+
+  @media (max-width:560px){
+    .wrap{ padding:48px 18px 100px; }
+    h1{ font-size:28px; }
+    .gloss-row{ grid-template-columns:1fr; gap:4px; }
+    .rung{ grid-template-columns:32px 1fr; }
+    .rung-tag{ grid-column:2; }
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+
+<nav class="toc" aria-label="目錄">
+  <div class="toc-title">目錄</div>
+  <a href="#s01"><span class="num">01</span>術語速查</a>
+  <a href="#s02"><span class="num">02</span>優先順序</a>
+
+  <button class="toc-group-toggle" type="button" aria-expanded="true" aria-controls="tg-direction">
+    <span>方向 · Module 1</span><span class="chev">▾</span>
+  </button>
+  <div class="toc-group-body" id="tg-direction">
+    <a href="#s03"><span class="num">03</span>市場為什麼會動</a>
+    <a href="#s04"><span class="num">04</span>Aggregation Model</a>
+    <a href="#s05"><span class="num">05</span>90/5/5法則</a>
+    <a href="#s06"><span class="num">06</span>LG to LG 判方向</a>
+    <a href="#s07"><span class="num">07</span>挑相關swing</a>
+    <a href="#s08"><span class="num">08</span>LGR與LGC的判定</a>
+    <div class="toc-item-wrap">
+      <div class="toc-item-row">
+        <a href="#s09"><span class="num">09</span>Flow Sequencing SOP</a>
+        <button class="toc-sub-toggle" type="button" aria-expanded="true" aria-controls="ts-09" aria-label="展開/收合 09 子項">▾</button>
+      </div>
+      <div class="toc-sub" id="ts-09">
+        <a href="#s09-1">9.1 三階段SOP</a>
+        <a href="#s09-2">9.2 DT視覺化色碼</a>
+        <a href="#s09-3">9.3 CBC起點/信心水位</a>
+        <a href="#s09-4">9.4 別觀察過頭</a>
+        <a href="#s09-5">9.5 LGC四層框架</a>
+      </div>
+    </div>
+    <a href="#s10"><span class="num">10</span>5 Phase Cycle（選讀）</a>
+  </div>
+
+  <button class="toc-group-toggle" type="button" aria-expanded="true" aria-controls="tg-entry">
+    <span>進場 · Module 2</span><span class="chev">▾</span>
+  </button>
+  <div class="toc-group-body" id="tg-entry">
+    <a href="#s11"><span class="num">11</span>SSSL 進場觸發</a>
+    <div class="toc-item-wrap">
+      <div class="toc-item-row">
+        <a href="#s12"><span class="num">12</span>進場後管理與精修</a>
+        <button class="toc-sub-toggle" type="button" aria-expanded="true" aria-controls="ts-12" aria-label="展開/收合 12 子項">▾</button>
+      </div>
+      <div class="toc-sub" id="ts-12">
+        <a href="#s12-1">12.1 R倍數移動停損</a>
+        <a href="#s12-2">12.2 三種DT類型</a>
+        <a href="#s12-3">12.3 Retest精修進場</a>
+        <a href="#s12-4">12.4 多時間框精修</a>
+      </div>
+    </div>
+    <a href="#s13"><span class="num">13</span>LE Candle 過濾器</a>
+    <a href="#s14"><span class="num">14</span>We Hunt in LGCs</a>
+  </div>
+
+  <button class="toc-group-toggle" type="button" aria-expanded="true" aria-controls="tg-meta">
+    <span>補充</span><span class="chev">▾</span>
+  </button>
+  <div class="toc-group-body" id="tg-meta">
+    <a href="#s15"><span class="num">15</span>現場筆記</a>
+    <a href="#s16"><span class="num">16</span>Daniel 雙重確認法</a>
+    <a href="#s17"><span class="num">17</span>巢狀結構圖解</a>
+  </div>
+
+  <button class="toc-group-toggle" type="button" aria-expanded="true" aria-controls="tg-cases">
+    <span>案例研究</span><span class="chev">▾</span>
+  </button>
+  <div class="toc-group-body" id="tg-cases">
+    <div class="toc-item-wrap">
+      <div class="toc-item-row">
+        <a href="#s18"><span class="num">18</span>BTC盤面實況</a>
+        <button class="toc-sub-toggle" type="button" aria-expanded="true" aria-controls="ts-18" aria-label="展開/收合 18 子項">▾</button>
+      </div>
+      <div class="toc-sub" id="ts-18">
+        <a href="#s18-1">18.1 LG to LG連續推進＋SSSL</a>
+        <a href="#s18-2">18.2 Weekly→Daily→4R精修</a>
+        <a href="#s18-3">18.3 雙圖表＋坦承主觀判斷</a>
+        <a href="#s18-4">18.4 低點進場規則／一天一筆</a>
+      </div>
+    </div>
+    <div class="toc-item-wrap">
+      <div class="toc-item-row">
+        <a href="#s19"><span class="num">19</span>Flows與風控實測</a>
+        <button class="toc-sub-toggle" type="button" aria-expanded="true" aria-controls="ts-19" aria-label="展開/收合 19 子項">▾</button>
+      </div>
+      <div class="toc-sub" id="ts-19">
+        <a href="#s19-1">19.1 90天回測：spike定義</a>
+        <a href="#s19-2">19.2 partial vs full rebalance</a>
+        <a href="#s19-3">19.3 用wick讀掛單壓力</a>
+        <a href="#s19-4">19.4 兩則Q&amp;A澄清</a>
+      </div>
+    </div>
+    <div class="toc-item-wrap">
+      <div class="toc-item-row">
+        <a href="#s20"><span class="num">20</span>EURUSD與現貨策略</a>
+        <button class="toc-sub-toggle" type="button" aria-expanded="true" aria-controls="ts-20" aria-label="展開/收合 20 子項">▾</button>
+      </div>
+      <div class="toc-sub" id="ts-20">
+        <a href="#s20-1">20.1 EURUSD：多時間框對齊</a>
+        <a href="#s20-2">20.2 現貨Long-Only＋Reclaim</a>
+      </div>
+    </div>
+    <div class="toc-item-wrap">
+      <div class="toc-item-row">
+        <a href="#s21"><span class="num">21</span>作業訓練法</a>
+        <button class="toc-sub-toggle" type="button" aria-expanded="true" aria-controls="ts-21" aria-label="展開/收合 21 子項">▾</button>
+      </div>
+      <div class="toc-sub" id="ts-21">
+        <a href="#s21-1">21.1 反向工程</a>
+        <a href="#s21-2">21.2 正向逐swing訓練</a>
+      </div>
+    </div>
+    <a href="#s22"><span class="num">22</span>Replay Mode刻意練習</a>
+  </div>
+
+  <button class="toc-group-toggle" type="button" aria-expanded="true" aria-controls="tg-synthesis">
+    <span>總結工具</span><span class="chev">▾</span>
+  </button>
+  <div class="toc-group-body" id="tg-synthesis">
+    <div class="toc-item-wrap">
+      <div class="toc-item-row">
+        <a href="#s23"><span class="num">23</span>風控總整理</a>
+        <button class="toc-sub-toggle" type="button" aria-expanded="true" aria-controls="ts-23" aria-label="展開/收合 23 子項">▾</button>
+      </div>
+      <div class="toc-sub" id="ts-23">
+        <a href="#s23-1">23.1 結構性移動停損</a>
+        <a href="#s23-2">23.2 順勢全額／逆勢減半</a>
+        <a href="#s23-3">23.3 固定倍數 vs. 鎖外層range</a>
+      </div>
+    </div>
+    <a href="#s24"><span class="num">24</span>進場決策Checklist</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <p class="eyebrow">學習筆記 · candle-by-candle · TraderxB, LGR Traders 2022</p>
+  <h1>LGR System<br>Field Notes</h1>
+  <p class="lede">整理自Syllabus教材、SSSL補充講義、9支影片的本機轉錄逐字稿，以及一份2022-11-30的Discord即時問答逐字稿。每條規則都標出來源，<b>沒查到根據的東西不會寫在這裡</b>。章節依教學順序排列：方向（Module 1）先於進場（Module 2），跟xB自己反覆強調的優先順序一致。</p>
+
+  <div class="epigraph">
+    "Market Movement is a Function of Liquidity."
+    <span>MODULE 1.1 — THE AGGREGATION MODEL</span>
+  </div>
+
+  <div class="legend">
+    <div class="legend-title">來源標記</div>
+    <div class="legend-item"><span class="pill pdf">PDF</span> 官方Syllabus/Supps講義原文</div>
+    <div class="legend-item"><span class="pill video">影片</span> mlx-whisper本機轉錄的教學影片逐字稿＋截圖</div>
+    <div class="legend-item"><span class="pill discord">Discord</span> 2022-11-30 xB與學員即時問答逐字稿</div>
+    <div class="legend-item"><span class="pill unverified">未驗證</span> 個人心法／講義未收錄的推論</div>
+  </div>
+
+  <div class="card" style="margin-bottom:40px;">
+    <div class="card-head"><h3 style="margin:0;">如果你是完全新手：建議讀法</h3><span class="pill unverified">導覽</span></div>
+    <p class="soft" style="margin-bottom:10px;">目錄是按主題分類，不是按學習難度排的。如果從零開始，建議跳著讀，而不是照第01節讀到底：</p>
+    <ol style="margin:0 0 14px; padding-left:20px; color:var(--ink-soft); font-size:14px; line-height:1.7;">
+      <li>先讀<b style="color:var(--ink)">第01節術語表</b>＋<b style="color:var(--ink)">第02節優先順序</b>，建立詞彙地圖——不用背，有印象就好。</li>
+      <li>讀<b style="color:var(--ink)">第03～06節</b>，抓住「市場為什麼會動」跟「LG to LG判方向」——這兩節是整套系統的骨幹，其他都是延伸細節。</li>
+      <li>先跳過07～10的細節，直接讀<b style="color:var(--ink)">第11節SSSL</b>，搞懂「有了方向之後，怎麼進場」。</li>
+      <li>讀<b style="color:var(--ink)">第23節風控總整理</b>與<b style="color:var(--ink)">第24節進場決策Checklist</b>，把方向→進場→停損停利→部位大小串成一條線。</li>
+      <li>回頭補<b style="color:var(--ink)">第07～10、12～14節</b>的細節。</li>
+      <li>用<b style="color:var(--ink)">第18～21節案例研究</b>對照練習，18.1～18.3是難度最平緩的起手案例。</li>
+      <li>照<b style="color:var(--ink)">第22節Replay Mode</b>的方法，開始自己練——這套系統的作者自己也是靠這樣練出來的。</li>
+    </ol>
+    <div class="rule-box" style="margin-top:0;"><b>先不用死磕：</b>第10節5 Phase Expansion Cycle、第16～17節（Discord筆記／巢狀結構圖解）都是進階或後設層次的內容，太早看容易被過度精修的細節絆住。<b>教材沒有涵蓋、需要自己另外補的：</b>資金費率、槓桿選擇、下單滑價等交易所執行面知識——這些原始教材完全沒觸及，見第23節說明。</div>
+  </div>
+
+  <!-- 1 -->
+  <section id="s01">
+    <div class="sec-head">
+      <h2><span class="sec-num">01 /</span> <b>術語速查</b></h2>
+      <span class="pill pdf">PDF</span>
+    </div>
+    <div class="gloss">
+      <div class="gloss-row"><div class="gloss-term">LG</div><div class="gloss-def">Liquidity Gap，買賣力道失衡造成的價格缺口，日後會被回補。每個LG含<b>High / Low / EQ</b>三層。<b>綁時間框</b>，不可跨圖混用。</div></div>
+      <div class="gloss-row"><div class="gloss-term">LGR</div><div class="gloss-def">Liquidity Gap Reversal — 噴出造出LG後立刻收回LG之上/下，是swing point形成前的最後一個LG。<b>單獨出現不代表任何事</b>，只是「可能要開始整理」的提示。精確位置＝<b>swing EQ往下（或往上）一根K棒</b>（見第9節Flow Sequencing）。</div></div>
+      <div class="gloss-row"><div class="gloss-term">LGC</div><div class="gloss-def">Liquidity Gap Confirmation，Aggregation Model第3步：造出大LG的擴張K棒，作者內部原稱「fuck off candle」。代表確認要往下一級失衡流動噴。標記慣例是只用實體不用wick（見第8節）。</div></div>
+      <div class="gloss-row"><div class="gloss-term">SSSL</div><div class="gloss-def">Entry Trigger 1，四字母對應四步驟：<b>S</b>pike → <b>S</b>weep → <b>S</b>wing → <b>L</b>GC。</div></div>
+      <div class="gloss-row"><div class="gloss-term">DT</div><div class="gloss-def">Directional Trigger，方向圖上用來確認「現在往哪走」的觸發，跟entry trigger分屬不同圖表。</div></div>
+      <div class="gloss-row"><div class="gloss-term">EQ</div><div class="gloss-def"><b>兩種不同用法別搞混：</b>① <b>swing的EQ</b>——拿整段swing高低點畫fib抓出的中點，第9節Flow Sequencing Phase 2判斷sweep有效性要用這個；② <b>單一K棒的EQ</b>——這根K棒自己高低點的中點，第13節LE Candle判定用這個。兩者計算基礎不同，別互相套用。</div></div>
+      <div class="gloss-row"><div class="gloss-term">LE Candle</div><div class="gloss-def">Lose the Equilibrium — sweep後收盤穿越自己range EQ的K棒，作為SSSL的加強過濾器。</div></div>
+      <div class="gloss-row"><div class="gloss-term">Sweep</div><div class="gloss-def">掃過內部swing、或前一個swing裡某根K棒的高/低點。</div></div>
+      <div class="gloss-row"><div class="gloss-term">Swing</div><div class="gloss-def">方向轉折的三點結構（低-高-低 或 高-低-高）。判斷LG、LGR、EQ都要先確定「現在在哪個swing裡」——第7節專門講怎麼挑「相關的swing」。</div></div>
+      <div class="gloss-row"><div class="gloss-term">Rebalance</div><div class="gloss-def">market從inefficient（失衡/擴張）回頭整理、回補缺口的階段，小實體、低量。跟expansion（擴張/inefficient）交替出現，是Aggregation Model第2步。</div></div>
+      <div class="gloss-row"><div class="gloss-term">OE</div><div class="gloss-def">Origin of Expansion，動能剛啟動、造出第一個LG的那根K棒——市場之後要rebalance時，就是要回來補這個位置（第03節）。</div></div>
+      <div class="gloss-row"><div class="gloss-term">HH / LL</div><div class="gloss-def">Higher High / Lower Low，LE Candle判定sweep candle方向用的縮寫：做空要看HH，做多要看LL（第13節）。</div></div>
+      <div class="gloss-row"><div class="gloss-term">Flows</div><div class="gloss-def">市場目前的整體方向意圖（"flows are up/down"）。flows反轉＝完整走完一次Aggregation Model或5 Phase Cycle才算數，不是隨便一根K棒就能判定。</div></div>
+      <div class="gloss-row"><div class="gloss-term">LG Level N</div><div class="gloss-def">同一個swing裡由近到遠的編號系統：LGR＝LG Level 1，LGR之後第一個untested LG＝<b>LG Level 2</b>，依此類推。收盤穿越LG2不只是訊號，代表「情勢真的變了」——比LGR本身更重要（第8節）。</div></div>
+      <div class="gloss-row"><div class="gloss-term">Reclaim</div><div class="gloss-def">收盤穿越LG level後又跌破，之後再度收盤穿越同一個level——這個「二次收復」可以當成比第一次穿越更強的方向確認（第8節）。</div></div>
+      <div class="gloss-row"><div class="gloss-term">Confluence</div><div class="gloss-def">多個獨立層級（LG level、前一根LGC的EQ、swing內部結構）同時指向同一個價位，代表訊號強度更高。第9.5節「四層框架」的核心判準。</div></div>
+      <div class="gloss-row"><div class="gloss-term">VC</div><div class="gloss-def">Volatility Candle，帶大wick、顯示劇烈拉扯的K棒，常見於sweep附近，代表「fuel」正在被吃掉準備發動下一段。第12.2節Sweep DT的精修條件之一。</div></div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section id="s02">
+    <div class="sec-head">
+      <h2><span class="sec-num">02 /</span> <b>優先順序</b></h2>
+      <span class="pill pdf">PDF</span>
+    </div>
+    <p class="soft">xB在2022-12-04的Discord留言裡明講，自己後悔太早公開「5 Phase Expansion Cycle」——太多學員把它看得太重。真正任何時候都要優先依賴的，是LG to LG跟Aggregation Model。</p>
+    <div class="ladder">
+      <div class="rung"><div class="rung-rank">1</div><div><div class="rung-name">LG to LG + Aggregation Model</div><div class="rung-desc">"take precedent at all times" — 方向判斷的骨幹</div></div><div class="rung-tag">必修</div></div>
+      <div class="rung"><div class="rung-rank">2</div><div><div class="rung-name">SSSL Entry Trigger</div><div class="rung-desc">"entries are relatively easy once you know where price is going"</div></div><div class="rung-tag">必修</div></div>
+      <div class="rung"><div class="rung-rank">3</div><div><div class="rung-name">5 Phase Expansion Cycle</div><div class="rung-desc">"the phase model is just a observatory concept... not essential"</div></div><div class="rung-tag">選讀 · 見第10節</div></div>
+    </div>
+  </section>
+
+  <div class="module-band">方向模組 <span class="arrow">→</span> <b>Module 1 — Direction</b> <span class="arrow">·</span> 第03～10節</div>
+
+  <!-- 3 -->
+  <section id="s03">
+    <div class="sec-head">
+      <h2><span class="sec-num">03 /</span> <b>市場為什麼會動</b></h2>
+      <span class="pill video">影片逐字稿</span>
+    </div>
+    <p class="soft">整套系統最底層的世界觀。核心命題：<b>市場移動是流動性的函數</b>。交易所不是中立的撮合方，它們靠價差跟內部流動性賺錢，一旦偵測到動能（momentum），會啟動「price engine」把買賣價一路推到能吃到足夠訂單為止——這就是為什麼會有大wick跟跳空。</p>
+    <ul class="plain">
+      <li>市場只在兩種狀態間循環：<b>efficient（平衡/整理）</b>——小實體、缺口很快被填平；<b>inefficient（失衡/擴張）</b>——大實體、留下未回補的缺口。balanced → imbalanced → rebalance → balanced，無限循環。</li>
+      <li>別在consolidation（平衡整理段）裡交易——那是低量、低流動性環境，方向不明。要在<b>「consolidation的終結點」</b>進場，也就是動能剛啟動的那一刻。</li>
+      <li>動能開始的那根K棒＝<b>expansion的origin（起源）</b>，之後市場要rebalance時，就是要回來補這個origin的位置。</li>
+    </ul>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 影片原話</div>
+      <div class="quote-text">"Market movement is a function of liquidity."</div>
+    </div>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 影片原話</div>
+      <div class="quote-text">"The exchanges are not there to work for you. They're there to work against you."</div>
+      <div class="quote-note">新聞（例如Elon Musk的推文、Twitter敘事）只會加速波動，不會改變方向——這是他反覆強調的立場。</div>
+    </div>
+    <div class="figure"><img src="assets/772106be1d3035611e17f1b8585a0857.jpg" alt="折線圖上用方框標出rebalance區域"><div class="figure-cap">圖表改用折線呈現（非K棒），方框標出「origin of expansion」之後該回補的區域。</div></div>
+    <div class="figure"><img src="assets/fd2d9db344e3e3105fe76aa6c9259cdd.jpg" alt="折線圖延伸的rebalance方框"><div class="figure-cap">同一段邏輯延伸：efficient（方框內）與inefficient（方框外的噴出）交替出現。</div></div>
+  </section>
+
+  <!-- 4 -->
+  <section id="s04">
+    <div class="sec-head">
+      <h2><span class="sec-num">04 /</span> <b>Aggregation Model</b></h2>
+      <span class="pill pdf">PDF</span>
+    </div>
+    <p>四步驟的節奏控制器，決定「現在該react還是該observe」。<b>不是碎形，不是market reversal訊號本身</b>，四步驟必須全部走完才算數。</p>
+    <div class="sequence">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body"><div class="step-label mono">LGR</div><div class="step-gloss">轉折提示訊號 — swing形成前的最後一個LG</div></div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body"><div class="step-label mono">REBALANCE (SWEEP)</div><div class="step-gloss">價格在此整理、掃頭寸</div></div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body"><div class="step-label mono">LGC FORMATION</div><div class="step-gloss">origin of expansion — 確認擴張起點</div></div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body"><div class="step-label mono">INEFFICIENT EXPANSION</div><div class="step-gloss">真正噴向下一級imbalanced flows — react</div></div>
+      </div>
+    </div>
+    <div class="rule-box"><b>硬規則：</b>All steps must be complete to fulfill the criteria — 沒走完四步就不算Aggregation Model completion。</div>
+  </section>
+
+  <!-- 5 -->
+  <section id="s05">
+    <div class="sec-head">
+      <h2><span class="sec-num">05 /</span> <b>90/5/5法則 + 完整週期實例</b></h2>
+      <span class="pill video">影片逐字稿</span>
+    </div>
+    <p class="soft">把方向判斷的權重量化講清楚，並用一次完整實盤週期走一遍「LGR→sweep→LGC→expansion」。</p>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 影片原話</div>
+      <div class="quote-text">"90% of any trading system, in my opinion... 90% of the system is direction, you have 5% for triggers and entries, so each."</div>
+      <div class="quote-note">方向判斷佔整套系統90%的權重，觸發跟進場各分剩下的5%——這也是為什麼整套教材花這麼多篇幅在方向，直到Module 2才碰進場。</div>
+    </div>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 影片原話</div>
+      <div class="quote-text">"It is not a fractal, and it should not be used as such."</div>
+      <div class="quote-note">原因：我們看不到order book深度，只能用「概念定義」去判斷，不是真的在找重複的幾何圖形。</div>
+    </div>
+    <p class="soft">實盤走一次完整週期：LGR（step1）→sweep（step2）→LGC formation（step3）→inefficient expansion（step4），完成後回到LG to LG找下一個目標，準確度他自估<b>85~90%</b>。</p>
+    <div class="figure"><img src="assets/23ad1601a344c8fd42aa636658ed57eb.jpg" alt="LGC堆疊灰色區塊的實例"><div class="figure-cap">完整週期中的LGC堆疊，每個灰色區塊都是一次partial rebalance。</div></div>
+    <div class="figure"><img src="assets/66512e7f7c72552ad40e11b3435da068.jpg" alt="延伸的堆疊區塊"><div class="figure-cap">持續往同方向推進的堆疊。</div></div>
+    <div class="figure"><img src="assets/212763815ace893554fcd656718c6682.jpg" alt="用對角虛線標出swing間比例關係"><div class="figure-cap">用對角線量測swing之間的比例關係，判斷第二段expansion該有多長——跟第10節「5 Phase」用的技巧一致。</div></div>
+  </section>
+
+  <!-- 6 -->
+  <section id="s06">
+    <div class="sec-head">
+      <h2><span class="sec-num">06 /</span> <b>LG to LG 判方向</b></h2>
+      <span class="pill pdf">PDF ＋ 影片逐字稿</span>
+    </div>
+    <ul class="plain">
+      <li>先找出目前所在的<code class="term">swing</code>，標出裡面所有LG</li>
+      <li>優先看<b>同一swing內未測試過</b>的LG — 最敏感、機率最高</li>
+      <li>同swing內測試完，往前一個swing找目標</li>
+      <li>LG綁時間框，判方向<b>永遠只用同一張圖</b>，不跨timeframe混用</li>
+    </ul>
+    <p class="soft">逐K棒操作時，把這套規則刻進肌肉記憶的口訣是<b>「close through it, go to the next one」</b>：大擴張K棒造出的LG＝「objective level」，同一個swing裡<b>沒被測試過</b>的LG敏感度最高；swing內的untested LG都測試完了，就退回<b>前一個swing</b>找下一個目標——這跟下一節「怎麼挑相關的swing」是同一件事的兩種講法。距離大＝這段移動會更expansive，距離的長短本身就是一種資訊，值得放進判斷裡。</p>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 影片原話</div>
+      <div class="quote-text">"We never front run levels."</div>
+      <div class="quote-note">反覆出現的警語：沒收盤穿越就不能提前當作已經發生。</div>
+    </div>
+    <div class="rule-box"><b>慣性心法（來自SXPPERP DT Practice）：</b>「by the theory of inertia we need a serious force to slow the momentum of this move and then reverse it — we have no reason to not continue [shorting] until we see something that we want to see」。市場有慣性，沒看到明確反轉訊號前，預設立場是「原方向持續」，不是「測不過去就該轉向」。</div>
+    <div class="figure"><img src="assets/152a735f7e2fc3a2740cd909419f6703.jpg" alt="標出多層LG水平線的實戰範例"><div class="figure-cap">逐K棒即時標記objective LG levels的過程。</div></div>
+    <div class="figure"><img src="assets/79fbf9175da0227cfbefd26656feb275.jpg" alt="延續同一段swing的LG標記"><div class="figure-cap">持續往下標記，示範「測試完就換下一個」的節奏。</div></div>
+    <div class="rule-box" style="margin-top:24px;"><b>Levels not levels：</b>這些level不是「買支撐、賣壓力」的傳統概念，是純粹的<b>price point</b>——就算被測試過也不會失效，因為敏感度來自流動性缺口本身，不是價位有沒有被碰過。「I've tested it through nearly every chart that TradingView has to offer」——這條規則不是主觀選出來的，是跑過大量圖表驗證的。</div>
+  </section>
+
+  <!-- 7 -->
+  <section id="s07">
+    <div class="sec-head">
+      <h2><span class="sec-num">07 /</span> <b>怎麼挑「相關的swing」</b></h2>
+      <span class="pill video">影片逐字稿</span>
+    </div>
+    <p class="soft">怎麼決定<b>該拿哪個swing來標LG</b>。zoom out到最大常常會找到要花好幾週才會走到的LG，對短線交易沒有實際意義，所以要挑「相對於目前價格有意義」的swing。</p>
+    <div class="rule-box"><b>核心規則：</b>「圖上最重要的東西，是我們現在所在swing的<b>前一個</b>swing」——這個swing是你交易的依據，前一個swing是你參考的依據。一致性比選哪個swing更重要：只要每次都用同一套邏輯挑swing，規則就能穩定套用在每張圖上。</div>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 影片原話</div>
+      <div class="quote-text">"This move is the move we trade, this move is the move we reference."</div>
+    </div>
+    <div class="figure"><img src="assets/b382e2a0da9c452d8ca3e4ec84122e97.jpg" alt="用鋸齒對角線標出多層swing結構"><div class="figure-cap">示範怎麼在同一段走勢裡辨認「swing裡的swing」，決定要用哪一層。</div></div>
+    <div class="figure"><img src="assets/a956af4c5a1ac2785ea32196f296ffd1.jpg" alt="標出高低點範圍的水平參考線"><div class="figure-cap">選定relative swing後，標出high/low當作範圍邊界。</div></div>
+  </section>
+
+  <!-- 8 -->
+  <section id="s08">
+    <div class="sec-head">
+      <h2><span class="sec-num">08 /</span> <b>LGR 與 LGC 的判定</b></h2>
+      <span class="pill video">影片逐字稿</span>
+    </div>
+    <p class="soft">LGC的<b>標記慣例</b>，以及LGC本身也是<b>proportionate（成比例）</b>的兩個判定細節。</p>
+    <ul class="plain">
+      <li>標LGC時只用<b>實體（body）不用wick</b>：「from the high to the close... I don't want the wicks, the wicks are unimportant to me, I want to play within the LGC」——目的是避免一根K棒裡混進好幾天的價格行為。</li>
+      <li>LGC本身也是proportionate：每根LGC自己內部也在做expansion跟rebalance，只是比例更小——這條線索其實已經預告了後面第10節的5 Phase Expansion Cycle。</li>
+      <li>再次強調LGR永遠是<b>swing形成前的最後一個LG</b>，不是swing裡任何一個LG。</li>
+    </ul>
+
+    <div class="card">
+      <div class="card-head"><h3 style="margin:0;">LG Level編號系統</h3><span class="pill video">Defining your Swing and your LG Levels</span></div>
+      <p class="soft" style="margin-bottom:10px;">把LGR之後的層級精確命名：<b>LGR＝LG Level 1</b>，LGR之後第一個untested LG＝<b>LG Level 2</b>，再往後LG Level 3、4...。這條編號讓「我們現在在追蹤哪一層」變得可以明確指稱，不再只是含糊地說「下一個level」。</p>
+      <p class="soft" style="margin:0;"><b style="color:var(--ink)">關鍵地位差異：</b>「LGR signals a rebalance, but closing through LG Level 2 doesn't signal a rebalance — it signals that something has changed.」LGR只是提示可能要整理，LG Level 2才是真正判定「方向反轉是否成立」的關鍵level，是整套系統裡最重要的單一level。</p>
+    </div>
+
+    <div class="rule-box"><b>Reclaim（來自Let's Talk LGCs）：</b>收盤穿越LG後又跌破，之後再度收盤穿越同一個level——這個「二次收復」的訊號比第一次穿越更值得信任，可以當成SSSL/DT額外的加分確認。</div>
+
+    <div class="figure"><img src="assets/84bfa8524591d84c68ba8239f4b43e87.jpg" alt="多層水平線標出LG堆疊結構"><div class="figure-cap">連續LGR/LGC堆疊，每一層都用body-to-close的方式標記。</div></div>
+    <div class="figure"><img src="assets/ba07a1e7c504eb7f0fbbfbb3e07b10a3.jpg" alt="延續的LG堆疊範例"><div class="figure-cap">同一套邏輯延伸到更長的區間。</div></div>
+    <div class="figure"><img src="assets/692dc487ea03614d8d256c984292b0c8.jpg" alt="含垂直DT標記的圖表"><div class="figure-cap">紅色垂直線是DT（方向觸發）標記點。</div></div>
+  </section>
+
+  <!-- 9 -->
+  <section id="s09">
+    <div class="sec-head">
+      <h2><span class="sec-num">09 /</span> <b>LGR System Flow Sequencing — 三階段SOP</b></h2>
+      <span class="pill video">影片逐字稿</span>
+    </div>
+    <p class="soft">方向模組的總結——把「該看到什麼才能行動」寫成明確的三階段SOP，其中Phase 2的<b>EQ規則是目前所有教材裡唯一出現的地方</b>，資訊密度是全書最高的一節。</p>
+
+    <div class="subhead" id="s09-1"><span class="subnum">9.1</span><h3>三階段SOP</h3></div>
+
+    <div class="sequence">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-label mono">PHASE 1 — CLOSING THROUGH THE LG LEVEL</div>
+          <div class="step-gloss">等前一個LG level被一根<b>反方向</b>的擴張K棒收盤穿越（例如市場原本在跌，卻收盤穿越一個往上的LG）——這只確認方向，但要等rebalance階段完成才算數。高時間框的訊號比較乾淨，每到一個level都要重新evaluate。</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-label mono">PHASE 2 — THE REBALANCE</div>
+          <div class="step-gloss">必須同時看到：①噴進internal swing的LG或LGC ②<b>這個噴進的位置要在整個swing的EQ之下（做多）或之上（做空）</b>——EQ是拿整段swing的高低點畫fib抓出來的，不是單一根K棒的EQ ③掃到前一個swing point/LGC/K棒的高低點 ④掃出後未能延續，SSSL才算完成。</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-label mono">PHASE 3 — THE EXPANSION</div>
+          <div class="step-gloss">確認擴張展開後，切到進場時間框逐K棒（candle by candle）操作，每個higher low/lower high都是機會，直到打到下一級flows再重新evaluate。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-box">
+      <b>Points to Note（原片檢核清單）：</b>噴進internal level的幅度越大，反轉機率越高；找不到LG level就往上一個時間框找；LG/LGC的<b>大小本身是資訊</b>——越大的擴張，之後需要的rebalance也越久；<b>LGR level的精確定義＝swing EQ往下（或往上）一根</b>，這就是origin of expansion的位置；掃到之後不該逗留，該看到brief aggregation後迅速展開。
+    </div>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 影片原話</div>
+      <div class="quote-text">"We don't hunt for setups... if you're patient the setups will come to you. If we're trying to force a trade, we're trying to mold our criteria into something that looks like a trade — it's not a trade, and you're an idiot if you enter."</div>
+    </div>
+
+    <div class="figure"><img src="assets/e71ea7119aad4464f709ff5179871328.jpg" alt="Phase 1投影片含範例圖表"><div class="figure-cap">Phase 1 — Closing through the LG level，圖右附範例K棒圖。</div></div>
+    <div class="figure"><img src="assets/73addd8cc6bf400a18ba3b663ba74f34.jpg" alt="Phase 2投影片含範例圖表與EQ標示"><div class="figure-cap">Phase 2 — The Rebalance，圖上可見EQ與sweep/LGC標註。</div></div>
+    <div class="figure"><img src="assets/131d77a0a3cd02d044563d9d57645c49.jpg" alt="Phase 3投影片含範例圖表"><div class="figure-cap">Phase 3 — The Expansion — "Candle by Candle until we reach the next level of flows. LG to LG baby!"</div></div>
+
+    <div class="card" id="s09-2" style="margin-top:24px;">
+      <div class="card-head"><h3><span class="subnum">9.2</span>怎麼視覺化執行「每到一個level就重新evaluate」</h3><span class="pill pdf">PDF · Market Navigation - Directional Triggers</span></div>
+      <p class="soft" style="margin-bottom:12px;">在每個判定為「actionable」的K棒收盤位置畫一條垂直線，三色對應三種狀態：</p>
+      <ul class="plain">
+        <li><b style="color:var(--confirm)">綠色 / 紅色垂直線</b> — 這根收盤觸發你切到entry/trigger時間框去獵殺SSSL。垂直線右邊的所有走勢都是你要關注的範圍。</li>
+        <li><b style="color:var(--pending)">灰色垂直線</b> — 進入observation：還在rebalance/aggregation，留在方向圖上等，不切timeframe、不進場。</li>
+      </ul>
+      <p class="soft" style="margin:0;"><b style="color:var(--ink)">原文一處瑕疵：</b>PDF裡綠色跟紅色的說明文字一字不差地重複，沒有明講哪個對應多方、哪個對應空方。這裡依照整套教材的顏色慣例（綠漲紅跌）推論，<b>但PDF原文並未明講，這是推論不是原文</b>。</p>
+    </div>
+
+    <div class="card" id="s09-3" style="margin-top:16px;">
+      <div class="card-head"><h3><span class="subnum">9.3</span>Candle by Candle算的起點是哪裡</h3><span class="pill video">Why Lower Highs and Higher Lows are so Damn Important</span></div>
+      <p class="soft" style="margin-bottom:10px;">Phase 3寫「切到進場時間框逐K棒操作」，容易誤解成從整個swing開始算。真正的起點更精確：</p>
+      <div class="quote" style="margin-bottom:10px;">
+        <div class="quote-meta"><span class="who">TraderxB</span> · 影片原話</div>
+        <div class="quote-text">"I'm candle by candle from here, on the lower high. I'm not candle by candle on the swing."</div>
+      </div>
+      <p class="soft" style="margin:0;">計時起點是<b>確認出higher low/lower high的那根K棒</b>，不是swing剛形成的地方。信心水位他自己估：<b>「85 to 90%... if you can glean 75 to 80% of the direction then you're good to go」</b>——不用追求100%確定才動作。</p>
+    </div>
+
+    <div class="card" id="s09-4" style="margin-top:16px;">
+      <div class="card-head"><h3><span class="subnum">9.4</span>別觀察過頭</h3><span class="pill video">Ramblings on Logic, LG to LG, and Candle by Candle</span></div>
+      <p class="soft" style="margin-bottom:10px;">最常見的錯誤：看到反方向的LGR就整個進入observation，一路等到出現同方向LGC才肯回來——中間這段其實已經漏掉真正的進場點。</p>
+      <div class="quote" style="margin-bottom:10px;">
+        <div class="quote-meta"><span class="who">TraderxB</span> · 影片原話</div>
+        <div class="quote-text">"LGRs are not of any importance other than to tell you rebalance is coming... we don't observe until we get this candle [失敗延續的那根K棒]. What you've done [提早進observation] is you've missed the opportunity within this candle."</div>
+      </div>
+      <p class="soft" style="margin:0;">他自己的比例：<b>「I take 80% of my setups at an LGC」</b>。具體做法叫「Parallel EQ」——在LGR的低點/EQ設好alert，等到觸發後直接進場，不是被動等一個完整的反向LGC才肯動作。</p>
+    </div>
+
+    <div class="card" id="s09-5" style="margin-top:16px;">
+      <div class="card-head"><h3><span class="subnum">9.5</span>LGC四層框架</h3><span class="pill video">Bringing it All Together</span></div>
+      <p class="soft" style="margin-bottom:10px;">整套系統可以收斂成一句話：<b>永遠只在四個層級之一交易</b>——① LGC的High　② LGC的EQ　③ LGC的Low　④ LG level本身。這四層之外的價格波動基本上不值得關注。</p>
+      <p class="soft" style="margin:0;"><b style="color:var(--ink)">Confluence（多層重合）：</b>當這四層裡有多個同時指向同一個價位——例如「LG level」剛好跟「前一根LGC的EQ」疊在一起——訊號強度會顯著提高。這是判斷「這個進場點夠不夠好」最實用的單一判準。</p>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section id="s10">
+    <div class="sec-head">
+      <h2><span class="sec-num">10 /</span> <b>5 Phase Expansion Cycle（選讀）</b></h2>
+      <span class="pill video">影片逐字稿</span>
+    </div>
+    <p class="soft">Syllabus裡唯一被列為「選讀、建議先跳過」的一節——<b>方法完全沒變</b>，這只是在LG to LG跟Aggregation Model之上再拉遠一層，幫你看懂「現在這個swing走到循環的哪個階段」。這層週期本身具有<b>fractal（碎形）性質</b>，同一個5階段結構會在每個時間框、甚至同一段expansion內部的更低proportion裡反覆出現。</p>
+
+    <div class="rule-box" style="margin-top:0; margin-bottom:24px;">循環結構：<b>3個Expansion + 2個Rebalance</b>交錯——Expansion 1 → Rebalance 1 → <b>Expansion 2</b> → Rebalance 2 → Expansion 3 → 觸發下一輪反轉</div>
+
+    <div class="sequence">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <span class="tag-mini expansion">Expansion 1</span>
+          <div class="step-label mono">REVERSAL OF FLOWS (LGR)</div>
+          <div class="step-gloss">剛出現LGR，flows開始反轉但什麼都還沒確認。</div>
+          <div class="step-trade">別交易這階段本身——單靠一根LGR賭全盤反轉太冒險。改交易<b>Rebalance 1</b>：往LGR level拉回、方向仍是舊方向的動作。</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <span class="tag-mini rebalance">Rebalance 1</span>
+          <div class="step-label mono">EFFICIENT MOVE, FUELING PHASE 2</div>
+          <div class="step-gloss">前一個swing內的效率移動，為Expansion 2蓄力。</div>
+          <div class="step-trade">這裡才要求看到<b>完整</b>Aggregation Model（LGR→sweep→rebalance→LGC formation）——因為要確認flows真的換方向了。</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <span class="tag-mini expansion">Expansion 2</span>
+          <div class="step-label mono">THE BIG BOY</div>
+          <div class="step-gloss">循環裡最無效率、最大的一段——真正想全力參與的階段。</div>
+          <div class="step-trade">確認進入後<b>不必每次等完整aggregation</b>，只要partial rebalance（一次sweep+LGC）就能繼續加碼。"we hunt in LGCs"——95~100%進場發生在LGC區間，逐一打到下一級目標，切低時間框找進場點。</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <span class="tag-mini rebalance">Rebalance 2</span>
+          <div class="step-label mono">FULL REVERSAL BEFORE THE FINAL LEG</div>
+          <div class="step-gloss">Expansion 2結束前的完整反向flows，方向逆著Expansion 2走一段——最多人在這裡被巴出場。</div>
+          <div class="step-trade">邏輯跟Rebalance 1同一套（要求完整aggregation），只是發生在對側，目的是鋪墊Expansion 3的噴出。</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <span class="tag-mini expansion">Expansion 3</span>
+          <div class="step-label mono">THE SPIKE THAT REVERSES FLOWS</div>
+          <div class="step-gloss">循環最後一段，通常是衝進一個level的spike。</div>
+          <div class="step-trade">"the spike to get people offside"——用來洗出對手單，同時觸發下一輪循環的Expansion 1（flows正式反轉）。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quote" style="margin-top:8px;">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 影片原話</div>
+      <div class="quote-text">"When I know I've seen expansion two finish I immediately go into a more conservative trading mode... when I'm in expansion two I'm balls deep."</div>
+    </div>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 影片原話</div>
+      <div class="quote-text">"Every single thing we do has to be exactly the same each and every time... I don't give a fuck [what Twitter says]."</div>
+    </div>
+
+    <h3 style="margin-top:32px;">圖表截圖</h3>
+    <p class="soft" style="margin-bottom:16px;">以下對應一段BTCPERP 4H的完整案例，逐步標出Expansion/Rebalance各階段。</p>
+
+    <div class="figure">
+      <img src="assets/6a368a030e94764a4de2e41d4f986b48.jpg" alt="兩段swing用藍色橢圓標出比例關係">
+      <div class="figure-cap">用藍色橢圓圈出兩段swing，說明<b>proportional relationship</b>：判斷expansion的比例關係時，是拿前一段swing的長度/幅度去對照下一段。</div>
+    </div>
+
+    <div class="figure">
+      <img src="assets/4def79e230d7fd9b9f400cfffd973419.jpg" alt="一段swing上標出多個LG水平線">
+      <div class="figure-cap">基礎LG to LG範例：整段swing上標出多層LG水平線，紅色小標記是sweep位置，這是Expansion 1/Rebalance 1判讀的骨架。</div>
+    </div>
+
+    <div class="figure">
+      <img src="assets/f0e537e746e775649028f334af5da2f6.jpg" alt="上升趨勢中連續三段灰色LGC區塊疊加">
+      <div class="figure-cap"><b>"We hunt in LGCs"</b>：Expansion 2進行中，連續三段灰色矩形是疊起來的LGC區間，每一段都是partial rebalance後繼續加碼多單的位置，不需要每次等完整aggregation。</div>
+    </div>
+
+    <div class="figure">
+      <img src="assets/1e585d25488df58459d5f7a03ba909f8.jpg" alt="LGC堆疊持續延伸，K棒收在高點">
+      <div class="figure-cap">同一段Expansion 2的延伸：LGC堆疊持續往上疊（"stack stack stack"），xB原話形容這種每個LGC都守住的走勢是"such a strong market"。</div>
+    </div>
+
+    <div class="figure">
+      <img src="assets/05f46c7e6637c47c0135ab2b7fc184b1.jpg" alt="紫色對角趨勢線標示swing比例關係">
+      <div class="figure-cap">用紫色對角線量測swing的比例關係，呼應原話「must be five times the length of one which is why we want to take it」——用來判斷Expansion 2該有多長。</div>
+    </div>
+
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · Expansion Phases, Rebalancing Phases...</div>
+      <div class="quote-text">"We won't see flow reversals all the fucking time because the market doesn't reverse all the time. If I'm on a four hour chart, the flows would reverse twice a week max... if we're in a big expansive phase, it'll be once a week if even."</div>
+      <div class="quote-note">具體頻率參考：4H圖上flows反轉一週最多2次，若正處在大段Expansion 2裡，可能一週不到1次——這解釋了為什麼「耐心等」如此關鍵，不是隨便一根反向K棒就該重新判斷方向。</div>
+    </div>
+    <div class="rule-box"><b>連作者自己都承認的主觀性（來自Expansions and Proportions）：</b>這部分內容被Navigating_the_Content.pdf標成「選讀、可能造成混淆」，內容是用費波納契比例（如1.618）去量測expansion之間的比例關係。xB自己坦承：<b>「It seems far too subjective for me to make rules around... I never did make any rules about them because I found it very hard to try and objectively identify these expansions.」</b>——這跟整套系統標榜的「完全客觀」精神有明顯落差，比例分析本身停留在他個人的直覺判斷，沒有具體規則可教。</div>
+    <div class="rule-box"><b>跟The_Aggregation_Model.pdf的用詞小張力：</b>該PDF明講4步驟的Aggregation Model「It is NOT a 'fractal'」，但5 Phase Expansion Cycle的說法卻是「due to the fractal nature of the market it happens on every timeframe」——兩者講的不是同一個機制（一個是節奏控制器、一個是宏觀週期），但用詞上確實有點打架，也許正是xB後來在Discord上說「後悔公開這部分內容、太多人把phases看太重」的原因之一。</div>
+  </section>
+
+  <div class="module-band">進場模組 <span class="arrow">→</span> <b>Module 2 — Entry</b> <span class="arrow">·</span> 第11～14節</div>
+
+  <!-- 11 -->
+  <section id="s11">
+    <div class="sec-head">
+      <h2><span class="sec-num">11 /</span> <b>SSSL 進場觸發</b></h2>
+      <span class="pill pdf">PDF ＋ 影片逐字稿</span>
+    </div>
+    <div class="sequence">
+      <div class="step">
+        <div class="step-num">S</div>
+        <div class="step-body"><div class="step-label mono">SPIKE</div><div class="step-gloss">噴進一個LGC/LG裡</div></div>
+      </div>
+      <div class="step">
+        <div class="step-num">S</div>
+        <div class="step-body"><div class="step-label mono">SWEEP</div><div class="step-gloss">掃過內部swing、或前一swing某根K棒的高/低點</div></div>
+      </div>
+      <div class="step">
+        <div class="step-num">S</div>
+        <div class="step-body"><div class="step-label mono">SWING</div><div class="step-gloss">讓swing完整形成，不提前預判</div></div>
+      </div>
+      <div class="step">
+        <div class="step-num">L</div>
+        <div class="step-body"><div class="step-label mono">LGC</div><div class="step-gloss">收盤穿越swing K棒高/低點 → 收盤市價進場</div></div>
+      </div>
+    </div>
+    <div class="rule-box">
+      <b>停損</b> — swing上/下方幾個tick 　<b>停利</b> — 固定倍數 2:1 / 3:1（6:1較激進，作者不建議）
+    </div>
+
+    <div class="card" style="margin-top:24px;">
+      <div class="card-head"><h3 style="margin:0;">實際程式碼裡的雙重確認</h3><span class="pill pdf">Pine原始碼</span></div>
+      <p class="soft" style="margin-bottom:12px;">「LGC closing through the swing candle high/low」看似一句話，真實Pine v6原始碼把它拆成兩個必須<b>同時成立</b>（AND）的收盤條件：</p>
+      <ul class="plain">
+        <li><span class="mono" style="color:var(--level)">確認 A</span> — 收盤 &gt; 前一根K棒最高點（判定這根K棒夠格算LGC/gap-close型態）</li>
+        <li><span class="mono" style="color:var(--level)">確認 B</span> — 收盤 ≥ 被掃K棒自己的實體高點（確認真的吃穿被掃的那個具體結構）</li>
+      </ul>
+      <p class="soft" style="margin:0;">Sweep發生後進入「武裝」狀態，武裝期間若出現更深的sweep會持續更新參照點，直到A+B同時成立才觸發進場。</p>
+    </div>
+
+    <div class="rule-box" style="margin-top:24px;"><b>實戰補充：</b>同一個目標區間內可能連續出現<b>好幾個SSSL訊號</b>——一個實例裡2.5天內連續觸發5次，全部都是「hit or quit」（不是碰到停利就是碰到停損，沒有中途搖擺），只要風險參數允許可以全部進場。測試方法有兩種：①先在4H標好所有DT，再回頭在30分鐘圖上標SSSL；②分割螢幕左4H右30分鐘，同步看。<b>方向判斷不穩就別碰SSSL</b>，否則會一直在錯的方向找進場點。</div>
+
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 影片原話</div>
+      <div class="quote-text">"Two to one, three to one a day, you'll never work again."</div>
+    </div>
+    <div class="figure"><img src="assets/3d4846cc771c8d40ed786f80be893661.jpg" alt="SPIKE SWEEP SWING LGC示意圖"><div class="figure-cap">SSSL四步驟示意圖：Spike → Sweep → Swing → LGC。</div></div>
+    <div class="figure"><img src="assets/c01d0b51f1b68c239ff5cee1f1461548.jpg" alt="紅色區塊標出SSSL進場區間"><div class="figure-cap">紅色矩形標出SSSL進場區間。</div></div>
+    <div class="figure"><img src="assets/c5d2a8635b87710fea86aad516f2c9b6.jpg" alt="含灰色目標區的SSSL範例"><div class="figure-cap">紅色進場區＋灰色目標區同時標出，對照風報比。</div></div>
+  </section>
+
+  <!-- 12 -->
+  <section id="s12">
+    <div class="sec-head">
+      <h2><span class="sec-num">12 /</span> <b>進場後的管理與精修</b></h2>
+      <span class="pill video">影片逐字稿</span>
+    </div>
+    <p class="soft">風控與Directional Trigger精修合併成一節，因為兩者本質上都是「SSSL進場之後該怎麼做」——一個管風險，一個管挑DT跟精修進場點。</p>
+
+    <div class="subhead" id="s12-1"><span class="subnum">12.1</span><h3>R倍數移動停損</h3></div>
+    <p class="soft" style="margin-bottom:10px;">來自<b>Managing Risk Parameters on a Live SSSL entry</b>。進場後不是死守原始停損到底，而是隨著價格每收盤穿越一個R倍數，就把停損移到「造成那次穿越的那個swing」——不是固定百分比的移動停損，是用結構本身當停損參照。</p>
+    <div class="quote" style="margin-bottom:10px;">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 影片原話</div>
+      <div class="quote-text">"If I can guarantee 3R per trade, then my strike rate all it has to be is above 35%, and I'm making money."</div>
+    </div>
+    <div class="rule-box"><b>他自己的取捨：</b>他是「hit and quit」交易者，目標定死3R，不分批停利，靠移動停損鎖住獲利。如果系統勝率已經驗證到60~65%，其實不需要這套移動停損；勝率還在累積數據階段，就該積極移動停損降低風險。</div>
+
+    <div class="subhead" id="s12-2"><span class="subnum">12.2</span><h3>三種DT類型</h3></div>
+    <p class="soft" style="margin-bottom:10px;">來自<b>Defining your DTs</b>與<b>Homework - The Sweep DT</b>。他把自己實際在用的DT收斂成三種，難度跟勝率排序如下：</p>
+    <div class="gloss" style="margin-bottom:12px;">
+      <div class="gloss-row"><div class="gloss-term">Flow Continuation LGC</div><div class="gloss-def">最容易辨認：LGC單純延續現有flows方向，收盤穿越前一個LG level。這是三者中最安全、最好上手的。</div></div>
+      <div class="gloss-row"><div class="gloss-term">LGC Reversal</div><div class="gloss-def">LGC不只是延續flows，而是<b>收盤穿越前一根LGC本身</b>（不只是穿越LG level）。他自估這是三者中<b>最賺錢</b>的一種，但判讀難度也最高。</div></div>
+      <div class="gloss-row"><div class="gloss-term">Sweep DT（4R Sweep）</div><div class="gloss-def">最複雜、<b>唯一會逆著當下flows走</b>的DT類型——下跌趨勢中的lower-high sweep才是「bread and butter」，higher-high sweep機率較低。精修規則：沒有前置LGR、或沒看到VC（Volatility Candle，大wick顯示劇烈拉扯）的話，不輕易把sweep當DT。</div></div>
+    </div>
+
+    <div class="subhead" id="s12-3"><span class="subnum">12.3</span><h3>Retest精修進場</h3></div>
+    <p class="soft" style="margin-bottom:10px;">來自<b>Refining DTs and Entries using the same DT</b>。標準SSSL是在LGC收盤當下市價進場；精修版是等LGC出現後，<b>回測（retest）</b>那根LGC的high/EQ/low才進場，用更好的價格換更佳風報比。</p>
+    <div class="rule-box"><b>實際效益：</b>「Half your entry-to-stop distance means double position size for same risk」——進場點離停損更近，同樣風險金額下部位可以放大一倍。代價是不一定每次都會拿到retest，錯過了就照原始SSSL規則市價進場，不強求。</div>
+
+    <div class="subhead" id="s12-4"><span class="subnum">12.4</span><h3>多時間框精修：Weekly → Daily → 4H</h3></div>
+    <p class="soft" style="margin-bottom:10px;">來自<b>Refining your Levels for Higher Accuracy</b>。具體工作流程：每週日花10分鐘看Weekly抓level，每天看Daily抓level，再把這些更高時間框的level「轉寫」到4H圖上——4H上剛好跟Weekly/Daily的level重合的位置，就是confluence最強的地方，通常會落在4H LGC的EQ附近。</p>
+    <div class="rule-box"><b>額外情報：</b>他提到自己也有跑一套「現貨週期交易」，用Daily判方向、4R進場，2021整年大概只出現20次訊號，平均持倉約2週9天（最短3天、最長超過1個月）——時間框越高，訊號越少，但風報比也跟著放大。</div>
+    <div class="rule-box"><b>一個變體：</b>同樣是Daily→4H的精修技巧，但LGC三層改用<b>Open / EQ / Close</b>來描述，不是其他章節慣用的High/EQ/Low。跟LG level重合的那一層通常是EQ最敏感，跟第9.5節的四層框架邏輯一致，只是這裡換了一種切法描述同一組層級。</div>
+  </section>
+
+  <!-- 13 -->
+  <section id="s13">
+    <div class="sec-head">
+      <h2><span class="sec-num">13 /</span> <b>LE Candle 過濾器</b></h2>
+      <span class="pill pdf">PDF</span>
+    </div>
+    <p>SSSL的加強濾網，篩掉「反覆被掃（sweep of sweeps）」的假訊號。</p>
+    <ul class="plain">
+      <li>Sweep candle的高點必須<b>高於前一根的高點</b>（做空看HH；做多反過來看LL）</li>
+      <li>該K棒收盤必須穿越<b>自己range的EQ</b>（不是swing的EQ，是這根K棒自己高低點的中點）</li>
+      <li>之後應照常看到swing形成，並擴張至下一級imbalanced flows</li>
+    </ul>
+    <div class="rule-box">"It's a completely objective metric" — 完全客觀，用來提升SSSL選點的一致性。</div>
+  </section>
+
+  <!-- 14 -->
+  <section id="s14">
+    <div class="sec-head">
+      <h2><span class="sec-num">14 /</span> <b>"We Hunt in LGCs" — 實盤現場</b></h2>
+      <span class="pill video">影片逐字稿</span>
+    </div>
+    <p class="soft">xB自己說這是他第一次真正公開「自己實際在做什麼」而不只是講概念。用2021年10月1日~6日的真實週線走勢，示範怎麼在一段確認的Expansion 2裡連續獵殺LGC。</p>
+    <div class="rule-box"><b>戰績：</b>同一段方向裡連續拿下<b>5個setup，全勝</b>，時間跨度約2.5天——他的評語是「pretty good week if I don't say so myself」。另一支XRP的一週實況重播（Replay Mode）示範也拿到<b>4個setup全勝，共12R</b>，同樣是靠反覆套用同一套LG to LG+SSSL邏輯。</div>
+    <ul class="plain">
+      <li>同一個LGC區間內出現多個SSSL候選時，挑「最obvious」（最乾淨、最有明顯wick失敗）的那個優先，用「order of magnitude」（噴出幅度的量級）排序候選訊號。</li>
+      <li>明確不建議把4H的LGC再往下refine成30分鐘的LGC來找進場：<b>「I think it's a good method, but sometimes it gets too almost too refined. I prefer looking at these big levels.」</b>——這條跟第16節Daniel的「等兩次strike」形成有趣對比：xB自己反而傾向不要過度精修。</li>
+    </ul>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 影片原話</div>
+      <div class="quote-text">"I talk a lot about the conceptual process, but I never talk about what I actually do."</div>
+    </div>
+    <div class="figure"><img src="assets/5c7a8c4c1b59785d6734ba4fbe2472ed.jpg" alt="紅色標記框出LGC獵殺區間"><div class="figure-cap">紅色標記框出LGC「狩獵區」。</div></div>
+    <div class="figure"><img src="assets/b61253ed210790352a9051c67a4ce0d1.jpg" alt="連續多個LGC堆疊紅框"><div class="figure-cap">連續獵殺多個LGC的過程，每個紅框都是一次進場考量。</div></div>
+    <div class="figure"><img src="assets/a6ad599bd475f61e80b745e41217e4e1.jpg" alt="更多堆疊紅框範例"><div class="figure-cap">持續堆疊，直到打到目標區。</div></div>
+    <div class="figure"><img src="assets/75b3dad9bbfa02c191264f2525980e3d.jpg" alt="大幅上漲後的LGR標記"><div class="figure-cap">大幅推進後出現LGR，提示可能要進入observation重新evaluate。</div></div>
+  </section>
+
+  <div class="module-band">補充 <span class="arrow">→</span> <b>Meta / Cross-cutting</b> <span class="arrow">·</span> 第15～17節</div>
+
+  <!-- 15 -->
+  <section id="s15">
+    <div class="sec-head">
+      <h2><span class="sec-num">15 /</span> <b>現場筆記</b></h2>
+      <span class="pill discord">Discord · 2022-11-30</span>
+    </div>
+    <p class="soft">xB跟學員Skadedrengen在真實圖表上來回辯論一整個下午，暴露出教材裡沒寫清楚的判斷灰色地帶。</p>
+
+    <div class="quote">
+      <div class="quote-meta"><span class="who">Skadedrengen</span> · 14:10</div>
+      <div class="quote-text">"Closing through your LG level can not override the larger, more prominent level we just closed through and you even had marked."</div>
+      <div class="quote-note">內部小LG被穿越，不能凌駕於剛標記的、更大的swing結構之上。</div>
+    </div>
+
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 15:00</div>
+      <div class="quote-text">"If we're going to continue to expand with the flows, a test of a LG level means nothing until we aggregate at it."</div>
+      <div class="quote-note">單純碰到LG level本身沒有意義——除非真的在那裡開始aggregate，不該一碰到level就切成observation等反轉。</div>
+    </div>
+    <div class="figure"><img src="assets/778f66991aac52c920fa5a1dc788f4a0.png" alt="AVAXUSDT 4H圖標出Swing we're in、Close through、LGR level、LG Level與AM completion"><div class="figure-cap">辯論當下實際對照的圖：標出「Swing we're in」「Close through」「LGR level」「LG Level」跟「AM completion」的相對位置。</div></div>
+    <div class="figure"><img src="assets/f5f2e2e3924c0a6b9ccda832f753cc78.png" alt="4H圖表標出4H OE LGC的位置"><div class="figure-cap">同一場討論裡另一張圖，標出「4H OE LGC」——origin of expansion在真實圖上的具體位置。</div></div>
+
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 15:28</div>
+      <div class="quote-text">"If we close through the 2nd LG IN THE SWING WE ARE IN, we go to the next."</div>
+      <div class="quote-note">比一般說法更精確的推進規則：限定「你當下判定的那個swing範圍內」的第2個LG，跨swing的LG不算數。</div>
+    </div>
+    <div class="figure"><img src="assets/7b45f1a534a35b104047124d4ef0fa55.png" alt="AVAX 4H圖含Close through the 2nd LG提示框"><div class="figure-cap">當下討論用的原圖：tooltip寫著「Close through the 2nd LG = I am looking for HL's」，就是這句quote的實際畫面。</div></div>
+
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 15:17</div>
+      <div class="quote-text">"Properly my biggest flaw in utilizing this system. Being 100% confident in when we are expanding, and in which direction."</div>
+      <div class="quote-note">連作者本人都承認：這套系統最難的不是規則，是敢不敢100%確信當下的擴張方向。</div>
+    </div>
+
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 15:16</div>
+      <div class="quote-text">"Expansion down is rebalancing up... we want a LH to take it down."</div>
+      <div class="quote-note">方向配對：expansion up ↔ rebalance down；expansion down ↔ rebalance up。下跌趨勢的回調段要等的是<b>LH</b>不是HL。</div>
+    </div>
+    <div class="figure"><img src="assets/ada5f89865c9410f91fe83a2ca6df18b.png" alt="標示This is the swing we're in if we've confirmed expansion down的圖表"><div class="figure-cap">對應討論的原圖：「This is the swing we're in if we've confirmed expansion down」。</div></div>
+    <div class="figure"><img src="assets/ec9a132d6a500529e8642c9c0a5664a0.png" alt="LH below here圖表，黃色螢光標出構成LH的K棒"><div class="figure-cap">「LH below here」——黃色螢光標出的，就是構成這個LH的具體K棒範圍。</div></div>
+  </section>
+
+  <!-- 16 -->
+  <section id="s16">
+    <div class="sec-head">
+      <h2><span class="sec-num">16 /</span> <b>Daniel 的雙重確認法</b></h2>
+      <span class="pill unverified">未驗證</span>
+    </div>
+    <p>Day chart看到連續兩個strike（D1、D2）才切進4H找H1、H2兩個strike，在H2進場——不吃第一個green cross。</p>
+    <div class="card">
+      <p class="soft" style="margin-bottom:10px;"><b style="color:var(--ink)">部分有根據：</b>第102頁範例31的筆記寫著「the setup is just a SSSL within a SSSL (30m and 5m setup here)」——高時間框SSSL框出區間、切進低時間框再找一次SSSL進場的<b>drill-down架構</b>，官方教材確實有。</p>
+      <p class="soft" style="margin:0;"><b style="color:var(--ink)">沒有根據：</b>「必須先集齊兩個strike才動作」這個計數規則，翻遍7份PDF跟103頁範例集都沒找到。邏輯上站得住腳（跟LE Candle同樣是拿訊號量換勝率），但目前只能當作Daniel個人在官方框架上疊加的執行紀律，不是xB原始教材寫死的規則。第15節裡xB自己反而傾向不過度精修時間框，兩人的直覺不完全一致。</p>
+    </div>
+  </section>
+
+  <!-- 17 -->
+  <section id="s17">
+    <div class="sec-head">
+      <h2><span class="sec-num">17 /</span> <b>巢狀結構圖解</b></h2>
+      <span class="pill unverified">未驗證</span>
+    </div>
+    <p class="soft">第04節Aggregation Model跟第11節SSSL常被誤認成同一套四步驟——兩者剛好都是四步，也都用到sweep跟LGC這兩個詞。下圖畫出兩者實際的巢狀關係：方向圖上完整跑一次Aggregation Model（LGR→Rebalance→LGC Formation→Expansion），<b>展開之後才切到進場時間框</b>，在同一段Expansion裡用SSSL（Spike→Sweep→Swing→LGC）反覆觸發——一次外層週期，通常包住好幾次內層進場，呼應第14節「we hunt in LGCs」連續5個setup的實例。<b>這個巢狀框架是跨章節整理出的推論，沒有單一段原文逐字這樣講。</b></p>
+
+    <div class="figure">
+      <svg viewBox="0 0 1040 600" role="img" aria-label="Aggregation Model 作為外層方向容器，內含四個階段：LGR、Rebalance、LGC Formation、Expansion。Expansion 階段展開後連接到內層的 SSSL 容器，裡面反覆執行 Spike-Sweep-Swing-LGC 四步驟，每一輪都產生一次獨立進場，直到打到下一級 flows 才回到外層找下一個 LGR。" style="display:block;width:100%;height:auto;">
+        <defs>
+          <marker id="s19-arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="context-stroke"/>
+          </marker>
+        </defs>
+
+        <rect x="30" y="40" width="980" height="520" rx="16"
+              fill="var(--level-soft)" stroke="var(--level)" stroke-width="2" stroke-dasharray="7 5"/>
+        <text x="54" y="76" class="mono" font-size="15" font-weight="700" fill="var(--level)" letter-spacing="0.04em">AGGREGATION MODEL</text>
+        <text x="54" y="95" class="mono" font-size="12" fill="var(--ink-soft)">方向圖 · 高時間框 · 完整一次週期才算數</text>
+
+        <rect x="89" y="118" width="190" height="78" rx="10" fill="var(--surface)" stroke="var(--line)" stroke-width="1.5"/>
+        <text x="184" y="152" text-anchor="middle" class="mono" font-size="15" font-weight="700" fill="var(--ink)">LGR</text>
+        <text x="184" y="171" text-anchor="middle" class="mono" font-size="12" fill="var(--ink-soft)">轉折提示</text>
+
+        <rect x="313" y="118" width="190" height="78" rx="10" fill="var(--surface)" stroke="var(--line)" stroke-width="1.5"/>
+        <text x="408" y="152" text-anchor="middle" class="mono" font-size="15" font-weight="700" fill="var(--ink)">REBALANCE</text>
+        <text x="408" y="171" text-anchor="middle" class="mono" font-size="12" fill="var(--ink-soft)">(SWEEP)</text>
+
+        <rect x="537" y="118" width="190" height="78" rx="10" fill="var(--surface)" stroke="var(--line)" stroke-width="1.5"/>
+        <text x="632" y="152" text-anchor="middle" class="mono" font-size="14.5" font-weight="700" fill="var(--ink)">LGC FORMATION</text>
+        <text x="632" y="171" text-anchor="middle" class="mono" font-size="12" fill="var(--ink-soft)">起點確認</text>
+
+        <rect x="761" y="118" width="190" height="78" rx="10" fill="var(--confirm-soft)" stroke="var(--confirm)" stroke-width="2"/>
+        <text x="856" y="152" text-anchor="middle" class="mono" font-size="15" font-weight="700" fill="var(--confirm)">EXPANSION</text>
+        <text x="856" y="171" text-anchor="middle" class="mono" font-size="12" fill="var(--ink-soft)">真正噴出</text>
+
+        <line x1="281" y1="157" x2="311" y2="157" stroke="var(--level)" stroke-width="2" marker-end="url(#s19-arrow)"/>
+        <line x1="505" y1="157" x2="535" y2="157" stroke="var(--level)" stroke-width="2" marker-end="url(#s19-arrow)"/>
+        <line x1="729" y1="157" x2="759" y2="157" stroke="var(--level)" stroke-width="2" marker-end="url(#s19-arrow)"/>
+
+        <line x1="856" y1="196" x2="856" y2="247" stroke="var(--ink-soft)" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#s19-arrow)"/>
+        <text x="770" y="222" text-anchor="end" class="mono" font-size="12" fill="var(--ink-soft)">展開後切到進場時間框</text>
+
+        <rect x="90" y="250" width="850" height="262" rx="14" fill="var(--surface-2)" stroke="var(--confirm)" stroke-width="2"/>
+        <text x="114" y="280" class="mono" font-size="14.5" font-weight="700" fill="var(--confirm)" letter-spacing="0.03em">SSSL — 進場圖，反覆觸發</text>
+        <text x="114" y="298" class="mono" font-size="12" fill="var(--ink-soft)">Expansion 展開期間連續獵殺，不必每次等完整 Aggregation Model</text>
+
+        <g>
+          <line x1="187" y1="345" x2="214" y2="345" stroke="var(--confirm)" stroke-width="1.75" marker-end="url(#s19-arrow)"/>
+          <line x1="240" y1="345" x2="267" y2="345" stroke="var(--confirm)" stroke-width="1.75" marker-end="url(#s19-arrow)"/>
+          <line x1="293" y1="345" x2="320" y2="345" stroke="var(--confirm)" stroke-width="1.75" marker-end="url(#s19-arrow)"/>
+          <circle cx="174" cy="345" r="13" fill="var(--surface)" stroke="var(--ink-faint)" stroke-width="1.5"/>
+          <text x="174" y="349" text-anchor="middle" class="mono" font-size="12" font-weight="600" fill="var(--ink-soft)">S</text>
+          <circle cx="227" cy="345" r="13" fill="var(--surface)" stroke="var(--ink-faint)" stroke-width="1.5"/>
+          <text x="227" y="349" text-anchor="middle" class="mono" font-size="12" font-weight="600" fill="var(--ink-soft)">S</text>
+          <circle cx="280" cy="345" r="13" fill="var(--surface)" stroke="var(--ink-faint)" stroke-width="1.5"/>
+          <text x="280" y="349" text-anchor="middle" class="mono" font-size="12" font-weight="600" fill="var(--ink-soft)">S</text>
+          <circle cx="333" cy="345" r="13" fill="var(--confirm)" stroke="var(--confirm)" stroke-width="1.5"/>
+          <text x="333" y="349" text-anchor="middle" class="mono" font-size="12" font-weight="700" fill="var(--surface)">L</text>
+          <text x="333" y="384" text-anchor="middle" class="mono" font-size="11" fill="var(--confirm)">entry ✓</text>
+        </g>
+
+        <line x1="346" y1="345" x2="401" y2="345" stroke="var(--ink-soft)" stroke-width="1.75" stroke-dasharray="4 4" marker-end="url(#s19-arrow)"/>
+
+        <g>
+          <line x1="427" y1="345" x2="454" y2="345" stroke="var(--confirm)" stroke-width="1.75" marker-end="url(#s19-arrow)"/>
+          <line x1="480" y1="345" x2="507" y2="345" stroke="var(--confirm)" stroke-width="1.75" marker-end="url(#s19-arrow)"/>
+          <line x1="533" y1="345" x2="560" y2="345" stroke="var(--confirm)" stroke-width="1.75" marker-end="url(#s19-arrow)"/>
+          <circle cx="414" cy="345" r="13" fill="var(--surface)" stroke="var(--ink-faint)" stroke-width="1.5"/>
+          <text x="414" y="349" text-anchor="middle" class="mono" font-size="12" font-weight="600" fill="var(--ink-soft)">S</text>
+          <circle cx="467" cy="345" r="13" fill="var(--surface)" stroke="var(--ink-faint)" stroke-width="1.5"/>
+          <text x="467" y="349" text-anchor="middle" class="mono" font-size="12" font-weight="600" fill="var(--ink-soft)">S</text>
+          <circle cx="520" cy="345" r="13" fill="var(--surface)" stroke="var(--ink-faint)" stroke-width="1.5"/>
+          <text x="520" y="349" text-anchor="middle" class="mono" font-size="12" font-weight="600" fill="var(--ink-soft)">S</text>
+          <circle cx="573" cy="345" r="13" fill="var(--confirm)" stroke="var(--confirm)" stroke-width="1.5"/>
+          <text x="573" y="349" text-anchor="middle" class="mono" font-size="12" font-weight="700" fill="var(--surface)">L</text>
+          <text x="573" y="384" text-anchor="middle" class="mono" font-size="11" fill="var(--confirm)">entry ✓</text>
+        </g>
+
+        <line x1="586" y1="345" x2="641" y2="345" stroke="var(--ink-soft)" stroke-width="1.75" stroke-dasharray="4 4" marker-end="url(#s19-arrow)"/>
+
+        <g>
+          <line x1="667" y1="345" x2="694" y2="345" stroke="var(--confirm)" stroke-width="1.75" marker-end="url(#s19-arrow)"/>
+          <line x1="720" y1="345" x2="747" y2="345" stroke="var(--confirm)" stroke-width="1.75" marker-end="url(#s19-arrow)"/>
+          <line x1="773" y1="345" x2="800" y2="345" stroke="var(--confirm)" stroke-width="1.75" marker-end="url(#s19-arrow)"/>
+          <circle cx="654" cy="345" r="13" fill="var(--surface)" stroke="var(--ink-faint)" stroke-width="1.5"/>
+          <text x="654" y="349" text-anchor="middle" class="mono" font-size="12" font-weight="600" fill="var(--ink-soft)">S</text>
+          <circle cx="707" cy="345" r="13" fill="var(--surface)" stroke="var(--ink-faint)" stroke-width="1.5"/>
+          <text x="707" y="349" text-anchor="middle" class="mono" font-size="12" font-weight="600" fill="var(--ink-soft)">S</text>
+          <circle cx="760" cy="345" r="13" fill="var(--surface)" stroke="var(--ink-faint)" stroke-width="1.5"/>
+          <text x="760" y="349" text-anchor="middle" class="mono" font-size="12" font-weight="600" fill="var(--ink-soft)">S</text>
+          <circle cx="813" cy="345" r="13" fill="var(--confirm)" stroke="var(--confirm)" stroke-width="1.5"/>
+          <text x="813" y="349" text-anchor="middle" class="mono" font-size="12" font-weight="700" fill="var(--surface)">L</text>
+          <text x="813" y="384" text-anchor="middle" class="mono" font-size="11" fill="var(--confirm)">entry ✓</text>
+        </g>
+
+        <line x1="826" y1="345" x2="862" y2="345" stroke="var(--ink-faint)" stroke-width="1.75" stroke-dasharray="2 4" marker-end="url(#s19-arrow)"/>
+        <text x="885" y="349" text-anchor="middle" class="mono" font-size="15" fill="var(--ink-faint)">⋯</text>
+
+        <text x="515" y="423" text-anchor="middle" class="mono" font-size="12.5" fill="var(--ink-soft)">同一組 Spike → Sweep → Swing → LGC 反覆觸發，每輪都是一次獨立進場</text>
+
+        <text x="515" y="490" text-anchor="middle" class="mono" font-size="12.5" fill="var(--ink-soft)">→ 直到打到下一級 imbalanced flows，才跳出這層，回到外層找下一個 LGR</text>
+      </svg>
+      <div class="figure-cap"><b>外層</b>（藍色虛線）是Aggregation Model的四步驟，跑在方向圖、判斷flows有沒有真的反轉；<b>內層</b>（綠色實線）是SSSL，在Expansion展開之後切到進場時間框反覆觸發，一次外層週期可以包住好幾次內層進場。</div>
+    </div>
+  </section>
+
+  <div class="module-band">案例研究 <span class="arrow">→</span> <b>Case Studies</b> <span class="arrow">·</span> 第18～22節</div>
+
+  <!-- 18 -->
+  <section id="s18">
+    <div class="sec-head">
+      <h2><span class="sec-num">18 /</span> <b>案例研究 — BTC盤面實況</b></h2>
+      <span class="pill video">影片逐字稿</span>
+    </div>
+    <p class="soft">四支BTC即時盤面分析，各自示範一次完整或局部的LG to LG／SSSL操作過程。跟前面章節的抽象規則不同，這裡的重點是「規則在真實雜訊圖表上長什麼樣子」。</p>
+
+    <div class="subhead" id="s18-1"><span class="subnum">18.1</span><h3>LG to LG連續推進＋SSSL全流程</h3></div>
+    <p class="soft" style="margin-bottom:10px;">BTC即時盤面分析，單一session走完一次完整的「方向判斷→進場判斷」流程。</p>
+    <p>開場先示範一個不用先畫線就能大致判斷市場狀態的直覺：小實體帶長wick＝efficient（整理），大實體＝inefficient（擴張）。接著標出一段從高點噴出的大LGR，收盤穿越後市場一路efficient噴到高點——因為高點之上沒有untested LG，訂單都在那，價格自然直奔那裡。到了高點出現一根吃盡雙邊range的K棒，隨後大幅噴出穿越前一根LGC，形成新的LGR，這根K棒被明講「必須是DT，沒有模糊空間」，示範什麼叫「毫無疑義的訊號」。</p>
+    <p>接著具體示範「LG大小本身是資訊」的用法：LGC越大，代表它產生的LG level之後需要的aggregation（整理）時間也越長——大level＝訂單量大＝需要更久時間消化；並用「books are thin」解釋一個level被測試過一次之後敏感度會下降的原因：原本堆在那裡的單邊訂單被掃過之後就被清空了，之後即使價格回來，也不會有一樣多的量在等。全片最具體的段落，是一根K棒同時滿足「跌破前高後failure to continue」「穿越LG level」「inside bar後收盤形成LGC」「同時也是LGR」多重confluence，於是這根K棒的整個高低範圍都被視為可交易區間，在裡面找SSSL進場，目標設在LGC high。</p>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 影片原話</div>
+      <div class="quote-text">"The bigger the LGC, the larger the move that precedes it and also the larger the aggregation."</div>
+      <div class="quote-note">LG/LGC大小本身帶資訊：越大的擴張，之後需要的整理期也越長。</div>
+    </div>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 影片原話</div>
+      <div class="quote-text">"I take 85% of my trades as LGC sweeps... I just have to wait. I save more money from just not trading than working on my strike rate."</div>
+      <div class="quote-note">交易績效的關鍵不是選點能力，而是「不交易」的紀律——八成以上訂單只在LGC sweep後才進場。</div>
+    </div>
+
+    <div class="subhead" id="s18-2"><span class="subnum">18.2</span><h3>Weekly → Daily → 4R逐層精修實況</h3></div>
+    <p class="soft" style="margin-bottom:10px;">跨Weekly／Daily／4R三個時間框的週一開盤例行更新——第12.4節「多時間框精修」抽象工作流程唯一一次的完整實際操作示範。</p>
+    <p>先看Weekly抓大級別的high/EQ/low，再切到Daily找更精細的level，再把Daily的level「轉寫」到4R圖上執行。片中用Weekly層級的大LGC去預告「未來三四週都會是擴張式的價格波動」，讓交易者在更低時間框操作時心裡有底，不因短期雜訊自亂陣腳。中段完整示範「origin of expansion」在真實圖表上的定位方式：某段擴張沒有現成的LG可以標記，於是直接把「造成這段擴張的那根K棒」本身定義為origin，並強調「這會是目前圖上最重要的一個level，會決定我們的命運」。文末列出面對盤整不明圖表時的五種DT觸發情境（①spike+sweep ②failure to continue+跌破EQ ③LGR後等lower high ④完整反轉expand down ⑤收盤穿越持續flows），是目前教材裡最完整的一份「DT情境窮舉清單」。</p>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 影片原話</div>
+      <div class="quote-text">"This will decide our fate."</div>
+      <div class="quote-note">多層時間框分析最終都要收斂到單一關鍵level（origin of expansion）。</div>
+    </div>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 影片原話</div>
+      <div class="quote-text">"I am in absolutely no rush to long Bitcoin. I'm still on short watch."</div>
+      <div class="quote-note">示範「flows technically up」跟「真正想做的方向」可以不一致——等更高機率的訊號，不照著表面flows硬做。</div>
+    </div>
+
+    <div class="subhead" id="s18-3"><span class="subnum">18.3</span><h3>雙圖表對照與坦承主觀判斷</h3></div>
+    <p class="soft" style="margin-bottom:10px;">同時對照兩張圖（現貨圖只標LG level看大方向、Perp圖找實際進場點），價格處於長時間盤整、訊號不明確的狀態。</p>
+    <p>這支案例最大的特色，是罕見坦承在「沒有現成LG可用」時如何主觀判斷origin of expansion：「因為沒有LG在那裡形成，我就自己決定把這段擴張下跌的起點當作origin……我把它稍微『塑形』去符合我自己的敘事」。這段自白直接點出系統裡最隱晦的一塊——規則沒辦法機械式套用時，作者實際上是怎麼判斷的，呼應第10節那兩個「連作者自己都承認的主觀性」rule-box，可以視為同一主題的第三個實例。片中也示範一個沒在其他地方明講的判讀框架：問「這段走勢有沒有『燃料』可以繼續跑」——如果price已經進入相對窄的區間、量能被充分消化，接下來只要有觸發就會噴；如果還沒充分整理，則要等更久。文末明講「這些都不是高機率交易，兩個方向都不是，也許最好的操作是不操作」，呼應第03節「別在consolidation裡交易」的規則，但給出一個更誠實的即時案例。</p>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 影片原話</div>
+      <div class="quote-text">"I've just taken what I would decide is the origin of the expansion down... I've moulded that slightly to fit my narrative."</div>
+      <div class="quote-note">坦承在沒有現成LG可用時，origin of expansion的判定帶有主觀塑形成分。</div>
+    </div>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 影片原話</div>
+      <div class="quote-text">"These aren't high probability trades in either direction. So maybe best to stay out."</div>
+      <div class="quote-note">盤整不明時最好的操作是不操作。</div>
+    </div>
+
+    <div class="subhead" id="s18-4"><span class="subnum">18.4</span><h3>兩則快速案例：低點進場的兩種規則／一天一筆的紀律</h3></div>
+    <p class="soft" style="margin-bottom:10px;">同一段近兩週橫盤行情前後三天的兩支快速分析，前一支立規則、後一支示範紀律的實際樣子。</p>
+    <p>第一支示範一條教材沒有明講的細則：LGC低點該怎麼等進場有兩種規則，取決於參照的swing大小——多數情況下要在進場時間框上等「higher low sweep」出現才進場；但如果是在EQ位置，判斷起來比較寬鬆，因為此時的參照基準是「這段swing對到那段swing」的關係。片中也示範「雙情境同時持有」的操作心法：同時攤開「收盤穿越這個低點就空」跟「收盤穿越那個高點就多」兩套劇本，並坦承「我不太喜歡同時等兩種情境，但至少讓你們知道我的思路」。三天後的第二支幾乎沒有新規則，價值在於一段生活化的紀律自白：接下來一小時47分鐘完全不用盯盤，「一天很少交易超過一筆，如果已經抓到一個贏的setup，因為不需要也不想要更多」——跟第14節連續5個setup全勝的積極示範剛好形成對比，說明同一套系統既可以在Expansion 2連續加碼，也可以是「一天一筆就收工」，取決於當下所處的循環階段跟個人選擇。</p>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 影片原話</div>
+      <div class="quote-text">"Most of the time I just wait for the higher low sweep on the entry timeframe. Whereas if it's at the EQ, we don't have to worry too much about that."</div>
+      <div class="quote-note">LGC低點進場的兩種等待標準，依參照的swing層級而異。</div>
+    </div>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 影片原話</div>
+      <div class="quote-text">"I don't really take more than one trade a day if I take a winner, because I just don't need nor want to. That's the beauty of it — I don't need to be at the computer."</div>
+      <div class="quote-note">交易紀律的生活化示範：贏了就收手，不是規則要求而是主動選擇，系統設計的目的是讓交易者不需要一直盯盤。</div>
+    </div>
+  </section>
+
+  <!-- 19 -->
+  <section id="s19">
+    <div class="sec-head">
+      <h2><span class="sec-num">19 /</span> <b>案例研究 — Flows與風控實測</b></h2>
+      <span class="pill video">影片逐字稿</span>
+    </div>
+    <p class="soft">四支案例，補齊「spike」的正式定義、部位風險規則、候盤直覺、以及兩則Q&A澄清——這批內容比單純換標的重複示範更貼近實戰細節。</p>
+
+    <div class="subhead" id="s19-1"><span class="subnum">19.1</span><h3>90天回測：spike的客觀定義與風險減碼</h3></div>
+    <p class="soft" style="margin-bottom:10px;">BTCPERP，用Replay Mode回放約三個月（90天）走勢，刻意只停留在方向圖上標DT，不切進entry timeframe練習方向判斷。</p>
+    <p>開場把方向邏輯收斂成一個二分問題：任何一根收盤，只問「這是flows的reversal還是continuation」，沒有第三種狀態。要回答這個問題，片中第一次把「spike」給出明確客觀定義——<b>spike＝一根收盤方向跟當下flows相反的LGC</b>（例如整體在跌，卻收盤走出一根向上的LGC），並直言這是整套系統裡最難拿捏客觀標準的一環。接著重申交易紀律：90%的設定都應該在LGC內交易，只有明確逆勢的sweep DT才考慮更激進的做法，且逆勢單位建議減半風險、順勢單位才給全額風險。整段90天回測中，作者刻意不把任何一次單獨的sweep標記成DT，只用LGC計算，最後統計出43次方向觸發，平均約每兩天一次；若以60~65%勝率、贏3R輸1R估算，長期是正期望值的策略。</p>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 影片原話</div>
+      <div class="quote-text">"So how do we define a spike? For me... I'm going to define it clearly and objectively as an LGC [that opposes the current direction]."</div>
+      <div class="quote-note">第一次把「spike」明確定義成「跟當下flows方向相反的LGC」，而非模糊的「噴出」概念。</div>
+    </div>
+    <div class="rule-box"><b>部位風險規則：</b>「maybe half risk on counter flows, full risk on with the flows」——逆勢單位減半風險、順勢單位全額風險，教材其他章節（第12.1節R倍數移動停損）只講出場管理，沒講進場前的部位大小該怎麼依訊號強弱調整，這條算是補齊。90天43次訊號的頻率，也可以跟第9.2節「4H訊號一週最多2次」的說法互相印證。</div>
+
+    <div class="subhead" id="s19-2"><span class="subnum">19.2</span><h3>partial rebalance vs full cycle rebalance實例</h3></div>
+    <p class="soft" style="margin-bottom:10px;">BTCPERP，單一swing從頭走到尾的LG to LG練習，內部flows與外部flows的層級關係是核心。</p>
+    <p>一段大LGC內部又形成自己的internal swing，內部flows可以先小幅反轉，但還不足以確認外部swing真正反轉，直到收盤穿越外部LG level才算數。片尾把整段行情倒回去整理成完整的Expansion Cycle摘要，並明確區分<b>partial rebalance</b>（單次sweep+LGC，expansion內部持續加碼用）與<b>full cycle rebalance</b>（整個3 Expansion + 2 Rebalance循環走完才算數）的差異——這是第10節「5 Phase Expansion Cycle」的抽象循環結構，第一次有逐K棒的實例把兩者的差別具體演示出來。</p>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 影片原話</div>
+      <div class="quote-text">"Rebalance complete again — we know we're expanding there so it's partial rebalance, it's not full cycle rebalance. Full cycle rebalance comes after the full expansion phase."</div>
+      <div class="quote-note">partial rebalance跟full cycle rebalance的明確區分。</div>
+    </div>
+
+    <div class="subhead" id="s19-3"><span class="subnum">19.3</span><h3>團體共學：用wick讀掛單壓力</h3></div>
+    <p class="soft" style="margin-bottom:10px;">一場社群共學直播，4小時方向圖切30分鐘進場圖，「大家一起對答案」的即時教學。</p>
+    <p>核心是兩個候盤細節。第一，反覆用wick的有無讀掛單壓力：如果一根收盤創高的K棒幾乎沒有上影線，代表這個價位之上根本沒什麼掛單在等——因為如果有，早就會被打出更長的wick；反過來，沒wick的K棒之後如果被吃掉，就代表真的有量在上面等著出貨，這根本身就不該拿來當多方延續的依據。第二，點出一個具體幾何規律：<b>LGR level大約落在LGC的EQ的85~90%位置</b>，強調這不是巧合。全片也特別強調「efficient（乾淨、無太多wick）的價格行為才會給出乾淨的sweep」——choppy、wick很多的走勢通常不會給出可信的sweep訊號。</p>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 影片原話</div>
+      <div class="quote-text">"The LGR level is 85 to 90 percent the EQ of the LGC. And... it's no coincidence."</div>
+      <div class="quote-note">LGR落點與LGC的EQ之間的具體幾何比例。</div>
+    </div>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 影片原話</div>
+      <div class="quote-text">"It's in the efficiency that we want to trade, because the efficient price is what gives us a sweep."</div>
+      <div class="quote-note">把「efficient價格行為」跟「sweep訊號可信度」明確掛鉤。</div>
+    </div>
+
+    <div class="subhead" id="s19-4"><span class="subnum">19.4</span><h3>兩則Q&amp;A澄清：短線flows的但書／LGR為什麼孤立無意義</h3></div>
+    <p class="soft" style="margin-bottom:10px;">兩支BTCUSD短篇複習／Q&amp;A影片，各自澄清一條容易被誤解的規則。</p>
+    <p>第一支明確給出「只跟flows做」原則的一個但書：市場短期內部flows轉向上，但長期大方向仍是下跌，片中直言「short term they're 100% up, long term they're not — but we can take the short term flows as long as we know it's [counter to] the overall market if we just get quick moves」——短線flows可以獨立於長線flows交易，只要清楚自己在逆勢、目標只是快速一段小行情，不需要等長線方向真正翻轉。第二支是逐根K棒拆解一段容易誤判的flows反轉：市場出現一根帶LGR味道的K棒，作者刻意不理它，因為真正該看的是這根K棒有沒有測到EQ——「LGRs mean fuck all in isolation. It's that the candle tested the EQ.」；並進一步解釋LGC三層機制運作的原因：一根大LGC代表一次失衡擴張，之後rebalance時通常在EQ附近就能找到足夠流動性完成回補，但有時候EQ的流動性不夠，價格就會多跌深一點，一路碰到LGC的Low才找得到足夠流動性——這補上了第9.5節「LGC四層框架」沒講的「為什麼有時候要跌比較深」的機制原因。</p>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 影片原話</div>
+      <div class="quote-text">"It's not that it was the LGR because LGRs mean fuck all in isolation. It's that the candle tested the EQ."</div>
+      <div class="quote-note">LGR孤立無意義，EQ測試才是關鍵——呼應第15節Discord筆記的類似說法，但這裡用實際圖表把「為什麼」講得更具體。</div>
+    </div>
+  </section>
+
+  <!-- 20 -->
+  <section id="s20">
+    <div class="sec-head">
+      <h2><span class="sec-num">20 /</span> <b>案例研究 — EURUSD與現貨策略</b></h2>
+      <span class="pill video">影片逐字稿</span>
+    </div>
+    <p class="soft">全書其餘章節幾乎都是加密貨幣永續合約，這兩支是例外：一支換了資產類別，一支換了整個交易框架。</p>
+
+    <div class="subhead" id="s20-1"><span class="subnum">20.1</span><h3>EURUSD實況：多時間框對齊</h3></div>
+    <p class="soft" style="margin-bottom:10px;">EURUSD，30分鐘圖當方向圖、2分鐘圖當進場圖，用Replay Mode重播約一週走勢——全書唯一非加密貨幣的完整案例。</p>
+    <p>先在最高proportion（長期swing）標出方向，再往下一層（30分鐘）標出short-term swing，再往下切到2分鐘找SSSL進場——三層proportion同時在跑。全片反覆強調一個核心判準：<b>「long term flows meet short term flows — all the flows line and it just runs like a river」</b>，長線swing方向跟短線swing方向真正對齊的那一刻，才是片中唯一標記「runner」（值得抱最久、風報比最好）的那筆交易，最終停損設在swing低點、持倉超過一週。這跟第12.4節「多時間框精修」的邏輯完全一致，但那一節只有文字流程描述，這支影片是唯一一次完整、逐步示範怎麼真正做多時間框對齊分析，而且用的是非加密貨幣資產，直接證明這套系統跟標的無關。</p>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 影片原話</div>
+      <div class="quote-text">"Long term flows meet short term flows. All the flows line and it just runs like a river."</div>
+      <div class="quote-note">多時間框對齊的核心心法。</div>
+    </div>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 影片原話</div>
+      <div class="quote-text">"Understanding the proportions becomes a tool to have serious, serious upside in the profitability of this, if you play your card right."</div>
+    </div>
+
+    <div class="subhead" id="s20-2"><span class="subnum">20.2</span><h3>現貨Long-Only策略與Reclaim四步驟定義</h3></div>
+    <p class="soft" style="margin-bottom:10px;">BTC與ETH現貨，只做多（「如果我想做空，我就直接去做perp」），只用Weekly抓level、Daily找進場——約佔整體交易量30%的獨立副策略。</p>
+    <p>這支案例最大的貢獻，是第一次把社群裡各說各話、沒人講清楚的「Reclaim」明確定義成一套四步驟流程：①daily收盤穿越weekly的LG level；②之後形成一個higher low（範圍限定在「造成那次收盤穿越的那根K棒的高低點之間」）；③這個higher low被sweep或raid過一次；④再一次daily收盤穿越同一個weekly level——四個條件同時滿足才叫reclaim，缺一不可。除此之外，這套現貨策略還有幾個跟其他章節不同的執行細節：停損是「軟的」，不掛在交易所訂單簿裡，而是在關鍵level設alert、觸發後才手動評估；停利只鎖external range的LG，不看固定R倍數，但因為「市場習慣走三段式節奏」，實際RR經驗值大約落在2.75~3.25R之間；並明講一條紀律：「只做higher low的多單、只做lower high的空單，絕不碰lower low或higher high」。</p>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 影片原話</div>
+      <div class="quote-text">"People were talking about reclaim of levels and no one objectively defining what that is... I'm going to give you a reclaim of a level tutorial."</div>
+      <div class="quote-note">明確指出reclaim這個詞目前社群裡沒有正式定義，這支影片要把它講死。</div>
+    </div>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 影片原話</div>
+      <div class="quote-text">"[Rule:] you will not take anything that's not a higher low or a lower high. Your profitability goes through the roof."</div>
+    </div>
+    <div class="rule-box"><b>跟第8節Reclaim定義的關係：</b>術語表（第01節）跟第8節的Reclaim目前只有一句話（「收盤穿越LG後又跌破，之後再度收盤穿越同一個level」），這支影片給出的四步驟版本明顯更嚴謹、更具體，值得讀者對照參考。</div>
+  </section>
+
+  <!-- 21 -->
+  <section id="s21">
+    <div class="sec-head">
+      <h2><span class="sec-num">21 /</span> <b>案例研究 — 作業訓練法</b></h2>
+      <span class="pill video">影片逐字稿</span>
+    </div>
+    <p class="soft">兩份週末作業示範，方向完全相反，合起來是一套完整的訓練閉環：一個練「怎麼看」，一個練「怎麼定義DT」。</p>
+
+    <div class="subhead" id="s21-1"><span class="subnum">21.1</span><h3>反向工程：從贏家回推DT定義</h3></div>
+    <p class="soft" style="margin-bottom:10px;">BTC，4小時方向圖＋30分鐘entry timeframe。</p>
+    <p>標準流程是「先在方向圖上找DT，再切到entry timeframe找SSSL進場」（由上而下）；這份作業反過來：先只在30分鐘entry timeframe上，把一整個月裡所有符合SSSL規則、而且真正打到停利目標的「贏家」設定通通標記出來（不管方向、也不標記輸家——「我們只聚焦贏家，不聚焦輸家」），再回到4小時方向圖，回頭去看這些贏家設定分別對應著方向圖上的哪一個DT、以及那個DT具體長什麼樣子。片中示範一個具體案例：最初把「單純LGC穿越前一個level」當DT，回頭核對對應到的entry timeframe設定其實是輸家；於是重新定義DT，改成「必須等到LGC的EQ被回測過才算數」，這次核對才對應到真正的贏家。這個「定義→回推核對→發現是輸家→收緊定義→再核對」的反覆修正過程，就是這份作業教的核心方法，作者稱之為「reverse engineering」。</p>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 影片原話</div>
+      <div class="quote-text">"We don't try and guess the ending of a book if we haven't read the book. So wait, read the ending and then you can go and do what you want because you know the storyline."</div>
+      <div class="quote-note">用「先看結局再回頭理解故事」比喻反向工程訓練法的精神。</div>
+    </div>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 影片原話</div>
+      <div class="quote-text">"You could almost just trade at the LGC EQ for the rest of your life. I swear to Christ."</div>
+      <div class="quote-note">把DT定義收緊到「LGC的EQ必須被回測過」之後，才篩出真正的贏家，凸顯EQ在精修DT時的關鍵地位。</div>
+    </div>
+
+    <div class="subhead" id="s21-2"><span class="subnum">21.2</span><h3>正向訓練：逐swing窮舉拆解</h3></div>
+    <p class="soft" style="margin-bottom:10px;">BTC，4小時方向圖，三個月價格行為的逐swing拆解練習。</p>
+    <p>跟21.1互補的「正向」訓練法：把過去三個月的價格行為，用「低-高-高點低（或高-低-低點高）」的結構逐一框出每一個獨立的swing，針對每一個swing單獨做逐K棒分析——不是一次看完整張圖，而是把長期flows跟短期flows的關係拆開來、一段一段練習辨認。具體做法：先確定「現在這個swing」跟「上一個swing」分別是什麼（呼應第7節「怎麼挑相關的swing」），標出這個swing範圍內的所有LG level，逐K棒narrate發生了什麼——close through、fail to continue、swing forms、LGC、origin of expansion——做完一個swing換下一個，直到三個月結束。重點不是「做完就好」，而是靠重複操作讓「long-term flows跟short-term flows之間的比例關係」變成直覺。</p>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 影片原話</div>
+      <div class="quote-text">"I still feel this is where people are struggling — it's the proportional relationship between the long term flows and the shorter term flows."</div>
+      <div class="quote-note">指出學員最常卡關的地方：長短期flows的比例關係。</div>
+    </div>
+  </section>
+
+  <!-- 22 -->
+  <section id="s22">
+    <div class="sec-head">
+      <h2><span class="sec-num">22 /</span> <b>Replay Mode刻意練習</b></h2>
+      <span class="pill video">影片逐字稿</span>
+    </div>
+    <p class="soft">一支EURUSD快速案例的後半段，話題完全轉向——不是教規則，是教「怎麼練出直覺」，全書唯一觸及具體練習方法與成果數字的內容。</p>
+    <p>前半是典型LG to LG／Aggregation Model chart walkthrough，內容跟其他案例高度重複，唯一值得一提的細節是「hindsight cheating」的自我提醒——事後看圖永遠合理，但那不代表當下真的看得出來，所以要用Replay Mode練習而不是只回顧歷史線圖。後半公開具體訓練數字：用Replay Mode練習了20個月，其中19個月是賺錢的，平均準確率60%；並描述自己是怎麼從「用Replay練習第一次差點把筆電砸出去」進步到「每天做一次Replay、連續三個月，變成完全不同的交易者」。</p>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 影片原話</div>
+      <div class="quote-text">"I've done replay mode for 20 months prior, and out of the 20 months I made money in 19 of them. My average accuracy was 60% over the 20 months."</div>
+      <div class="quote-note">具體訓練成果數字，全教材唯一一次揭露。</div>
+    </div>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 影片原話</div>
+      <div class="quote-text">"I did replay once a day, every day, for three months. All of a sudden I was a completely different trader."</div>
+      <div class="quote-note">具體練習頻率與週期。</div>
+    </div>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 影片原話</div>
+      <div class="quote-text">"Don't be afraid to fuck up. The first time I did replay after learning this system, I nearly threw the laptop out of the house."</div>
+    </div>
+  </section>
+
+  <div class="module-band">總結工具 <span class="arrow">→</span> <b>Synthesis</b> <span class="arrow">·</span> 第23～24節</div>
+
+  <!-- 23 -->
+  <section id="s23">
+    <div class="sec-head">
+      <h2><span class="sec-num">23 /</span> <b>風控總整理</b></h2>
+      <span class="pill unverified">整理</span>
+    </div>
+    <p class="soft">這節不是新的規則，是把原本分散在第12.1、19.1、20.2節的風控細節整合到一起，方便一次看完。跨章節整理，沒有單一影片逐字對應這節的編排。</p>
+
+    <div class="subhead" id="s23-1"><span class="subnum">23.1</span><h3>停損：結構性移動停損</h3></div>
+    <p class="soft" style="margin-bottom:10px;">來自第12.1節。進場後不是死守原始停損，而是隨著價格每收盤穿越一個R倍數，就把停損移到「造成那次穿越的那個swing」——用結構本身當停損參照，不是固定百分比。</p>
+    <div class="rule-box"><b>取捨：</b>系統勝率已驗證到60~65%時，其實不需要這套移動停損；勝率還在累積數據階段，就該積極移動停損降低風險。另一種軟停損做法（第20.2節現貨策略）：不掛在交易所訂單簿裡，而是在關鍵level設alert，觸發後才手動評估。</div>
+
+    <div class="subhead" id="s23-2"><span class="subnum">23.2</span><h3>部位大小：順勢全額、逆勢減半</h3></div>
+    <p class="soft" style="margin-bottom:10px;">來自第19.1節90天回測案例。逆勢單位（sweep DT等反著當下flows走的訊號）建議減半風險；順勢單位（flows continuation LGC，第12.2節三種DT類型裡最安全的一種）才給全額風險。</p>
+
+    <div class="subhead" id="s23-3"><span class="subnum">23.3</span><h3>停利：固定倍數 vs. 鎖外層range</h3></div>
+    <p class="soft" style="margin-bottom:10px;">兩種做法並存，取決於策略：SSSL標準做法（第11節）是固定倍數2:1/3:1（6:1較激進，作者不建議）；現貨long-only策略（第20.2節）則只鎖external range的LG，不看固定R倍數，實際RR經驗值落在2.75~3.25R之間，因為「市場習慣走三段式節奏」。</p>
+
+    <div class="rule-box" style="margin-top:24px;"><b>教材沒有涵蓋、需要自己另外補的：</b>單筆交易該押多少%本金、同時開幾筆倉位算安全、連續虧損後該怎麼調整——這些帳戶層級的資金管理規則，翻遍全部教材跟案例都沒有找到明確數字。永續合約特有的資金費率（funding rate）怎麼處理、槓桿倍數怎麼選、市價單滑價怎麼應對，教材也完全沒有觸及。這些是交易所執行面的知識，需要自己另外建立規則，不是這套系統教的範圍。</div>
+  </section>
+
+  <!-- 24 -->
+  <section id="s24">
+    <div class="sec-head">
+      <h2><span class="sec-num">24 /</span> <b>進場決策Checklist</b></h2>
+      <span class="pill unverified">整理</span>
+    </div>
+    <p class="soft">把方向判斷→DT觸發→SSSL進場→濾網→停損停利→部位大小，串成一份可以照著走的操作清單。跨章節整理，沒有單一影片逐字對應這份清單，實際盤面判斷仍需要練習累積的直覺（見第10、18.3節「連作者自己都承認的主觀性」）。</p>
+
+    <div class="sequence">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-label mono">方向確認</div>
+          <div class="step-gloss">用LG to LG（第6節）標出目前所在的swing跟裡面所有LG，優先看同一swing內未測試過的LG。確認「相關的swing」選對了嗎（第7節）。</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-label mono">DT觸發確認</div>
+          <div class="step-gloss">這是三種DT類型（第12.2節）裡的哪一種：Flow Continuation LGC（最安全）、LGC Reversal（最賺但難判讀）、還是Sweep DT（最複雜、逆勢）？有沒有confluence（第9.5節四層框架）同時指向同一價位？</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-label mono">SSSL四步驟</div>
+          <div class="step-gloss">Spike→Sweep→Swing→LGC（第11節）依序出現了嗎？LE Candle過濾器（第13節）：sweep candle的高/低點有沒有比前一根更極端，收盤有沒有穿越自己range的EQ？</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-label mono">精修（可選）</div>
+          <div class="step-gloss">要不要等LGC的retest換更好的風報比（第12.3節）？高時間框的level有沒有跟這裡confluence（第12.4節多時間框精修）？</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <div class="step-label mono">停損停利與部位大小</div>
+          <div class="step-gloss">停損設在swing上/下方幾個tick，目標2:1/3:1（第11節）。這是順勢還是逆勢單位？部位風險是否依第23.2節規則調整過？</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <div class="step-label mono">事後檢查</div>
+          <div class="step-gloss">這筆是不是硬湊出來的？「if you're patient the setups will come to you」（第9節）——沒看到明確訊號前，答案永遠是等待，不是找理由進場。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-box"><b>提醒：</b>這份checklist幫你確認「該檢查的都檢查了」，但不會幫你做主觀判斷本身——origin of expansion該標在哪、現在算不算「真的在aggregate」，這些仍然要靠第18～21節的案例練習累積直覺，沒有捷徑。</div>
+  </section>
+
+
+  <footer>
+    整理自：<b>The_Liquidity_Gap-The_LG</b> / <b>LGRs_and_LGCs</b> / <b>The_Aggregation_Model</b> / <b>SSSL_Supplement</b> / <b>SSSL_Filtering-The_LE_Candle</b> / <b>LGR_System-Navigating_the_Content</b>／ <b>Market_Navigation-Directional_Triggers</b> / <b>Defining your Swing and your LG Levels to Maximise Trading Reversals in Flows</b> / <b>Levels are NOT levels</b> / <b>Why Lower Highs and Higher Lows are so Damn Important to the LGR system</b> / <b>Expansion Phases, Rebalancing Phases, Flow Reversals, and Proportionate Relationships</b> / <b>Expansions and Proportions</b> / <b>Let's Talk LGCs</b> / <b>Ramblings on Logic, LG to LG, and Candle by Candle</b> / <b>Bringing it All Together</b>（Supplementary）（皆TraderxB, LGR Traders 2022）／ <b>lgr-discussion</b> Discord逐字稿（2022-11-30）／本機mlx-whisper轉錄逐字稿＋畫面截圖：<b>5 Phase Expansion Cycle and Price Behaviour</b> / <b>The Aggregation Model - Aggregation 101</b> / <b>The Liquidity Gap- The LG</b> / <b>Module 1.2 Assignment</b> / <b>Module 1 - The LGR and The LGC</b> / <b>Module 1.4 - The Aggregation Model</b> / <b>LGR System Flow Sequencing</b> / <b>Entry Trigger 1 - The SSSL</b> / <b>Navigating Expansions with LGCs for SSSL Triggers</b> / <b>Managing Risk Parameters on a Live SSSL entry</b> / <b>Defining your DTs - SSSL LGC Reversal</b> / <b>Homework Assignment - The Sweep DT</b> / <b>Refining DTs and Entries using the same DT</b> / <b>Refining your Levels for Higher Accuracy</b>（皆TraderxB, LGR Traders 2022）。Module 1.3 Assignment、Flows Discussion and LGCs、Quick Note on Data Collection、Ramblings on Price and DTs、Navigating DTs and LG to LG for short term and long term flows五支已轉錄閱讀，但內容跟其他已收錄影片重複度過高，未貢獻獨立概念故未收錄進本文，僅供之後查證用。ltf_sensitivity_around_htf_price_points的內容已併入第12.4節。Category D（BTCPERP / FTM / XAUUSD — LG to LG Concept三支）與Category E（Directional Trigger Practice：1INCHPERP／ETHPERP／SOLUSDT／SXPPERP四支＋Replay Mode 1 week of XRPPERP）皆已轉錄閱讀，八支中六支純粹是同一套LG to LG／SSSL邏輯在不同標的上的重複實戰示範，未貢獻獨立概念；SXPPERP的「慣性心法」quote併入第06節，XRPPERP的一週戰績併入第14節，其餘不逐支收錄。Category F（每日盤面分析類15支）已全數轉錄閱讀並收錄成第18～22節的案例研究：<b>BTC analysis June 3rd</b> / <b>BTC analysis from 1W to 4H - June 6th</b> / <b>BTC Analysis - June 10th</b> / <b>Quick BTC Analysis - May 23rd</b> / <b>Quick BTC Analysis - May 26th</b> / <b>Flows Practice for Directional Confidence</b> / <b>Flows Practice BTCPERP</b> / <b>Flows Talk Friday</b> / <b>Quick Flow Analysis - BTCUSD</b> / <b>Price Discussion on BTCUSD</b> / <b>EURUSD Replay and Discussion</b> / <b>Spot Trading Walkthrough</b> / <b>Weekend Assignment - June 10th</b> / <b>Weekend Assignment - June 4th</b> / <b>Rambles on EURUSD - May 27th</b>（皆TraderxB, LGR Traders 2022）。這批影片並非單純重複示範：spike的正式定義、逆勢減碼風控、Reclaim四步驟定義、多時間框對齊的唯一完整實況、以及Replay Mode刻意練習的具體成果數字，都是其他章節沒有的內容。
+    <br><br>
+    章節順序依教學邏輯排列（方向Module 1 → 進場Module 2 → 補充 → 案例研究），非處理時間順序；2026-09-25重排。第17節巢狀結構圖解為對話中整理出的跨章節推論，非官方教材原文，2026-09-25新增。2026-09-25再次調整：原第06/07節（LG to LG）與第12/13節（SSSL）本是PDF與影片深化的姊妹節，已合併為單節並改寫敘事語氣，全文不再需要對照原始影片即可獨立閱讀；各章節pill／quote／文末來源清單仍保留出處供查證，原19節精簡為17節。2026-09-25修正：先前footer提到的「Candle-By-Candle Series」經核對資料夾並無對應檔案，屬舊草稿殘留，已刪除。2026-09-25新增第18～22節：Category F全數15支影片轉錄閱讀完畢，逐支評估後以案例研究形式收錄，不採預設高重複度的判斷。2026-09-25新增第23～24節與開頭新手導覽框：整合原本分散在第12.1、19.1、20.2節的風控規則，並串成一份進場決策checklist；同時老實標出教材沒有涵蓋的部分（帳戶層級資金管理、資金費率、槓桿選擇、下單滑價），不臆測補上。2026-09-25第15節補圖：Discord逐字稿原本只有文字，另從2022-11-30當天的網頁匯出檔（lgr-discussion.html_Files資料夾）裡挑出5張辯論當下實際對照的原圖，各自對應到已收錄的quote；其餘20餘張同一組基礎圖表模板反覆貼標籤的重複圖、以及一張含意不明的手繪紅圈截圖，判斷價值不足或無法確認對應內容，未收錄。
+  </footer>
+
+</div>
+</div>
+
+<script>
+  try{
+    var links = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+    var map = {};
+    links.forEach(function(a){ map[a.getAttribute('href').slice(1)] = a; });
+    var sections = Array.prototype.slice.call(document.querySelectorAll('section[id], .subhead[id], .card[id]'));
+    if('IntersectionObserver' in window && sections.length){
+      var observer = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          var link = map[entry.target.id];
+          if(!link) return;
+          if(entry.isIntersecting){
+            links.forEach(function(a){ a.classList.remove('active'); });
+            link.classList.add('active');
+          }
+        });
+      }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+      sections.forEach(function(s){ observer.observe(s); });
+    }
+  }catch(e){}
+
+  try{
+    var TOC_STATE_KEY = 'lgr-field-notes-toc-collapse';
+    var tocState = {};
+    try{ tocState = JSON.parse(localStorage.getItem(TOC_STATE_KEY)) || {}; }catch(e){ tocState = {}; }
+
+    function saveTocState(){
+      try{ localStorage.setItem(TOC_STATE_KEY, JSON.stringify(tocState)); }catch(e){}
+    }
+
+    function wireToggle(btn){
+      var targetId = btn.getAttribute('aria-controls');
+      var target = document.getElementById(targetId);
+      if(!target) return;
+      var collapsed = !!tocState[targetId];
+      btn.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+      target.hidden = collapsed;
+      btn.addEventListener('click', function(){
+        var nowCollapsed = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', nowCollapsed ? 'false' : 'true');
+        target.hidden = nowCollapsed;
+        tocState[targetId] = nowCollapsed;
+        saveTocState();
+      });
+    }
+
+    Array.prototype.slice.call(document.querySelectorAll('.toc-group-toggle, .toc-sub-toggle')).forEach(wireToggle);
+  }catch(e){}
+</script>
+</body>
+</html>
