@@ -30,6 +30,54 @@
     --shadow: 0 1px 2px rgba(52,59,89,.08), 0 8px 24px -12px rgba(52,59,89,.16);
   }
 
+  /* Dark variant — same role, tuned to Tokyo Night's dark hues rather than the
+     risotto theme's base16 file (whose base09/0A/0C remap breaks the pending/level
+     color coding on this page) */
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ground:      #1A1B26;
+      --surface:     #212330;
+      --surface-2:   #2B2E42;
+      --line:        #A9B1D630;
+      --ink:         #C0CAF5;
+      --ink-soft:    #9AA5CE;
+      --ink-faint:   #7982B0;
+
+      --level:       #7AA2F7;
+      --level-soft:  #7AA2F724;
+      --confirm:     #9ECE6A;
+      --confirm-soft:#9ECE6A20;
+      --pending:     #E0AF68;
+      --pending-soft:#E0AF6822;
+      --reaction:    #F7768E;
+      --reaction-soft:#F7768E1e;
+
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.55);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:      #1A1B26;
+    --surface:     #212330;
+    --surface-2:   #2B2E42;
+    --line:        #A9B1D630;
+    --ink:         #C0CAF5;
+    --ink-soft:    #9AA5CE;
+    --ink-faint:   #7982B0;
+
+    --level:       #7AA2F7;
+    --level-soft:  #7AA2F724;
+    --confirm:     #9ECE6A;
+    --confirm-soft:#9ECE6A20;
+    --pending:     #E0AF68;
+    --pending-soft:#E0AF6822;
+    --reaction:    #F7768E;
+    --reaction-soft:#F7768E1e;
+
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.55);
+    color-scheme: dark;
+  }
+
   *{box-sizing:border-box;}
   html{ scroll-behavior:smooth; }
   @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
@@ -140,13 +188,20 @@
 
   .lang-doc{ display:contents; }
   .lang-doc[hidden]{ display:none !important; }
-  .lang-toggle{
+
+  .toolbar{
     position:fixed;
     top:16px;
     right:16px;
     z-index:50;
     display:inline-flex;
     align-items:center;
+    gap:8px;
+  }
+  .hud-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
     gap:6px;
     padding:6px 12px;
     border-radius:3px;
@@ -159,9 +214,13 @@
     cursor:pointer;
     box-shadow:var(--shadow);
   }
-  .lang-toggle:hover{ color:var(--level); border-color:var(--level); }
+  .hud-btn:hover{ color:var(--level); border-color:var(--level); }
+  #theme-toggle{ padding:6px 9px; line-height:0; }
+  #theme-toggle svg{ display:block; }
   @media (max-width:560px){
-    .lang-toggle{ top:8px; right:8px; padding:5px 10px; font-size:11px; }
+    .toolbar{ top:8px; right:8px; gap:6px; }
+    .hud-btn{ padding:5px 10px; font-size:11px; }
+    #theme-toggle{ padding:5px 8px; }
   }
 
   @media (max-width:900px){
@@ -519,7 +578,10 @@
 </style>
 </head>
 <body>
-<button id="lang-toggle" class="lang-toggle" type="button" aria-label="Switch to English">EN</button>
+<div class="toolbar">
+  <button id="theme-toggle" class="hud-btn" type="button" aria-label="切換為深色模式"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+  <button id="lang-toggle" class="hud-btn lang-toggle" type="button" aria-label="Switch to English">EN</button>
+</div>
 <div id="doc-zh" class="lang-doc">
 <div class="layout">
 
@@ -2849,6 +2911,59 @@
         apply(next);
         try{ localStorage.setItem(LANG_KEY, next); }catch(e){}
       });
+    }catch(e){}
+  })();
+</script>
+
+<script>
+  (function(){
+    try{
+      var THEME_KEY = 'lgr-field-notes-theme';
+      var root = document.documentElement;
+      var btn = document.getElementById('theme-toggle');
+      var mql = window.matchMedia('(prefers-color-scheme: dark)');
+      var MOON = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+      var SUN = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>';
+
+      function isZh(){
+        var docZh = document.getElementById('doc-zh');
+        return !docZh || !docZh.hidden;
+      }
+      function effectiveTheme(){
+        var explicit = root.getAttribute('data-theme');
+        if(explicit === 'dark' || explicit === 'light') return explicit;
+        return mql.matches ? 'dark' : 'light';
+      }
+      function render(theme){
+        if(!btn) return;
+        var zh = isZh();
+        if(theme === 'dark'){
+          btn.innerHTML = SUN;
+          btn.setAttribute('aria-label', zh ? '切換為淺色模式' : 'Switch to light mode');
+        }else{
+          btn.innerHTML = MOON;
+          btn.setAttribute('aria-label', zh ? '切換為深色模式' : 'Switch to dark mode');
+        }
+      }
+
+      var saved = null;
+      try{ saved = localStorage.getItem(THEME_KEY); }catch(e){}
+      if(saved === 'dark' || saved === 'light') root.setAttribute('data-theme', saved);
+      render(effectiveTheme());
+
+      if(btn){
+        btn.addEventListener('click', function(){
+          var next = effectiveTheme() === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          try{ localStorage.setItem(THEME_KEY, next); }catch(e){}
+          render(next);
+        });
+      }
+      try{
+        mql.addEventListener('change', function(){
+          if(!root.getAttribute('data-theme')) render(effectiveTheme());
+        });
+      }catch(e){}
     }catch(e){}
   })();
 </script>
