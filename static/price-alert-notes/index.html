@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Price Alert Field Notes</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500;700&display=swap');
+
+  /* Palette matched to kuoforit.github.io (risotto theme, tokyo-night-light), same tokens as /lgr-notes/ */
+  :root{
+    --ground:      #D5D6DB;
+    --surface:     #CBCCD1;
+    --surface-2:   #DFE0E5;
+    --line:        #343B5930;
+    --ink:         #343B59;
+    --ink-soft:    #4C505E;
+    --ink-faint:   #6B6E7C;
+
+    --level:       #34548A;   /* structure: flow, rules, links */
+    --level-soft:  #34548A22;
+    --confirm:     #485E30;   /* verified / working */
+    --confirm-soft:#485E301e;
+    --pending:     #965027;   /* caveats, Binance side */
+    --pending-soft:#96502720;
+    --reaction:    #8C4351;   /* secrets, failures */
+    --reaction-soft:#8C43511c;
+
+    --shadow: 0 1px 2px rgba(52,59,89,.08), 0 8px 24px -12px rgba(52,59,89,.16);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ground:#1A1B26; --surface:#212330; --surface-2:#2B2E42; --line:#A9B1D630;
+      --ink:#C0CAF5; --ink-soft:#9AA5CE; --ink-faint:#7982B0;
+      --level:#7AA2F7; --level-soft:#7AA2F724; --confirm:#9ECE6A; --confirm-soft:#9ECE6A20;
+      --pending:#E0AF68; --pending-soft:#E0AF6822; --reaction:#F7768E; --reaction-soft:#F7768E1e;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.55);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#1A1B26; --surface:#212330; --surface-2:#2B2E42; --line:#A9B1D630;
+    --ink:#C0CAF5; --ink-soft:#9AA5CE; --ink-faint:#7982B0;
+    --level:#7AA2F7; --level-soft:#7AA2F724; --confirm:#9ECE6A; --confirm-soft:#9ECE6A20;
+    --pending:#E0AF68; --pending-soft:#E0AF6822; --reaction:#F7768E; --reaction-soft:#F7768E1e;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.55);
+    color-scheme: dark;
+  }
+
+  *{box-sizing:border-box;}
+  html{ scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
+  body{
+    margin:0; background:var(--ground); color:var(--ink);
+    font-family:'Fira Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size:15px; line-height:1.65; -webkit-font-smoothing:antialiased;
+  }
+  a{ color:var(--level); }
+  :focus-visible{ outline:2px solid var(--level); outline-offset:2px; }
+
+  .layout{
+    display:grid; grid-template-columns:196px minmax(0,760px); gap:56px;
+    max-width:1012px; margin:0 auto; padding:72px 24px 120px; align-items:start;
+  }
+  .wrap{ min-width:0; }
+
+  .toc{ position:sticky; top:48px; display:flex; flex-direction:column; gap:1px; max-height:calc(100vh - 96px); overflow-y:auto; }
+  .toc-title{ font-size:10.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-faint); margin-bottom:6px; }
+  .toc-group{ font-size:9.5px; text-transform:uppercase; letter-spacing:.07em; color:var(--ink-faint); opacity:.75; margin:14px 0 4px; }
+  .toc-group:first-of-type{ margin-top:4px; }
+  .toc a{
+    display:block; padding:4px 0 4px 12px; margin-left:-13px; border-left:2px solid transparent;
+    font-size:12.5px; line-height:1.4; color:var(--ink-soft); text-decoration:none;
+  }
+  .toc a:hover{ color:var(--ink); }
+  .toc a.active{ color:var(--level); border-left-color:var(--level); font-weight:600; }
+  .toc .num{ color:var(--ink-faint); margin-right:6px; }
+  .toc a.active .num{ color:var(--level); }
+
+  .toolbar{ position:fixed; top:16px; right:16px; z-index:50; display:inline-flex; gap:8px; }
+  .hud-btn{
+    display:inline-flex; align-items:center; justify-content:center; padding:6px 9px; line-height:0;
+    border-radius:3px; border:1px solid var(--line); background:var(--surface); color:var(--ink);
+    cursor:pointer; box-shadow:var(--shadow);
+  }
+  .hud-btn:hover{ color:var(--level); border-color:var(--level); }
+  @media (max-width:560px){ .toolbar{ top:8px; right:8px; } }
+  @media (max-width:900px){
+    .layout{ grid-template-columns:1fr; padding-top:48px; padding-inline:16px; }
+    .toc{ display:none; }
+  }
+
+  .eyebrow{ font-size:11px; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-faint); margin:0 0 14px; }
+  h1{ font-size:36px; font-weight:700; letter-spacing:-0.01em; line-height:1.14; margin:0 0 14px; text-wrap:balance; }
+  .lede{ color:var(--ink-soft); font-size:15.5px; max-width:62ch; margin:0 0 8px; }
+  .lede b{ color:var(--ink); font-weight:600; }
+  .epigraph{
+    margin:32px 0 48px; padding:18px 22px; border-left:3px solid var(--level); background:var(--level-soft);
+    font-size:13.5px; color:var(--ink);
+  }
+  .epigraph span{ display:block; margin-top:6px; color:var(--ink-faint); font-size:11px; text-transform:uppercase; letter-spacing:.08em; }
+
+  section{ margin-bottom:64px; scroll-margin-top:24px; }
+  .sec-head{ display:flex; align-items:baseline; justify-content:space-between; gap:16px; border-bottom:1px solid var(--line); padding-bottom:10px; margin-bottom:24px; }
+  h2{ font-size:12.5px; font-weight:600; text-transform:uppercase; letter-spacing:.07em; color:var(--ink-soft); margin:0; }
+  h2 b{ color:var(--ink); }
+  .sec-num{ font-size:11px; color:var(--ink-faint); white-space:nowrap; }
+  h3{ font-size:15.5px; font-weight:600; margin:28px 0 10px; }
+  h3:first-child{ margin-top:0; }
+  p{ margin:0 0 14px; max-width:68ch; }
+  p.soft{ color:var(--ink-soft); }
+  ul.plain, ol.plain{ margin:0 0 14px; padding-left:22px; }
+  ul.plain li, ol.plain li{ margin-bottom:6px; max-width:64ch; }
+  code{ font-family:inherit; font-size:.92em; background:var(--surface-2); padding:1px 6px; border-radius:4px; word-break:break-word; }
+  code.term{ font-weight:600; color:var(--level); background:var(--level-soft); }
+  pre{ margin:0 0 16px; background:var(--surface-2); border:1px solid var(--line); border-radius:3px; padding:14px 16px; overflow-x:auto; font-size:12.5px; line-height:1.6; }
+  pre code{ background:none; padding:0; font-size:inherit; }
+  .secret{ color:var(--reaction); font-weight:600; }
+
+  .tbl{ overflow-x:auto; margin:0 0 16px; border:1px solid var(--line); border-radius:3px; background:var(--surface); }
+  table{ border-collapse:collapse; width:100%; font-size:13px; }
+  th, td{ text-align:left; vertical-align:top; padding:10px 14px; border-bottom:1px solid var(--line); }
+  tr:last-child td{ border-bottom:none; }
+  th{ font-size:10.5px; font-weight:600; text-transform:uppercase; letter-spacing:.07em; color:var(--ink-faint); white-space:nowrap; background:var(--surface-2); }
+  td.k{ white-space:nowrap; color:var(--ink); font-weight:500; }
+  td.n, th.n{ text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+  td .soft{ color:var(--ink-soft); }
+
+  .note{ margin:0 0 16px; padding:14px 16px; border-left:3px solid var(--pending); background:var(--pending-soft); border-radius:0 3px 3px 0; font-size:13.5px; color:var(--ink); }
+  .note b{ color:var(--pending); }
+  .note.secret-note{ border-left-color:var(--reaction); background:var(--reaction-soft); }
+  .note.secret-note b{ color:var(--reaction); }
+
+  .sequence{ display:flex; flex-direction:column; }
+  .step{ display:grid; grid-template-columns:82px 1fr; gap:16px; position:relative; padding-bottom:20px; }
+  .step:last-child{ padding-bottom:0; }
+  .step-t{ font-size:12px; font-weight:600; color:var(--level); padding-top:2px; font-variant-numeric:tabular-nums; }
+  .step-body{ font-size:13.5px; color:var(--ink-soft); }
+  .step-body b{ color:var(--ink); font-weight:600; }
+
+  .rule-box{ margin:0 0 16px; padding:16px 18px; background:var(--surface); border:1px solid var(--line); border-radius:3px; display:flex; flex-direction:column; gap:10px; }
+  .rule-group{ font-size:10.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-faint); }
+  .rule{ display:grid; grid-template-columns:28px 1fr; gap:10px; font-size:13.5px; }
+  .rule b{ color:var(--level); font-weight:700; }
+  .rule .why{ color:var(--ink-faint); }
+  .rule-or{ font-size:11px; font-weight:600; letter-spacing:.12em; color:var(--pending); text-transform:uppercase; padding:2px 0; }
+
+  .diagram{ margin:0 0 12px; padding:12px; background:var(--surface); border:1px solid var(--line); border-radius:3px; overflow-x:auto; }
+  .diagram svg{ display:block; min-width:720px; width:100%; height:auto; }
+  svg .zone{ fill:var(--level-soft); }
+  svg .zone2{ fill:var(--pending-soft); }
+  svg .zone3{ fill:var(--confirm-soft); }
+  svg .box{ fill:var(--surface-2); stroke:var(--line); stroke-width:1.2; }
+  svg .ztitle{ fill:var(--level); font:600 12px 'Fira Mono', monospace; letter-spacing:.06em; }
+  svg .ztitle2{ fill:var(--pending); font:600 12px 'Fira Mono', monospace; letter-spacing:.06em; }
+  svg .ztitle3{ fill:var(--confirm); font:600 12px 'Fira Mono', monospace; letter-spacing:.06em; }
+  svg .lbl{ fill:var(--ink); font:600 13px 'Fira Mono', monospace; }
+  svg .sub{ fill:var(--ink-soft); font:11.5px 'Fira Mono', monospace; }
+  svg .flow{ stroke:var(--level); stroke-width:1.6; fill:none; }
+  svg .flow2{ stroke:var(--pending); stroke-width:1.6; fill:none; }
+  svg .flow3{ stroke:var(--confirm); stroke-width:1.6; fill:none; }
+  svg .flowlbl{ fill:var(--ink-faint); font:11px 'Fira Mono', monospace; }
+  svg .ah{ fill:var(--level); } svg .ah2{ fill:var(--pending); } svg .ah3{ fill:var(--confirm); }
+  .diagram-cap{ font-size:12.5px; color:var(--ink-soft); margin:0 0 16px; }
+
+  .log-entry{ display:grid; grid-template-columns:110px 1fr; gap:16px; padding:14px 0; border-bottom:1px solid var(--line); }
+  .log-entry:last-child{ border-bottom:none; }
+  .log-date{ font-size:12px; color:var(--ink-faint); padding-top:2px; font-variant-numeric:tabular-nums; }
+  .log-body{ font-size:13.5px; }
+  .log-body .tag{ display:inline-block; font-size:9.5px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; padding:2px 7px; border-radius:4px; margin-right:6px; vertical-align:1px; }
+  .tag.ship{ color:var(--confirm); background:var(--confirm-soft); }
+  .tag.bug{ color:var(--reaction); background:var(--reaction-soft); }
+  .tag.lesson{ color:var(--pending); background:var(--pending-soft); }
+  .log-body p{ margin:6px 0 0; color:var(--ink-soft); }
+
+  footer{ border-top:1px solid var(--line); padding-top:18px; font-size:12px; color:var(--ink-faint); }
+  @media (max-width:560px){
+    h1{ font-size:28px; }
+    .step{ grid-template-columns:1fr; gap:2px; }
+    .log-entry{ grid-template-columns:1fr; gap:4px; }
+  }
+</style>
+</head>
+<body>
+<div class="toolbar">
+  <button id="theme-toggle" class="hud-btn" type="button" aria-label="Switch to dark mode"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+</div>
+
+<div class="layout">
+<nav class="toc" aria-label="Contents">
+  <div class="toc-title">Contents</div>
+  <div class="toc-group">Using it</div>
+  <a href="#s01"><span class="num">01</span>Commands</a>
+  <a href="#s02"><span class="num">02</span>When an alert fires</a>
+  <div class="toc-group">How it works</div>
+  <a href="#s03"><span class="num">03</span>Data flow</a>
+  <a href="#s04"><span class="num">04</span>Touch detection</a>
+  <a href="#s05"><span class="num">05</span>Binance price feed</a>
+  <div class="toc-group">Setup</div>
+  <a href="#s06"><span class="num">06</span>Creating the Discord bot</a>
+  <a href="#s07"><span class="num">07</span>Pi5: files &amp; service</a>
+  <a href="#s08"><span class="num">08</span>Configuration</a>
+  <div class="toc-group">Ops</div>
+  <a href="#s09"><span class="num">09</span>Failures &amp; logs</a>
+  <a href="#s10"><span class="num">10</span>Cost &amp; security</a>
+  <a href="#s11"><span class="num">11</span>Changelog &amp; lessons</a>
+</nav>
+
+<main class="wrap">
+  <div class="eyebrow">Discord slash commands · Binance USDT-M last price · Raspberry Pi 5</div>
+  <h1>Price Alert Field Notes</h1>
+  <p class="lede">A <b>Discord bot</b> that lives in one channel. Anyone in the channel types <code>/alert</code> with a coin and a price; the bot watches Binance and <b>pings that person once</b> when the price is touched, then deletes the alert.</p>
+  <p class="lede">It runs on the same Raspberry Pi 5 as the <a href="/volume-alert-notes/">volume alert</a>, but works differently: the volume alert only <i>sends</i> through a webhook, while this bot also has to <i>read</i> commands, so it is a real bot with its own login.</p>
+  <div class="epigraph">Set a level, get pinged the first time it trades there, then the alert is gone.<span>The whole contract</span></div>
+
+  <!-- 01 -->
+  <section id="s01">
+    <div class="sec-head"><h2><b>Commands</b></h2><span class="sec-num">01 · only in #price-alert</span></div>
+    <div class="tbl"><table>
+      <thead><tr><th>Command</th><th>What it does</th><th>Who sees the reply</th></tr></thead>
+      <tbody>
+        <tr><td class="k">/alert symbol:LPT price:1.7</td><td>Sets a one-shot alert. <code>LPT</code> and <code>LPTUSDT</code> both work; the symbol field autocompletes from Binance's live contract list.</td><td>Everyone in the channel</td></tr>
+        <tr><td class="k">/alerts</td><td>Lists every active alert: number, coin, direction, target, who set it, how long ago.</td><td>Only you</td></tr>
+        <tr><td class="k">/remove alert_id:3</td><td>Deletes an alert. Autocomplete offers only the alerts you're allowed to remove.</td><td>Everyone in the channel</td></tr>
+      </tbody>
+    </table></div>
+    <h3>What the bot answers</h3>
+<pre><code>/alert symbol:LPT price:1.7
+
+✅ Alert #12: LPTUSDT ⬆️ rises to 1.7 (now 1.62, +4.94%).
+   I'll ping @you once, then remove it.</code></pre>
+    <ul class="plain">
+      <li><b>Direction is decided at set time.</b> A target above the current price waits for price to rise to it; a target below waits for a fall.</li>
+      <li><b>Who can use it:</b> anyone who can see <code>#price-alert</code>. Access is controlled with normal Discord channel permissions, not by the bot.</li>
+      <li><b>Who can remove:</b> the person who set the alert, or anyone with <i>Manage Messages</i> in the channel.</li>
+      <li><b>Limits:</b> 50 active alerts per person. A symbol that isn't a trading USDT-M perpetual, or a price that isn't a positive number, is rejected with a short explanation.</li>
+      <li>Used outside <code>#price-alert</code>, every command replies privately with a pointer to the right channel.</li>
+    </ul>
+  </section>
+
+  <!-- 02 -->
+  <section id="s02">
+    <div class="sec-head"><h2><b>When an alert fires</b></h2><span class="sec-num">02</span></div>
+    <p>The bot posts in <code>#price-alert</code>, mentions the person who set the alert, and attaches a card:</p>
+<pre><code>@you
+🔔 LPTUSDT reached 1.7
+   Target      1.7
+   Last price  1.7004
+   Set at      1.62 · 2h 13m ago
+   Alert #12 · Binance USDT-M last price · removed after firing</code></pre>
+    <ul class="plain">
+      <li>The title links to the coin's Binance futures page. Green for an upward touch, red for a downward one.</li>
+      <li>The alert is marked <b>fired</b> and stops being watched. If price chops around 1.7 afterwards, nothing else is sent. To watch the level again, set a new alert.</li>
+      <li>Only the alert's owner is pinged; <code>@everyone</code> and role mentions are blocked.</li>
+    </ul>
+  </section>
+
+  <!-- 03 -->
+  <section id="s03">
+    <div class="sec-head"><h2><b>Data flow</b></h2><span class="sec-num">03 · one long-running process</span></div>
+    <div class="diagram" role="img" aria-label="Flow diagram: a user runs a slash command in Discord; Discord forwards it to the bot on the Pi5 over the bot's gateway connection; the bot checks the price over Binance REST, stores the alert in SQLite, and subscribes to that coin's kline stream over Binance WebSocket; when price touches, the bot posts a message mentioning the user.">
+      <svg viewBox="0 0 900 360" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 z"/></marker>
+          <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah2" d="M0,0 L10,5 L0,10 z"/></marker>
+          <marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah3" d="M0,0 L10,5 L0,10 z"/></marker>
+        </defs>
+        <rect class="zone3" x="10" y="10" width="250" height="340" rx="6"/>
+        <text class="ztitle3" x="28" y="36">DISCORD</text>
+        <rect class="box" x="28" y="56" width="214" height="62" rx="4"/>
+        <text class="lbl" x="42" y="82">You in #price-alert</text>
+        <text class="sub" x="42" y="102">/alert LPT 1.7</text>
+        <rect class="box" x="28" y="150" width="214" height="62" rx="4"/>
+        <text class="lbl" x="42" y="176">Discord gateway</text>
+        <text class="sub" x="42" y="196">slash command event</text>
+        <rect class="box" x="28" y="260" width="214" height="70" rx="4"/>
+        <text class="lbl" x="42" y="286">@you 🔔 LPTUSDT</text>
+        <text class="sub" x="42" y="306">reached 1.7</text>
+        <path class="flow3" d="M135,118 V150" marker-end="url(#a3)"/>
+
+        <rect class="zone" x="300" y="10" width="300" height="340" rx="6"/>
+        <text class="ztitle" x="318" y="36">RASPBERRY PI 5 · bot.py</text>
+        <rect class="box" x="318" y="56" width="264" height="62" rx="4"/>
+        <text class="lbl" x="332" y="82">Command handler</text>
+        <text class="sub" x="332" y="102">validate · direction · save</text>
+        <rect class="box" x="318" y="138" width="264" height="52" rx="4"/>
+        <text class="lbl" x="332" y="160">alerts.db (SQLite)</text>
+        <text class="sub" x="332" y="178">survives reboots</text>
+        <rect class="box" x="318" y="210" width="264" height="62" rx="4"/>
+        <text class="lbl" x="332" y="236">Touch checker</text>
+        <text class="sub" x="332" y="256">high / low vs target</text>
+        <rect class="box" x="318" y="292" width="264" height="44" rx="4"/>
+        <text class="lbl" x="332" y="319">systemd · Restart=always</text>
+        <path class="flow" d="M450,118 V138" marker-end="url(#a1)"/>
+        <path class="flow" d="M450,190 V210" marker-start="url(#a1)" marker-end="url(#a1)"/>
+
+        <path class="flow3" d="M242,181 C275,181 280,87 318,87" marker-start="url(#a3)" marker-end="url(#a3)"/>
+        <text class="flowlbl" x="252" y="140">gateway</text>
+        <path class="flow3" d="M318,241 C280,241 280,295 242,295" marker-end="url(#a3)"/>
+
+        <rect class="zone2" x="640" y="10" width="250" height="340" rx="6"/>
+        <text class="ztitle2" x="658" y="36">BINANCE · PUBLIC</text>
+        <rect class="box" x="658" y="56" width="214" height="62" rx="4"/>
+        <text class="lbl" x="672" y="82">REST</text>
+        <text class="sub" x="672" y="102">contract list · price</text>
+        <rect class="box" x="658" y="200" width="214" height="80" rx="4"/>
+        <text class="lbl" x="672" y="226">WebSocket</text>
+        <text class="sub" x="672" y="246">&lt;coin&gt;@kline_1m</text>
+        <text class="sub" x="672" y="264">pushed ~4× / second</text>
+        <path class="flow2" d="M582,87 H658" marker-start="url(#a2)" marker-end="url(#a2)"/>
+        <path class="flow2" d="M658,240 H582" marker-end="url(#a2)"/>
+      </svg>
+    </div>
+    <p class="diagram-cap">Green: Discord. Blue: inside the Pi5. Orange: Binance.</p>
+    <p>Unlike the volume alert, this is one process that stays up. It holds two live connections: one to Discord's gateway, to receive commands, and one to Binance's WebSocket, to receive prices. There is no polling interval; price updates arrive as they happen.</p>
+  </section>
+
+  <!-- 04 -->
+  <section id="s04">
+    <div class="sec-head"><h2><b>Touch detection</b></h2><span class="sec-num">04</span></div>
+    <div class="rule-box">
+      <div class="rule-group">At set time</div>
+      <div class="rule"><b>1</b><span>Fetch the current last price over REST. Target above it → direction <b>up</b>; below → <b>down</b>; equal → rejected as already there.</span></div>
+      <div class="rule-group">On every price push</div>
+      <div class="rule"><b>2</b><span><b>Up</b> alerts fire when the 1-minute candle's <b>high</b> ≥ target. <b>Down</b> alerts fire when its <b>low</b> ≤ target.</span></div>
+      <div class="rule"><b>3</b><span>In the minute the alert was created, only the <b>live price</b> counts. That candle's high or low may come from before the alert existed.</span></div>
+      <div class="rule"><b>4</b><span>Candles that ended before the alert was created are ignored entirely.</span></div>
+      <div class="rule-group">After firing</div>
+      <div class="rule"><b>5</b><span>The alert is removed from memory and marked <code>fired</code> in the database before the message is sent, so two pushes in quick succession can't fire it twice.</span></div>
+    </div>
+    <p>Why use the candle's high and low rather than the latest price: pushes arrive about every 250 ms, and a fast wick can touch 1.7 and come back between two pushes. The running high and low of the minute still record it.</p>
+  </section>
+
+  <!-- 05 -->
+  <section id="s05">
+    <div class="sec-head"><h2><b>Binance price feed</b></h2><span class="sec-num">05 · no API key</span></div>
+    <div class="tbl"><table>
+      <thead><tr><th>Source</th><th>Used for</th><th>When</th></tr></thead>
+      <tbody>
+        <tr><td class="k">GET /fapi/v1/exchangeInfo</td><td>The list of trading USDT-M perpetuals, for validation and autocomplete</td><td>At start; refreshed when an unknown symbol is entered</td></tr>
+        <tr><td class="k">GET /fapi/v1/ticker/price</td><td>Current last price when an alert is set</td><td>Once per <code>/alert</code></td></tr>
+        <tr><td class="k">GET /fapi/v1/klines 1m ×10</td><td>Catch-up after a reconnect: did price touch while disconnected?</td><td>On each (re)connect</td></tr>
+        <tr><td class="k">wss://fstream.binance.com/market/stream</td><td><code>&lt;coin&gt;@kline_1m</code> for coins with active alerts only</td><td>Always connected</td></tr>
+      </tbody>
+    </table></div>
+    <ul class="plain">
+      <li><b>Dynamic subscription.</b> Setting the first alert on a coin sends <code>SUBSCRIBE</code>; when its last alert fires or is removed, <code>UNSUBSCRIBE</code>. Coins nobody is watching cost nothing.</li>
+      <li><b>Path matters.</b> Kline streams are served under <code>/market/</code>. The older <code>/ws/</code> path accepts the connection but never sends candle data, which looks exactly like being blocked.</li>
+      <li><b>Last price</b> (the traded price, what charts show) is used, not mark price.</li>
+      <li>WebSocket pushes don't count against Binance's 2,400-per-minute REST weight, so this bot doesn't compete with the volume alert running on the same IP.</li>
+    </ul>
+  </section>
+
+  <!-- 06 -->
+  <section id="s06">
+    <div class="sec-head"><h2><b>Creating the Discord bot</b></h2><span class="sec-num">06 · ~5 minutes, free</span></div>
+    <h3>1 · Application</h3>
+    <ol class="plain">
+      <li>Open <code>discord.com/developers/applications</code> and sign in.</li>
+      <li><b>New Application</b> → name it (e.g. <i>Price Alert</i>) → accept the terms → <b>Create</b>.</li>
+    </ol>
+    <h3>2 · Make it private</h3>
+    <ol class="plain">
+      <li><b>Installation</b> → <b>Install Link</b> → set to <b>None</b> → Save.</li>
+      <li><b>Bot</b> → turn <b>Public Bot</b> off → Save. This stops other people from adding your bot to their servers.</li>
+    </ol>
+    <div class="note"><b>Order matters.</b> Turning Public Bot off while the install link is still "Discord Provided Link" fails with <i>"Private application cannot have a default authorization link."</i> Set the install link to None first.</div>
+    <h3>3 · Token and intents</h3>
+    <ol class="plain">
+      <li>On the <b>Bot</b> page, leave all three <b>Privileged Gateway Intents</b> off. Slash commands don't need to read message content.</li>
+      <li><b>Reset Token</b> → copy it. It is shown once.</li>
+    </ol>
+    <div class="note secret-note"><b>The token is the bot's password.</b> Whoever has it can log in as the bot. It belongs only in the Pi's <code>.env</code>. If it leaks, press Reset Token again; the old one stops working immediately.</div>
+    <h3>4 · Invite it to your server</h3>
+    <ol class="plain">
+      <li><b>OAuth2</b> → <b>URL Generator</b>.</li>
+      <li>Scopes: <code>bot</code> and <code>applications.commands</code>.</li>
+      <li>Bot permissions: <code>View Channels</code>, <code>Send Messages</code>, <code>Embed Links</code>.</li>
+      <li>Open the generated URL, pick your server, <b>Authorize</b>. This works even though the default install link is off.</li>
+    </ol>
+    <h3>5 · Channel and IDs</h3>
+    <ol class="plain">
+      <li>Create <code>#price-alert</code>. Whoever can see it can use the bot.</li>
+      <li>User Settings → Advanced → turn on <b>Developer Mode</b>.</li>
+      <li>Right-click the channel → <b>Copy Channel ID</b>. Right-click the server icon → <b>Copy Server ID</b>.</li>
+    </ol>
+    <p class="soft">The server ID is used to register the commands to that one server, where they appear immediately. Global commands can take up to an hour to show up.</p>
+  </section>
+
+  <!-- 07 -->
+  <section id="s07">
+    <div class="sec-head"><h2><b>Pi5:</b> files &amp; service</h2><span class="sec-num">07</span></div>
+    <div class="tbl"><table>
+      <thead><tr><th>Path</th><th>What it holds</th></tr></thead>
+      <tbody>
+        <tr><td class="k">~/price-alert-bot/bot.py</td><td>The whole bot: commands, Binance feed, touch checks.</td></tr>
+        <tr><td class="k">~/price-alert-bot/.env</td><td><span class="secret">Bot token</span>, server ID, channel ID, per-user limit. Mode <code>600</code>.</td></tr>
+        <tr><td class="k">~/price-alert-bot/alerts.db</td><td>SQLite. Every alert with its owner, symbol, target, direction, set price and time, and status: <code>active</code>, <code>fired</code> or <code>removed</code>.</td></tr>
+        <tr><td class="k">~/price-alert-bot/venv/</td><td>Python virtualenv with <code>discord.py</code> (which brings <code>aiohttp</code>, used for both Binance REST and WebSocket).</td></tr>
+        <tr><td class="k">…/systemd/system/price-alert-bot.service</td><td><code>Type=simple</code>, <code>Restart=always</code>, <code>RestartSec=10</code>, enabled at boot, runs as a normal user.</td></tr>
+      </tbody>
+    </table></div>
+    <h3>Deploying</h3>
+    <p>Source lives on the laptop in a local git repo. <code>./deploy.sh</code> creates the venv on first run, copies <code>bot.py</code> and the unit file, reloads systemd and restarts the service. It never touches <code>.env</code> or <code>alerts.db</code>, so active alerts survive a deploy.</p>
+  </section>
+
+  <!-- 08 -->
+  <section id="s08">
+    <div class="sec-head"><h2><b>Configuration</b></h2><span class="sec-num">08 · .env</span></div>
+    <div class="tbl"><table>
+      <thead><tr><th>Variable</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td class="k">DISCORD_BOT_TOKEN</td><td>From step 3 above.</td></tr>
+        <tr><td class="k">DISCORD_GUILD_ID</td><td>Server ID; commands are registered here.</td></tr>
+        <tr><td class="k">PRICE_ALERT_CHANNEL_ID</td><td>The only channel where commands work and alerts are posted.</td></tr>
+        <tr><td class="k">MAX_ACTIVE_PER_USER</td><td>Active alerts allowed per person (default 50).</td></tr>
+      </tbody>
+    </table></div>
+    <p class="soft">Changes take effect after <code>sudo systemctl restart price-alert-bot</code>.</p>
+  </section>
+
+  <!-- 09 -->
+  <section id="s09">
+    <div class="sec-head"><h2><b>Failures</b> &amp; logs</h2><span class="sec-num">09 · journalctl</span></div>
+    <div class="tbl"><table>
+      <thead><tr><th>Situation</th><th>Behaviour</th></tr></thead>
+      <tbody>
+        <tr><td class="k">Binance WebSocket drops</td><td>Reconnects with backoff (1 s doubling to 60 s), resubscribes, then checks the last ten 1m candles over REST for touches during the gap.</td></tr>
+        <tr><td class="k">Binance's 24-hour disconnect</td><td>Same as above; handled as a normal reconnect.</td></tr>
+        <tr><td class="k">The bot process crashes</td><td>systemd restarts it after 10 seconds. Active alerts reload from SQLite.</td></tr>
+        <tr><td class="k">Pi reboot</td><td>The service starts at boot; alerts are still in the database.</td></tr>
+        <tr><td class="k">Slow Binance reply on /alert</td><td>The command is acknowledged first ("thinking…"), so Discord's 3-second limit isn't hit.</td></tr>
+        <tr><td class="k">Commands missing after a restart</td><td>Re-registering can take ~30 s when Discord rate-limits; restarting Discord itself refreshes the menu.</td></tr>
+      </tbody>
+    </table></div>
+<pre><code>$ journalctl -u price-alert-bot -n 30      # example output
+synced 3 commands to guild; 2 active alerts loaded
+binance ws connected
+logged in as Price Alert#8606
+set #12 LPTUSDT up 1.7 by &lt;user&gt; (now 1.62)
+fired #12 LPTUSDT up 1.7 at 1.7004</code></pre>
+  </section>
+
+  <!-- 10 -->
+  <section id="s10">
+    <div class="sec-head"><h2><b>Cost</b> &amp; security</h2><span class="sec-num">10</span></div>
+    <ul class="plain">
+      <li><b>No LLM.</b> Slash commands arrive already split into a symbol field and a price field; there is nothing to interpret, so no AI tokens are used.</li>
+      <li><b>Free.</b> Discord bots and Binance public market data cost nothing. The Pi was already running.</li>
+      <li><b>Read-only on Binance.</b> No API key, no account, no way to trade.</li>
+      <li><b>Minimal Discord permissions.</b> No privileged intents, three channel permissions, private application, mentions limited to the alert's owner.</li>
+      <li><b>One secret.</b> The bot token, kept only in the Pi's <code>.env</code> (mode 600), not in code, git or this page.</li>
+    </ul>
+  </section>
+
+  <!-- 11 -->
+  <section id="s11">
+    <div class="sec-head"><h2><b>Changelog</b> &amp; lessons</h2><span class="sec-num">11</span></div>
+    <div class="log-entry"><div class="log-date">2026-10-11</div><div class="log-body"><span class="tag ship">ship</span>First version: <code>/alert</code>, <code>/alerts</code>, <code>/remove</code>; kline_1m touch detection; SQLite storage; systemd service.</div></div>
+    <div class="log-entry"><div class="log-date">2026-10-11</div><div class="log-body"><span class="tag bug">bug</span>REST catch-up could fire on a candle from before the alert existed.<p>After a reconnect the bot rechecks the last ten 1m candles. Older candles were treated like the creation minute and compared on their close. Now any candle that ended before the alert was created is skipped. Covered by seven offline cases for up/down, wicks, and the creation minute.</p></div></div>
+    <div class="log-entry"><div class="log-date">2026-10-11</div><div class="log-body"><span class="tag bug">bug</span>"The application did not respond."<p>The Binance socket was stored as <code>self.ws</code>, which is the name <code>discord.Client</code> uses for its own gateway connection. Overwriting it crashed the bot a few seconds after start, systemd restarted it, and the cycle repeated, so commands landed while the bot was down. Renamed the attribute and made <code>/alert</code> acknowledge before calling Binance.</p></div></div>
+    <div class="log-entry"><div class="log-date">2026-10-11</div><div class="log-body"><span class="tag lesson">lesson</span>Subclassing a framework client means sharing its namespace.<p>Prefix your own attributes (<code>binance_ws</code>, not <code>ws</code>), and watch the restart counter (<code>systemctl show -p NRestarts</code>) after a deploy, not just "active".</p></div></div>
+  </section>
+
+  <footer>Personal tooling notes, not trading advice. Companion to the <a href="/volume-alert-notes/">Volume Alert Field Notes</a>. Last updated 2026-10-11. · <a href="/">kuoforit.github.io</a></footer>
+</main>
+</div>
+
+<script>
+  try{
+    var links = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+    var map = {};
+    links.forEach(function(a){ map[a.getAttribute('href').slice(1)] = a; });
+    var sections = Array.prototype.slice.call(document.querySelectorAll('section[id]'));
+    if('IntersectionObserver' in window && sections.length){
+      var observer = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          var link = map[entry.target.id];
+          if(!link) return;
+          if(entry.isIntersecting){
+            links.forEach(function(a){ a.classList.remove('active'); });
+            link.classList.add('active');
+          }
+        });
+      }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+      sections.forEach(function(s){ observer.observe(s); });
+    }
+  }catch(e){}
+</script>
+<script>
+  (function(){
+    try{
+      var THEME_KEY = 'price-alert-notes-theme';
+      var root = document.documentElement;
+      var btn = document.getElementById('theme-toggle');
+      var mql = window.matchMedia('(prefers-color-scheme: dark)');
+      var MOON = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+      var SUN = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>';
+      function effectiveTheme(){
+        var explicit = root.getAttribute('data-theme');
+        if(explicit === 'dark' || explicit === 'light') return explicit;
+        return mql.matches ? 'dark' : 'light';
+      }
+      function render(theme){
+        if(!btn) return;
+        btn.innerHTML = theme === 'dark' ? SUN : MOON;
+        btn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+      }
+      var saved = null;
+      try{ saved = localStorage.getItem(THEME_KEY); }catch(e){}
+      if(saved === 'dark' || saved === 'light') root.setAttribute('data-theme', saved);
+      render(effectiveTheme());
+      if(btn){
+        btn.addEventListener('click', function(){
+          var next = effectiveTheme() === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          try{ localStorage.setItem(THEME_KEY, next); }catch(e){}
+          render(next);
+        });
+      }
+      try{
+        mql.addEventListener('change', function(){
+          if(!root.getAttribute('data-theme')) render(effectiveTheme());
+        });
+      }catch(e){}
+    }catch(e){}
+  })();
+</script>
+</body>
+</html>
