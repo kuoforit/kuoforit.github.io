@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Volume Alert Field Notes</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500;700&display=swap');
+
+  /* Palette matched to kuoforit.github.io (risotto theme, tokyo-night-light), same tokens as /lgr-notes/ */
+  :root{
+    --ground:      #D5D6DB;
+    --surface:     #CBCCD1;
+    --surface-2:   #DFE0E5;
+    --line:        #343B5930;
+    --ink:         #343B59;
+    --ink-soft:    #4C505E;
+    --ink-faint:   #6B6E7C;
+
+    --level:       #34548A;   /* structure: flow, rules, links */
+    --level-soft:  #34548A22;
+    --confirm:     #485E30;   /* verified / working */
+    --confirm-soft:#485E301e;
+    --pending:     #965027;   /* caveats, Binance side */
+    --pending-soft:#96502720;
+    --reaction:    #8C4351;   /* secrets, failures */
+    --reaction-soft:#8C43511c;
+
+    --shadow: 0 1px 2px rgba(52,59,89,.08), 0 8px 24px -12px rgba(52,59,89,.16);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ground:#1A1B26; --surface:#212330; --surface-2:#2B2E42; --line:#A9B1D630;
+      --ink:#C0CAF5; --ink-soft:#9AA5CE; --ink-faint:#7982B0;
+      --level:#7AA2F7; --level-soft:#7AA2F724; --confirm:#9ECE6A; --confirm-soft:#9ECE6A20;
+      --pending:#E0AF68; --pending-soft:#E0AF6822; --reaction:#F7768E; --reaction-soft:#F7768E1e;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.55);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#1A1B26; --surface:#212330; --surface-2:#2B2E42; --line:#A9B1D630;
+    --ink:#C0CAF5; --ink-soft:#9AA5CE; --ink-faint:#7982B0;
+    --level:#7AA2F7; --level-soft:#7AA2F724; --confirm:#9ECE6A; --confirm-soft:#9ECE6A20;
+    --pending:#E0AF68; --pending-soft:#E0AF6822; --reaction:#F7768E; --reaction-soft:#F7768E1e;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.55);
+    color-scheme: dark;
+  }
+
+  *{box-sizing:border-box;}
+  html{ scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
+  body{
+    margin:0; background:var(--ground); color:var(--ink);
+    font-family:'Fira Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size:15px; line-height:1.65; -webkit-font-smoothing:antialiased;
+  }
+  a{ color:var(--level); }
+  :focus-visible{ outline:2px solid var(--level); outline-offset:2px; }
+
+  .layout{
+    display:grid; grid-template-columns:196px minmax(0,760px); gap:56px;
+    max-width:1012px; margin:0 auto; padding:72px 24px 120px; align-items:start;
+  }
+  .wrap{ min-width:0; }
+
+  .toc{ position:sticky; top:48px; display:flex; flex-direction:column; gap:1px; max-height:calc(100vh - 96px); overflow-y:auto; }
+  .toc-title{ font-size:10.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-faint); margin-bottom:6px; }
+  .toc-group{ font-size:9.5px; text-transform:uppercase; letter-spacing:.07em; color:var(--ink-faint); opacity:.75; margin:14px 0 4px; }
+  .toc-group:first-of-type{ margin-top:4px; }
+  .toc a{
+    display:block; padding:4px 0 4px 12px; margin-left:-13px; border-left:2px solid transparent;
+    font-size:12.5px; line-height:1.4; color:var(--ink-soft); text-decoration:none;
+  }
+  .toc a:hover{ color:var(--ink); }
+  .toc a.active{ color:var(--level); border-left-color:var(--level); font-weight:600; }
+  .toc .num{ color:var(--ink-faint); margin-right:6px; }
+  .toc a.active .num{ color:var(--level); }
+
+  .toolbar{ position:fixed; top:16px; right:16px; z-index:50; display:inline-flex; gap:8px; }
+  .hud-btn{
+    display:inline-flex; align-items:center; justify-content:center; padding:6px 9px; line-height:0;
+    border-radius:3px; border:1px solid var(--line); background:var(--surface); color:var(--ink);
+    cursor:pointer; box-shadow:var(--shadow);
+  }
+  .hud-btn:hover{ color:var(--level); border-color:var(--level); }
+  @media (max-width:560px){ .toolbar{ top:8px; right:8px; } }
+  @media (max-width:900px){
+    .layout{ grid-template-columns:1fr; padding-top:48px; padding-inline:16px; }
+    .toc{ display:none; }
+  }
+
+  .eyebrow{ font-size:11px; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-faint); margin:0 0 14px; }
+  h1{ font-size:36px; font-weight:700; letter-spacing:-0.01em; line-height:1.14; margin:0 0 14px; text-wrap:balance; }
+  .lede{ color:var(--ink-soft); font-size:15.5px; max-width:62ch; margin:0 0 8px; }
+  .lede b{ color:var(--ink); font-weight:600; }
+  .epigraph{
+    margin:32px 0 48px; padding:18px 22px; border-left:3px solid var(--level); background:var(--level-soft);
+    font-size:13.5px; color:var(--ink);
+  }
+  .epigraph span{ display:block; margin-top:6px; color:var(--ink-faint); font-size:11px; text-transform:uppercase; letter-spacing:.08em; }
+
+  section{ margin-bottom:64px; scroll-margin-top:24px; }
+  .sec-head{ display:flex; align-items:baseline; justify-content:space-between; gap:16px; border-bottom:1px solid var(--line); padding-bottom:10px; margin-bottom:24px; }
+  h2{ font-size:12.5px; font-weight:600; text-transform:uppercase; letter-spacing:.07em; color:var(--ink-soft); margin:0; }
+  h2 b{ color:var(--ink); }
+  .sec-num{ font-size:11px; color:var(--ink-faint); white-space:nowrap; }
+  h3{ font-size:15.5px; font-weight:600; margin:28px 0 10px; }
+  h3:first-child{ margin-top:0; }
+  p{ margin:0 0 14px; max-width:68ch; }
+  p.soft{ color:var(--ink-soft); }
+  ul.plain, ol.plain{ margin:0 0 14px; padding-left:22px; }
+  ul.plain li, ol.plain li{ margin-bottom:6px; max-width:64ch; }
+  code{ font-family:inherit; font-size:.92em; background:var(--surface-2); padding:1px 6px; border-radius:4px; word-break:break-word; }
+  code.term{ font-weight:600; color:var(--level); background:var(--level-soft); }
+  pre{ margin:0 0 16px; background:var(--surface-2); border:1px solid var(--line); border-radius:3px; padding:14px 16px; overflow-x:auto; font-size:12.5px; line-height:1.6; }
+  pre code{ background:none; padding:0; font-size:inherit; }
+  .secret{ color:var(--reaction); font-weight:600; }
+
+  .tbl{ overflow-x:auto; margin:0 0 16px; border:1px solid var(--line); border-radius:3px; background:var(--surface); }
+  table{ border-collapse:collapse; width:100%; font-size:13px; }
+  th, td{ text-align:left; vertical-align:top; padding:10px 14px; border-bottom:1px solid var(--line); }
+  tr:last-child td{ border-bottom:none; }
+  th{ font-size:10.5px; font-weight:600; text-transform:uppercase; letter-spacing:.07em; color:var(--ink-faint); white-space:nowrap; background:var(--surface-2); }
+  td.k{ white-space:nowrap; color:var(--ink); font-weight:500; }
+  td.n, th.n{ text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+  td .soft{ color:var(--ink-soft); }
+
+  .note{ margin:0 0 16px; padding:14px 16px; border-left:3px solid var(--pending); background:var(--pending-soft); border-radius:0 3px 3px 0; font-size:13.5px; color:var(--ink); }
+  .note b{ color:var(--pending); }
+  .note.secret-note{ border-left-color:var(--reaction); background:var(--reaction-soft); }
+  .note.secret-note b{ color:var(--reaction); }
+
+  .sequence{ display:flex; flex-direction:column; }
+  .step{ display:grid; grid-template-columns:82px 1fr; gap:16px; position:relative; padding-bottom:20px; }
+  .step:last-child{ padding-bottom:0; }
+  .step-t{ font-size:12px; font-weight:600; color:var(--level); padding-top:2px; font-variant-numeric:tabular-nums; }
+  .step-body{ font-size:13.5px; color:var(--ink-soft); }
+  .step-body b{ color:var(--ink); font-weight:600; }
+
+  .rule-box{ margin:0 0 16px; padding:16px 18px; background:var(--surface); border:1px solid var(--line); border-radius:3px; display:flex; flex-direction:column; gap:10px; }
+  .rule-group{ font-size:10.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-faint); }
+  .rule{ display:grid; grid-template-columns:28px 1fr; gap:10px; font-size:13.5px; }
+  .rule b{ color:var(--level); font-weight:700; }
+  .rule .why{ color:var(--ink-faint); }
+  .rule-or{ font-size:11px; font-weight:600; letter-spacing:.12em; color:var(--pending); text-transform:uppercase; padding:2px 0; }
+
+  .diagram{ margin:0 0 12px; padding:12px; background:var(--surface); border:1px solid var(--line); border-radius:3px; overflow-x:auto; }
+  .diagram svg{ display:block; min-width:720px; width:100%; height:auto; }
+  svg .zone{ fill:var(--level-soft); }
+  svg .zone2{ fill:var(--pending-soft); }
+  svg .zone3{ fill:var(--confirm-soft); }
+  svg .box{ fill:var(--surface-2); stroke:var(--line); stroke-width:1.2; }
+  svg .ztitle{ fill:var(--level); font:600 12px 'Fira Mono', monospace; letter-spacing:.06em; }
+  svg .ztitle2{ fill:var(--pending); font:600 12px 'Fira Mono', monospace; letter-spacing:.06em; }
+  svg .ztitle3{ fill:var(--confirm); font:600 12px 'Fira Mono', monospace; letter-spacing:.06em; }
+  svg .lbl{ fill:var(--ink); font:600 13px 'Fira Mono', monospace; }
+  svg .sub{ fill:var(--ink-soft); font:11.5px 'Fira Mono', monospace; }
+  svg .flow{ stroke:var(--level); stroke-width:1.6; fill:none; }
+  svg .flow2{ stroke:var(--pending); stroke-width:1.6; fill:none; }
+  svg .flow3{ stroke:var(--confirm); stroke-width:1.6; fill:none; }
+  svg .flowlbl{ fill:var(--ink-faint); font:11px 'Fira Mono', monospace; }
+  svg .ah{ fill:var(--level); } svg .ah2{ fill:var(--pending); } svg .ah3{ fill:var(--confirm); }
+  .diagram-cap{ font-size:12.5px; color:var(--ink-soft); margin:0 0 16px; }
+
+  .log-entry{ display:grid; grid-template-columns:110px 1fr; gap:16px; padding:14px 0; border-bottom:1px solid var(--line); }
+  .log-entry:last-child{ border-bottom:none; }
+  .log-date{ font-size:12px; color:var(--ink-faint); padding-top:2px; font-variant-numeric:tabular-nums; }
+  .log-body{ font-size:13.5px; }
+  .log-body .tag{ display:inline-block; font-size:9.5px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; padding:2px 7px; border-radius:4px; margin-right:6px; vertical-align:1px; }
+  .tag.ship{ color:var(--confirm); background:var(--confirm-soft); }
+  .tag.bug{ color:var(--reaction); background:var(--reaction-soft); }
+  .tag.lesson{ color:var(--pending); background:var(--pending-soft); }
+  .log-body p{ margin:6px 0 0; color:var(--ink-soft); }
+
+  footer{ border-top:1px solid var(--line); padding-top:18px; font-size:12px; color:var(--ink-faint); }
+  @media (max-width:560px){
+    h1{ font-size:28px; }
+    .step{ grid-template-columns:1fr; gap:2px; }
+    .log-entry{ grid-template-columns:1fr; gap:4px; }
+  }
+</style>
+</head>
+<body>
+<div class="toolbar">
+  <button id="theme-toggle" class="hud-btn" type="button" aria-label="Switch to dark mode"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+</div>
+
+<div class="layout">
+<nav class="toc" aria-label="Contents">
+  <div class="toc-title">Contents</div>
+  <div class="toc-group">System</div>
+  <a href="#s01"><span class="num">01</span>Data flow</a>
+  <a href="#s02"><span class="num">02</span>One minute, step by step</a>
+  <a href="#s03"><span class="num">03</span>Pi5: files &amp; schedule</a>
+  <a href="#s04"><span class="num">04</span>Binance API</a>
+  <div class="toc-group">Logic</div>
+  <a href="#s05"><span class="num">05</span>Baselines</a>
+  <a href="#s06"><span class="num">06</span>Trigger rules</a>
+  <a href="#s07"><span class="num">07</span>Repeat control</a>
+  <div class="toc-group">Delivery &amp; ops</div>
+  <a href="#s08"><span class="num">08</span>Discord webhook</a>
+  <a href="#s09"><span class="num">09</span>Failures &amp; logs</a>
+  <a href="#s10"><span class="num">10</span>Configuration</a>
+  <a href="#s11"><span class="num">11</span>Changelog &amp; lessons</a>
+</nav>
+
+<main class="wrap">
+  <div class="eyebrow">Binance USDT-M Futures · 5m candles · Raspberry Pi 5 → Discord</div>
+  <h1>Volume Alert Field Notes</h1>
+  <p class="lede">A small program on a <b>Raspberry Pi 5</b> at home. Every minute it pulls the latest 5-minute candles for every Binance USDT-margined perpetual, decides which coins just saw <b>abnormal, sudden volume</b>, and pushes them to a Discord channel through a webhook.</p>
+  <p class="lede">These notes document how it works end to end: where the data comes from, how the decision is made, and how the message reaches Discord.</p>
+  <div class="epigraph">A spike has to be unusual against the last three days <i>and</i> sudden against the last four hours.<span>The one-line version of the rule</span></div>
+
+  <!-- 01 -->
+  <section id="s01">
+    <div class="sec-head"><h2><b>Data flow</b></h2><span class="sec-num">01</span></div>
+    <div class="diagram" role="img" aria-label="Flow diagram: a systemd timer on the Pi5 starts volume_alert.py every minute; it reads the Binance public REST API, updates an in-memory cache and a state file, and posts alerts over HTTPS to a Discord webhook, which shows them in a channel and pushes them to a phone.">
+      <svg viewBox="0 0 900 380" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 z"/></marker>
+          <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah2" d="M0,0 L10,5 L0,10 z"/></marker>
+          <marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah3" d="M0,0 L10,5 L0,10 z"/></marker>
+        </defs>
+        <rect class="zone" x="10" y="10" width="420" height="360" rx="6"/>
+        <text class="ztitle" x="28" y="36">RASPBERRY PI 5 · HOME</text>
+        <rect class="box" x="28" y="52" width="180" height="62" rx="4"/>
+        <text class="lbl" x="42" y="78">systemd timer</text>
+        <text class="sub" x="42" y="98">every minute at :05</text>
+        <rect class="box" x="230" y="52" width="182" height="126" rx="4"/>
+        <text class="lbl" x="244" y="78">volume_alert.py</text>
+        <text class="sub" x="244" y="98">1 fetch list + candles</text>
+        <text class="sub" x="244" y="116">2 update cache</text>
+        <text class="sub" x="244" y="134">3 baselines + rules</text>
+        <text class="sub" x="244" y="152">4 repeat control</text>
+        <text class="sub" x="244" y="170">5 post to Discord</text>
+        <rect class="box" x="28" y="140" width="180" height="62" rx="4"/>
+        <text class="lbl" x="42" y="166">.env</text>
+        <text class="sub" x="42" y="186">thresholds + webhook</text>
+        <rect class="box" x="28" y="222" width="180" height="62" rx="4"/>
+        <text class="lbl" x="42" y="248">/dev/shm cache</text>
+        <text class="sub" x="42" y="268">867 volumes / coin</text>
+        <rect class="box" x="28" y="300" width="180" height="56" rx="4"/>
+        <text class="lbl" x="42" y="324">state.json</text>
+        <text class="sub" x="42" y="342">sent candles, waves</text>
+        <rect class="box" x="230" y="222" width="182" height="62" rx="4"/>
+        <text class="lbl" x="244" y="248">journald log</text>
+        <text class="sub" x="244" y="268">one line per run</text>
+        <path class="flow" d="M208,83 H230" marker-end="url(#a1)"/>
+        <path class="flow" d="M208,171 C219,171 219,150 230,150" marker-end="url(#a1)"/>
+        <path class="flow" d="M230,160 C214,200 214,240 208,250" marker-start="url(#a1)" marker-end="url(#a1)"/>
+        <path class="flow" d="M240,178 C190,250 214,320 208,326" marker-start="url(#a1)" marker-end="url(#a1)"/>
+        <path class="flow" d="M321,178 V222" marker-end="url(#a1)"/>
+
+        <rect class="zone2" x="470" y="10" width="420" height="168" rx="6"/>
+        <text class="ztitle2" x="488" y="36">BINANCE PUBLIC API · NO KEY</text>
+        <rect class="box" x="488" y="52" width="384" height="52" rx="4"/>
+        <text class="lbl" x="502" y="74">GET /fapi/v1/exchangeInfo</text>
+        <text class="sub" x="502" y="93">contract list · 1 call · weight 1</text>
+        <rect class="box" x="488" y="114" width="384" height="52" rx="4"/>
+        <text class="lbl" x="502" y="136">GET /fapi/v1/klines?interval=5m</text>
+        <text class="sub" x="502" y="155">last 4 candles · ~525 calls · weight 1 each</text>
+        <path class="flow2" d="M412,96 C445,96 445,78 488,78" marker-start="url(#a2)" marker-end="url(#a2)"/>
+        <path class="flow2" d="M412,124 C445,124 445,140 488,140" marker-start="url(#a2)" marker-end="url(#a2)"/>
+        <text class="flowlbl" x="420" y="196">HTTPS REST</text>
+
+        <rect class="zone3" x="470" y="202" width="420" height="168" rx="6"/>
+        <text class="ztitle3" x="488" y="228">DISCORD</text>
+        <rect class="box" x="488" y="244" width="186" height="60" rx="4"/>
+        <text class="lbl" x="502" y="268">Webhook URL</text>
+        <text class="sub" x="502" y="288">POST JSON embeds</text>
+        <rect class="box" x="690" y="244" width="182" height="60" rx="4"/>
+        <text class="lbl" x="704" y="268">Channel</text>
+        <text class="sub" x="704" y="288">cards / market list</text>
+        <rect class="box" x="690" y="316" width="182" height="44" rx="4"/>
+        <text class="lbl" x="704" y="343">Phone push</text>
+        <path class="flow3" d="M412,165 C455,165 450,274 488,274" marker-end="url(#a3)"/>
+        <path class="flow3" d="M674,274 H690" marker-end="url(#a3)"/>
+        <path class="flow3" d="M781,304 V316" marker-end="url(#a3)"/>
+        <text class="flowlbl" x="420" y="318">HTTPS POST</text>
+      </svg>
+    </div>
+    <p class="diagram-cap">Blue: inside the Pi5. Orange: requests to Binance. Green: delivery to Discord.</p>
+    <p>Each outside party has exactly one job. The <b>Pi5</b> schedules, computes and keeps state. <b>Binance</b> is only read from. <b>Discord</b> is only written to. Data moves one way; nothing comes back from Discord.</p>
+  </section>
+
+  <!-- 02 -->
+  <section id="s02">
+    <div class="sec-head"><h2><b>One minute,</b> step by step</h2><span class="sec-num">02 · ~15–18 s per run</span></div>
+    <div class="sequence">
+      <div class="step"><div class="step-t">hh:mm:05</div><div class="step-body">The systemd timer starts <code>binance-volume-alert.service</code>, a one-shot job. If the previous run is still going, a second one is not started on top of it.</div></div>
+      <div class="step"><div class="step-t">+0.3 s</div><div class="step-body">Load thresholds and the webhook URL from <code>.env</code>. Ask Binance for the contract list and keep the ones that are <b>USDT-quoted, perpetual and trading</b>, currently about 525.</div></div>
+      <div class="step"><div class="step-t">+0.5 s</div><div class="step-body">Over 32 parallel connections, fetch the <b>latest four 5m candles</b> for every coin: three closed plus the one still forming. Coins whose cache is missing or stale get the full 868-candle history instead, at most 300 per run.</div></div>
+      <div class="step"><div class="step-t">+12 s</div><div class="step-body">Append newly closed candles to the in-memory cache, keeping the last 867 USDT volumes per coin.</div></div>
+      <div class="step"><div class="step-t">+13 s</div><div class="step-body">For each coin, score the <b>just-closed</b> and the <b>still-forming</b> candle: compute the 72h and 4h medians, apply rules ①–⑤, then check <code>state.json</code> to decide whether this is a new alert.</div></div>
+      <div class="step"><div class="step-t">+14 s</div><div class="step-body">POST any alerts to the Discord webhook: one card per coin, or a single list if 15 or more coins fire at once. Write one summary line to the log and exit.</div></div>
+    </div>
+  </section>
+
+  <!-- 03 -->
+  <section id="s03">
+    <div class="sec-head"><h2><b>Pi5:</b> files &amp; schedule</h2><span class="sec-num">03 · Raspberry Pi OS</span></div>
+    <p>The script uses only the Python standard library, so nothing needs to be installed. Scheduling is plain systemd, the same pattern as the other projects on this Pi.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Path</th><th>What it holds</th></tr></thead>
+      <tbody>
+        <tr><td class="k">~/binance-volume-alert/volume_alert.py</td><td>The program. Runs top to bottom and exits.</td></tr>
+        <tr><td class="k">~/binance-volume-alert/.env</td><td>All thresholds plus the <span class="secret">Discord webhook URL</span>. Mode <code>600</code>: readable only by the user that runs the job.</td></tr>
+        <tr><td class="k">~/binance-volume-alert/state.json</td><td>Which candles have already been sent, and each coin's current "wave" (the volume the next alert has to double).</td></tr>
+        <tr><td class="k">/dev/shm/binance-volume-alert-5m.json</td><td>The last 867 five-minute USDT volumes per coin. Lives in RAM so the SD card isn't rewritten every minute; cleared on reboot and refilled in two runs.</td></tr>
+        <tr><td class="k">…/systemd/system/binance-volume-alert.service</td><td><code>Type=oneshot</code>, runs as a normal user, <code>EnvironmentFile=</code> points at <code>.env</code>.</td></tr>
+        <tr><td class="k">…/systemd/system/binance-volume-alert.timer</td><td><code>OnCalendar=*-*-* *:*:05</code>, <code>AccuracySec=1s</code>, enabled at boot.</td></tr>
+      </tbody>
+    </table></div>
+    <h3>Deploying</h3>
+    <p>The source lives on the laptop in a local git repo. <code>./deploy.sh</code> does three things:</p>
+    <ol class="plain">
+      <li>Stops the timer on the Pi, so no run straddles the code swap.</li>
+      <li>Copies the script, <code>.env.example</code> and both systemd units over with <code>scp</code>.</li>
+      <li>Runs <code>daemon-reload</code> and re-enables the timer.</li>
+    </ol>
+    <p>It never overwrites the Pi's <code>.env</code>, so the webhook URL never touches the laptop or git.</p>
+  </section>
+
+  <!-- 04 -->
+  <section id="s04">
+    <div class="sec-head"><h2><b>Binance API:</b> what is fetched</h2><span class="sec-num">04 · fapi.binance.com</span></div>
+    <p>Only public market data. No API key, no account, nothing that could place an order.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Endpoint</th><th>Purpose</th><th class="n">Calls / run</th><th class="n">Weight</th></tr></thead>
+      <tbody>
+        <tr><td class="k">/fapi/v1/exchangeInfo</td><td>Contract list. New listings join automatically, delisted ones drop out.</td><td class="n">1</td><td class="n">1</td></tr>
+        <tr><td class="k">/fapi/v1/klines limit=4</td><td>Latest four 5m candles per coin (normal runs).</td><td class="n">≈525</td><td class="n">1 each</td></tr>
+        <tr><td class="k">/fapi/v1/klines limit=868</td><td>Full history (first start, reboot, config change).</td><td class="n">≤300</td><td class="n">5 each</td></tr>
+      </tbody>
+    </table></div>
+    <p><b>Fields used:</b> open time, open price, close price (the current price for a forming candle), <b>quote volume in USDT</b>, and trade count. Volume is always measured in dollars so that coins are comparable.</p>
+    <p><b>Budget:</b> Binance allows 2,400 weight per minute per IP. A normal run uses about 526 (≈22%); the two backfill runs after a restart use about 1,500.</p>
+    <div class="note"><b>Shared IP.</b> The Pi shares its public IP with every other device on the home network, and they all draw on the same 2,400. Heavy backtests from the laptop once ate the whole budget and stretched Pi runs from 15 seconds to two minutes. The script now gives up a run immediately on <code>429</code> (rate-limited) or <code>418</code> (banned) instead of retrying, and tries again the next minute.</div>
+  </section>
+
+  <!-- 05 -->
+  <section id="s05">
+    <div class="sec-head"><h2><b>Baselines</b></h2><span class="sec-num">05 · all volumes in USDT</span></div>
+    <p>Two candles are scored per coin per run: the one that <b>just closed</b>, and the one <b>still forming</b>. The forming candle uses the volume traded so far. Volume only grows, so if it already passes, the closed candle will pass too. That's what lets alerts fire before the candle ends.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Baseline</th><th>Definition</th><th>Question it answers</th></tr></thead>
+      <tbody>
+        <tr><td class="k">Long-term</td><td>Median of the previous <b>864</b> candles (72 hours)</td><td>Is this unusual for this coin over the last three days?</td></tr>
+        <tr><td class="k">Short-term</td><td>Median of the previous <b>48</b> candles (4 hours)</td><td>Is it sudden, or has volume been this high for hours?</td></tr>
+      </tbody>
+    </table></div>
+    <p class="soft">Medians rather than means: one big spike in the window would drag a mean up and hide the next spike. Neither baseline includes the candle being scored.</p>
+    <p>Each baseline catches the other's blind spot. A quiet night drags the 4h median down, so ordinary morning volume would look "sudden"; the 72h baseline says it's just normal. A coin that has been running hot all day keeps beating its 72h median; the 4h baseline says it's the same as an hour ago. Requiring both leaves the genuinely abrupt moves.</p>
+  </section>
+
+  <!-- 06 -->
+  <section id="s06">
+    <div class="sec-head"><h2><b>Trigger rules</b></h2><span class="sec-num">06 · ① AND (② OR ③ OR ④), OR ⑤</span></div>
+    <div class="rule-box">
+      <div class="rule-group">Single-candle spike: ① must hold, plus at least one of ②③④</div>
+      <div class="rule"><b>①</b><span>Volume ≥ <b>5×</b> the 4h median <span class="why">— sudden, not already elevated</span></span></div>
+      <div class="rule"><b>②</b><span>≥ <b>10×</b> the 72h median and ≥ <b>$2M</b> <span class="why">— a normal spike</span></span></div>
+      <div class="rule"><b>③</b><span>≥ <b>100×</b> the 72h median and ≥ <b>$500K</b> <span class="why">— an extreme spike on a small coin</span></span></div>
+      <div class="rule"><b>④</b><span>≥ <b>30×</b> the 72h median and ≥ <b>$1M</b> <span class="why">— the gap between ② and ③</span></span></div>
+      <div class="rule-or">or</div>
+      <div class="rule-group">Sustained spike</div>
+      <div class="rule"><b>⑤</b><span><b>Three candles in a row</b>, each ≥ 20× the 72h median and ≥ 5× the 4h median; together ≥ <b>$500K</b>; price move across the three ≥ <b>2%</b>. The third candle may still be forming.</span></div>
+    </div>
+    <p>② through ④ exist because one dollar floor can't fit every coin. A large coin needs real size to matter; a coin that normally trades $4K per five minutes and suddenly does $550K is worth hearing about even though it never reaches $2M.</p>
+    <p>⑤ covers moves that never produce a single big candle: several consecutive candles at 20–50× normal while price grinds higher. One fat candle on a small coin is often a single large order; three in a row with price following is more likely real interest.</p>
+  </section>
+
+  <!-- 07 -->
+  <section id="s07">
+    <div class="sec-head"><h2><b>Repeat control</b></h2><span class="sec-num">07 · no time-based cooldown</span></div>
+    <ul class="plain">
+      <li><b>One alert per candle</b>, at most.</li>
+      <li>The first triggering candle starts a <b>wave</b> and always alerts.</li>
+      <li>Inside a wave, a later candle alerts again only if its volume is at least <b>2×</b> the last alerted candle's. Those cards are titled <code class="term">⏫ ESCALATING</code>. If the last alert fired mid-candle, the comparison switches to that candle's <b>final</b> volume once it closes, so a half-finished candle doesn't make the bar too easy to clear.</li>
+      <li>Three candles in a row without a trigger (15 minutes) end the wave. The next trigger starts a new one.</li>
+    </ul>
+    <p class="soft">An earlier version used a fixed 60-minute cooldown. It re-sent coins that stayed hot all day once an hour, and it could hide a second, larger leg that started 20 minutes after the first. "Only if it doubles" keeps accelerating moves visible without repeating plateaus.</p>
+  </section>
+
+  <!-- 08 -->
+  <section id="s08">
+    <div class="sec-head"><h2><b>Discord webhook</b></h2><span class="sec-num">08 · one-way · free · no bot</span></div>
+    <p>A webhook is Discord's built-in way for an outside program to post into one channel. It can only send, never read, so there is no bot to create, no permissions to configure, and no connection to keep open.</p>
+    <h3>Setup (once, in Discord)</h3>
+    <ol class="plain">
+      <li>Create a text channel on your own server, e.g. <code>#binance-alert</code>.</li>
+      <li>Channel settings → Integrations → Webhooks → New Webhook. Any name works.</li>
+      <li>Copy Webhook URL. It looks like <code>https://discord.com/api/webhooks/&lt;id&gt;/&lt;token&gt;</code>.</li>
+      <li>Put it in the Pi's <code>.env</code> as <code>DISCORD_WEBHOOK_URL=…</code>.</li>
+    </ol>
+    <div class="note secret-note"><b>The URL is the password.</b> Anyone holding it can post to the channel. It exists only in the Pi's <code>.env</code> (mode 600), not on the laptop, not in git, not on this page. If it leaks, delete that webhook in Discord, create a new one, and swap the value; it takes effect on the next minute.</div>
+    <h3>Sending</h3>
+    <p>The script sends one HTTPS POST per message with Python's built-in <code>urllib</code>. The body is JSON:</p>
+<pre><code>POST https://discord.com/api/webhooks/&lt;id&gt;/&lt;token&gt;
+Content-Type: application/json
+User-Agent: binance-volume-alert/1.0
+
+{
+  "username": "Volume Alert",
+  "embeds": [{
+    "title": "🟢 ENSOUSDT — volume spike 135.3x",
+    "url":   "https://www.binance.com/en/futures/ENSOUSDT",
+    "color": 3063173,
+    "fields": [
+      {"name": "5m volume",       "value": "$556.63K",               "inline": true},
+      {"name": "72h median (5m)", "value": "$4.11K",                 "inline": true},
+      {"name": "Ratio",           "value": "135.3x 72h · 131.4x 4h", "inline": true},
+      {"name": "Price",           "value": "0.9263 → 0.9736",        "inline": true},
+      {"name": "Change",          "value": "+5.11%",                 "inline": true},
+      {"name": "Timing",          "value": "at candle close",        "inline": true}
+    ],
+    "footer": {"text": "Binance USDT-M Futures · 5m candle · 3,412 trades"}
+  }]
+}</code></pre>
+    <p class="soft">The structure of a real alert, ENSO at 12:15 on 2026-10-09. The volume and price values are from that candle; the trade count is illustrative. Discord answers <code>204 No Content</code> on success, and the card appears in the channel and on the phone according to the channel's notification setting.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Situation</th><th>What gets posted</th></tr></thead>
+      <tbody>
+        <tr><td class="k">One coin fires</td><td>One embed per coin; up to 10 combined into one message.</td></tr>
+        <tr><td class="k">Rule ⑤</td><td>Title "sustained volume (3 candles)", plus a line with the run length, total volume and price move.</td></tr>
+        <tr><td class="k">≥ 15 coins at once</td><td>Treated as a market-wide move: one compact list, a line per coin sorted by ratio, BTC's ratio in the title, split every 60 lines.</td></tr>
+      </tbody>
+    </table></div>
+    <h3>Discord's limits and how they're handled</h3>
+    <ul class="plain">
+      <li>At most 10 embeds per message; consecutive messages are spaced one second apart.</li>
+      <li>Roughly 30 messages per minute per channel. On <code>429</code> Discord returns <code>retry_after</code>; the script waits that long and retries, up to three times.</li>
+      <li>An empty webhook URL means dry run: everything is logged, nothing is sent.</li>
+      <li>Webhooks are free; no Nitro needed.</li>
+    </ul>
+  </section>
+
+  <!-- 09 -->
+  <section id="s09">
+    <div class="sec-head"><h2><b>Failures</b> &amp; logs</h2><span class="sec-num">09 · journalctl</span></div>
+    <div class="tbl"><table>
+      <thead><tr><th>Situation</th><th>Behaviour</th></tr></thead>
+      <tbody>
+        <tr><td class="k">One coin's request fails</td><td>Retried twice, then skipped until next minute.</td></tr>
+        <tr><td class="k">Binance 429 / 418</td><td>No retry; the run is abandoned.</td></tr>
+        <tr><td class="k">Over half the coins fail</td><td>The run exits as failed and shows up in the log.</td></tr>
+        <tr><td class="k">New candle not yet created</td><td>Quiet coins may have no trade in the first seconds of a candle; the just-closed candle is still scored.</td></tr>
+        <tr><td class="k">Under 864 candles of history</td><td>New listings are skipped and counted as <code>short_history</code>.</td></tr>
+        <tr><td class="k">Pi reboot</td><td>The RAM cache is gone; the first two runs refill it.</td></tr>
+      </tbody>
+    </table></div>
+<pre><code>$ journalctl -u binance-volume-alert -n 50
+candle 15:45 scanned=525/525 backfill=0 short_history=0 errors=0 spikes=1 alerts=0 took=17.9s</code></pre>
+    <p><code>scanned</code> is coins with fresh data, <code>backfill</code> is coins refilled this run, <code>spikes</code> is candles that met a rule, <code>alerts</code> is messages actually sent, and <code>took</code> is wall time. When something is sent, a line per coin follows with its ratios, volume, timing and any <code>ESCALATING</code> / <code>SUSTAINED</code> flag.</p>
+  </section>
+
+  <!-- 10 -->
+  <section id="s10">
+    <div class="sec-head"><h2><b>Configuration</b></h2><span class="sec-num">10 · .env, live next minute</span></div>
+    <div class="tbl"><table>
+      <thead><tr><th>Variable</th><th class="n">Value</th><th>Controls</th></tr></thead>
+      <tbody>
+        <tr><td class="k">SHORT_RATIO</td><td class="n">5</td><td>① short-term multiple</td></tr>
+        <tr><td class="k">SPIKE_RATIO / MIN_QUOTE_VOLUME</td><td class="n">10 / 2,000,000</td><td>②</td></tr>
+        <tr><td class="k">EXTREME_RATIO / EXTREME_MIN_QUOTE_VOLUME</td><td class="n">100 / 500,000</td><td>③</td></tr>
+        <tr><td class="k">MID_RATIO / MID_MIN_QUOTE_VOLUME</td><td class="n">30 / 1,000,000</td><td>④</td></tr>
+        <tr><td class="k">SUSTAIN_CANDLES / SUSTAIN_RATIO</td><td class="n">3 / 20</td><td>⑤ run length and multiple</td></tr>
+        <tr><td class="k">SUSTAIN_MIN_QUOTE_VOLUME / _MOVE_PCT</td><td class="n">500,000 / 2</td><td>⑤ total volume and price move</td></tr>
+        <tr><td class="k">REALERT_MULT / EPISODE_GAP_CANDLES</td><td class="n">2 / 3</td><td>Re-alert multiple; quiet candles that end a wave</td></tr>
+        <tr><td class="k">MARKET_WIDE_MIN</td><td class="n">15</td><td>Coins at once before switching to a list</td></tr>
+        <tr><td class="k">LOOKBACK_CANDLES / SHORT_LOOKBACK_CANDLES</td><td class="n">864 / 48</td><td>72 hours / 4 hours of 5m candles</td></tr>
+      </tbody>
+    </table></div>
+    <p class="soft">Changing a lookback length invalidates the cache automatically: every coin's history is tagged with the length it was fetched for, and a mismatch triggers a refill.</p>
+  </section>
+
+  <!-- 11 -->
+  <section id="s11">
+    <div class="sec-head"><h2><b>Changelog</b> &amp; lessons</h2><span class="sec-num">11</span></div>
+    <div class="log-entry"><div class="log-date">2026-10-09</div><div class="log-body"><span class="tag ship">ship</span>First version: 15m candles, checked every 15 minutes after the close, ≥5× the 72h average.<p>It worked, but alerts arrived up to 16 minutes after a move began, and one big past spike in the average hid the next.</p></div></div>
+    <div class="log-entry"><div class="log-date">2026-10-09</div><div class="log-body"><span class="tag ship">ship</span>Switched to 5m candles checked every minute, median baselines, and a compact list for market-wide moves.<p>A 1-minute replay later showed per-minute checks alert only ~1.4 minutes earlier on average than checking at each close. Useful, not dramatic.</p></div></div>
+    <div class="log-entry"><div class="log-date">2026-10-09</div><div class="log-body"><span class="tag lesson">lesson</span>Laptop backtests and the Pi share one public IP and one Binance budget.<p>Runs slowed to two minutes until the backtest stopped. Backtests now fetch once to disk and throttle themselves; the alert job no longer retries on 429.</p></div></div>
+    <div class="log-entry"><div class="log-date">2026-10-09</div><div class="log-body"><span class="tag ship">ship</span>Rule F: the 4h short-term baseline, the ③ extreme tier, and "re-alert only when volume doubles" instead of a 60-minute cooldown.<p>A coin that had run 40–160× its 72h median for seven straight hours stopped re-alerting every hour.</p></div></div>
+    <div class="log-entry"><div class="log-date">2026-10-09</div><div class="log-body"><span class="tag bug">bug</span>For almost three hours, 300 of 525 coins weren't monitored at all.<p>The code was deployed before the lookback setting changed, so the first batch got 288 candles of history instead of 864, and coins with short history were skipped without a word. Fixed by tagging the cache with its lookback and logging <code>short_history</code>. The log had said <code>scanned=525/525 errors=0</code> the whole time, so a healthy-looking summary line isn't proof.</p></div></div>
+    <div class="log-entry"><div class="log-date">2026-10-10</div><div class="log-body"><span class="tag ship">ship</span>Added ④ (30× and $1M) and ⑤ (sustained, three candles).<p>Replayed against four moves that had been caught late, first alerts moved from +10–19% into the move to +4–6%, and one that was missed entirely is now caught. Hit rate on rule ⑤ is still unverified.</p></div></div>
+  </section>
+
+  <footer>Personal tooling notes, not trading advice. Backtest estimate for the current rules: about 134 alerts a day. Last updated 2026-10-11. · <a href="/">kuoforit.github.io</a></footer>
+</main>
+</div>
+
+<script>
+  try{
+    var links = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+    var map = {};
+    links.forEach(function(a){ map[a.getAttribute('href').slice(1)] = a; });
+    var sections = Array.prototype.slice.call(document.querySelectorAll('section[id]'));
+    if('IntersectionObserver' in window && sections.length){
+      var observer = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          var link = map[entry.target.id];
+          if(!link) return;
+          if(entry.isIntersecting){
+            links.forEach(function(a){ a.classList.remove('active'); });
+            link.classList.add('active');
+          }
+        });
+      }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+      sections.forEach(function(s){ observer.observe(s); });
+    }
+  }catch(e){}
+</script>
+<script>
+  (function(){
+    try{
+      var THEME_KEY = 'volume-alert-notes-theme';
+      var root = document.documentElement;
+      var btn = document.getElementById('theme-toggle');
+      var mql = window.matchMedia('(prefers-color-scheme: dark)');
+      var MOON = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+      var SUN = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>';
+      function effectiveTheme(){
+        var explicit = root.getAttribute('data-theme');
+        if(explicit === 'dark' || explicit === 'light') return explicit;
+        return mql.matches ? 'dark' : 'light';
+      }
+      function render(theme){
+        if(!btn) return;
+        btn.innerHTML = theme === 'dark' ? SUN : MOON;
+        btn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+      }
+      var saved = null;
+      try{ saved = localStorage.getItem(THEME_KEY); }catch(e){}
+      if(saved === 'dark' || saved === 'light') root.setAttribute('data-theme', saved);
+      render(effectiveTheme());
+      if(btn){
+        btn.addEventListener('click', function(){
+          var next = effectiveTheme() === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          try{ localStorage.setItem(THEME_KEY, next); }catch(e){}
+          render(next);
+        });
+      }
+      try{
+        mql.addEventListener('change', function(){
+          if(!root.getAttribute('data-theme')) render(effectiveTheme());
+        });
+      }catch(e){}
+    }catch(e){}
+  })();
+</script>
+</body>
+</html>
