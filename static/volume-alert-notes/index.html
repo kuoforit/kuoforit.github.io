@@ -357,18 +357,20 @@
 
   <!-- 06 -->
   <section id="s06">
-    <div class="sec-head"><h2><b>Trigger rules</b></h2><span class="sec-num">06 · ① AND (② OR ③ OR ④), OR ⑤</span></div>
+    <div class="sec-head"><h2><b>Trigger rules</b></h2><span class="sec-num">06 · ① AND (② OR ③ OR ④ OR ⑥), OR ⑤</span></div>
     <div class="rule-box">
-      <div class="rule-group">Single-candle spike: ① must hold, plus at least one of ②③④</div>
+      <div class="rule-group">Single-candle spike: ① must hold, plus at least one of ②③④⑥</div>
       <div class="rule"><b>①</b><span>Volume ≥ <b>5×</b> the 4h median <span class="why">— sudden, not already elevated</span></span></div>
       <div class="rule"><b>②</b><span>≥ <b>10×</b> the 72h median and ≥ <b>$2M</b> <span class="why">— a normal spike</span></span></div>
       <div class="rule"><b>③</b><span>≥ <b>100×</b> the 72h median and ≥ <b>$500K</b> <span class="why">— an extreme spike on a small coin</span></span></div>
       <div class="rule"><b>④</b><span>≥ <b>30×</b> the 72h median and ≥ <b>$1M</b> <span class="why">— the gap between ② and ③</span></span></div>
+      <div class="rule"><b>⑥</b><span>≥ <b>10×</b> the 72h median, ≥ <b>15×</b> the 4h median and ≥ <b>$1M</b> <span class="why">— a quiet coin waking up, below ②'s $2M and ④'s 30×</span></span></div>
       <div class="rule-or">or</div>
       <div class="rule-group">Sustained spike</div>
       <div class="rule"><b>⑤</b><span><b>Three candles in a row</b>, each ≥ 20× the 72h median and ≥ 5× the 4h median; together ≥ <b>$500K</b>; price move across the three ≥ <b>2%</b>. The third candle may still be forming.</span></div>
     </div>
     <p>② through ④ exist because one dollar floor can't fit every coin. A large coin needs real size to matter; a coin that normally trades $4K per five minutes and suddenly does $550K is worth hearing about even though it never reaches $2M.</p>
+    <p>⑥ fills the gap that ② and ④ leave open: 10–30× normal with $1–2M of volume. It requires 15× the 4h median, three times ①'s bar, so it only fires on coins that were quiet right before. Large coins drifting just under $2M stay out.</p>
     <p>⑤ covers moves that never produce a single big candle: several consecutive candles at 20–50× normal while price grinds higher. One fat candle on a small coin is often a single large order; three in a row with price following is more likely real interest.</p>
   </section>
 
@@ -466,6 +468,7 @@ candle 15:45 scanned=525/525 backfill=0 short_history=0 errors=0 spikes=1 alerts
         <tr><td class="k">SPIKE_RATIO / MIN_QUOTE_VOLUME</td><td class="n">10 / 2,000,000</td><td>②</td></tr>
         <tr><td class="k">EXTREME_RATIO / EXTREME_MIN_QUOTE_VOLUME</td><td class="n">100 / 500,000</td><td>③</td></tr>
         <tr><td class="k">MID_RATIO / MID_MIN_QUOTE_VOLUME</td><td class="n">30 / 1,000,000</td><td>④</td></tr>
+        <tr><td class="k">QUIET_RATIO / QUIET_SHORT_RATIO / QUIET_MIN_QUOTE_VOLUME</td><td class="n">10 / 15 / 1,000,000</td><td>⑥</td></tr>
         <tr><td class="k">SUSTAIN_CANDLES / SUSTAIN_RATIO</td><td class="n">3 / 20</td><td>⑤ run length and multiple</td></tr>
         <tr><td class="k">SUSTAIN_MIN_QUOTE_VOLUME / _MOVE_PCT</td><td class="n">500,000 / 2</td><td>⑤ total volume and price move</td></tr>
         <tr><td class="k">REALERT_MULT / EPISODE_GAP_CANDLES</td><td class="n">2 / 3</td><td>Re-alert multiple; quiet candles that end a wave</td></tr>
@@ -485,9 +488,10 @@ candle 15:45 scanned=525/525 backfill=0 short_history=0 errors=0 spikes=1 alerts
     <div class="log-entry"><div class="log-date">2026-10-09</div><div class="log-body"><span class="tag ship">ship</span>Rule F: the 4h short-term baseline, the ③ extreme tier, and "re-alert only when volume doubles" instead of a 60-minute cooldown.<p>A coin that had run 40–160× its 72h median for seven straight hours stopped re-alerting every hour.</p></div></div>
     <div class="log-entry"><div class="log-date">2026-10-09</div><div class="log-body"><span class="tag bug">bug</span>For almost three hours, 300 of 525 coins weren't monitored at all.<p>The code was deployed before the lookback setting changed, so the first batch got 288 candles of history instead of 864, and coins with short history were skipped without a word. Fixed by tagging the cache with its lookback and logging <code>short_history</code>. The log had said <code>scanned=525/525 errors=0</code> the whole time, so a healthy-looking summary line isn't proof.</p></div></div>
     <div class="log-entry"><div class="log-date">2026-10-10</div><div class="log-body"><span class="tag ship">ship</span>Added ④ (30× and $1M) and ⑤ (sustained, three candles).<p>Replayed against four moves that had been caught late, first alerts moved from +10–19% into the move to +4–6%, and one that was missed entirely is now caught. Hit rate on rule ⑤ is still unverified.</p></div></div>
+    <div class="log-entry"><div class="log-date">2026-10-14</div><div class="log-body"><span class="tag ship">ship</span>Added ⑥ (10× 72h, 15× 4h and $1M) after PYTH was missed.<p>PYTH's 11:00 candle did $1.40M at 13.7× the 72h median and 22.3× the 4h median, with price up 3.5%. It failed ② on dollars and ④ on the multiple, so no rule covered it. A 7-day backtest compared two fixes: lowering ②'s floor to $1M added 44 alerts a day, while ⑥ added 14 and still caught PYTH. Alerts added by either fix moved slightly less afterwards than the existing ones (median best move within 60 minutes 0.8% vs 1.0%), so this is about missing fewer coins, not sharper signals.</p></div></div>
   </section>
 
-  <footer>Personal tooling notes, not trading advice. Backtest estimate for the current rules: about 134 alerts a day. Last updated 2026-10-11. · See also <a href="/price-alert-notes/">Price Alert Field Notes</a> · <a href="/">kuoforit.github.io</a></footer>
+  <footer>Personal tooling notes, not trading advice. Backtest estimate for the current rules: about 145 alerts a day. Last updated 2026-10-14. · See also <a href="/price-alert-notes/">Price Alert Field Notes</a> · <a href="/">kuoforit.github.io</a></footer>
 </main>
 </div>
 
