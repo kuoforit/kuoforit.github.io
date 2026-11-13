@@ -713,6 +713,17 @@
       </div>
     </div>
     <a href="#s24"><span class="num">24</span>進場決策Checklist</a>
+    <div class="toc-item-wrap">
+      <div class="toc-item-row">
+        <a href="#s25"><span class="num">25</span>Re-entry重新進場總整理</a>
+        <button class="toc-sub-toggle" type="button" aria-expanded="true" aria-controls="ts-25" aria-label="展開/收合 25 子項">▾</button>
+      </div>
+      <div class="toc-sub" id="ts-25">
+        <a href="#s25-1">25.1 提早重新進場：Parallel EQ</a>
+        <a href="#s25-2">25.2 加碼時機：只有Expansion 2才適用</a>
+        <a href="#s25-3">25.3 多重候選篩選：挑最obvious的那個</a>
+      </div>
+    </div>
   </div>
 </nav>
 
@@ -743,6 +754,7 @@
       <li>讀<b style="color:var(--ink)">第03～06節</b>，抓住「市場為什麼會動」跟「LG to LG判方向」——這兩節是整套系統的骨幹，其他都是延伸細節。</li>
       <li>先跳過07～10的細節，直接讀<b style="color:var(--ink)">第11節SSSL</b>，搞懂「有了方向之後，怎麼進場」。</li>
       <li>讀<b style="color:var(--ink)">第23節風控總整理</b>與<b style="color:var(--ink)">第24節進場決策Checklist</b>，把方向→進場→停損停利→部位大小串成一條線。</li>
+      <li>想知道「方向確認之後怎麼在同一段flows裡持續再進場」，直接看<b style="color:var(--ink)">第25節Re-entry總整理</b>。</li>
       <li>回頭補<b style="color:var(--ink)">第07～10、12～14節</b>的細節。</li>
       <li>用<b style="color:var(--ink)">第18～21節案例研究</b>對照練習，18.1～18.3是難度最平緩的起手案例。</li>
       <li>照<b style="color:var(--ink)">第22節Replay Mode</b>的方法，開始自己練——這套系統的作者自己也是靠這樣練出來的。</li>
@@ -1622,7 +1634,7 @@
     </div>
   </section>
 
-  <div class="module-band">總結工具 <span class="arrow">→</span> <b>Synthesis</b> <span class="arrow">·</span> 第23～24節</div>
+  <div class="module-band">總結工具 <span class="arrow">→</span> <b>Synthesis</b> <span class="arrow">·</span> 第23～25節</div>
 
   <!-- 23 -->
   <section id="s23">
@@ -1701,11 +1713,40 @@
     <div class="rule-box"><b>提醒：</b>這份checklist幫你確認「該檢查的都檢查了」，但不會幫你做主觀判斷本身——origin of expansion該標在哪、現在算不算「真的在aggregate」，這些仍然要靠第18～21節的案例練習累積直覺，沒有捷徑。</div>
   </section>
 
+  <!-- 25 -->
+  <section id="s25">
+    <div class="sec-head">
+      <h2><span class="sec-num">25 /</span> <b>Re-entry：同方向裡怎麼重新進場</b></h2>
+      <span class="pill unverified">整理</span>
+    </div>
+    <p class="soft">這節不是新規則，是把原本分散在第9.4、10、14節的「已經確認方向之後，怎麼在同一段flows裡連續再進場」邏輯抽出來合併成一處，方便複習。Daniel DeGuzman把整套系統拆成四塊教學心法：Direction（判方向）／LG（抓目標位）／SSL（進場）／<b>Candle to Candle（重新進場）</b>——這節對應的就是他說的第四塊，但內容本身仍然是xB原始教材裡已經寫過的東西，只是換個角度重新收斂，不是新增規則。</p>
+
+    <div class="subhead" id="s25-1"><span class="subnum">25.1</span><h3>提早重新進場：Parallel EQ</h3></div>
+    <p class="soft" style="margin-bottom:10px;">來自第9.4節。最常見的錯誤是看到反方向LGR就整個進入observation，一路被動等到出現同方向LGC才肯回來——這段期間其實已經錯過真正的進場點。做法是在LGR的低點/EQ直接設alert，觸發後就進場，不等完整的反向LGC形成。</p>
+    <div class="quote" style="margin-bottom:10px;">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 影片原話</div>
+      <div class="quote-text">"LGRs are not of any importance other than to tell you rebalance is coming... I take 80% of my setups at an LGC."</div>
+    </div>
+
+    <div class="subhead" id="s25-2"><span class="subnum">25.2</span><h3>加碼時機：只有Expansion 2才適用</h3></div>
+    <p class="soft" style="margin-bottom:10px;">來自第10節5 Phase Cycle。確認進入Expansion 2（循環裡最大、最無效率的一段）之後，<b>不必每次都等完整Aggregation Model走完</b>——只要partial rebalance（一次sweep+LGC）就能繼續加碼同方向部位，95~100%的進場發生在LGC區間。Expansion 1、Rebalance 1/2這些階段仍然要求完整確認，不能套用同一套寬鬆標準。</p>
+
+    <div class="subhead" id="s25-3"><span class="subnum">25.3</span><h3>多重候選篩選：挑最obvious的那個</h3></div>
+    <p class="soft" style="margin-bottom:10px;">來自第14節實盤案例。同一個LGC區間裡如果同時出現多個SSSL候選，優先挑「最obvious」（最乾淨、wick失敗最明顯）的那個，用「order of magnitude」（噴出幅度量級）排序。xB本人實際示範過連續5個setup全勝（約2.5天）、另一次Replay Mode 4個setup全勝共12R，都是靠反覆套用同一套LG to LG+SSSL邏輯完成的。</p>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · 影片原話</div>
+      <div class="quote-text">"I think it's a good method, but sometimes it gets too almost too refined. I prefer looking at these big levels."</div>
+      <div class="quote-note">這跟第16節Daniel DeGuzman的「等兩次strike」形成對比——xB自己反而不建議把時間框切得太細來找更多進場點。</div>
+    </div>
+
+    <div class="rule-box" style="margin-top:16px;"><b>跟第9.3節的差別：</b>第9.3節講的是「candle by candle算的起點」（信心水位判斷），回答的是「現在這個方向我該多有信心」；這節講的是「已經有信心之後，怎麼在同一段flows裡找下一個進場點」——兩者都跟「逐根K棒判讀」有關，但解決的是不同問題，別混用。</div>
+  </section>
+
 
   <footer>
     整理自：<b>The_Liquidity_Gap-The_LG</b> / <b>LGRs_and_LGCs</b> / <b>The_Aggregation_Model</b> / <b>SSSL_Supplement</b> / <b>SSSL_Filtering-The_LE_Candle</b> / <b>LGR_System-Navigating_the_Content</b>／ <b>Market_Navigation-Directional_Triggers</b> / <b>Defining your Swing and your LG Levels to Maximise Trading Reversals in Flows</b> / <b>Levels are NOT levels</b> / <b>Why Lower Highs and Higher Lows are so Damn Important to the LGR system</b> / <b>Expansion Phases, Rebalancing Phases, Flow Reversals, and Proportionate Relationships</b> / <b>Expansions and Proportions</b> / <b>Let's Talk LGCs</b> / <b>Ramblings on Logic, LG to LG, and Candle by Candle</b> / <b>Bringing it All Together</b>（Supplementary）（皆TraderxB, LGR Traders 2022）／ <b>lgr-discussion</b> Discord逐字稿（2022-11-30）／本機mlx-whisper轉錄逐字稿＋畫面截圖：<b>5 Phase Expansion Cycle and Price Behaviour</b> / <b>The Aggregation Model - Aggregation 101</b> / <b>The Liquidity Gap- The LG</b> / <b>Module 1.2 Assignment</b> / <b>Module 1 - The LGR and The LGC</b> / <b>Module 1.4 - The Aggregation Model</b> / <b>LGR System Flow Sequencing</b> / <b>Entry Trigger 1 - The SSSL</b> / <b>Navigating Expansions with LGCs for SSSL Triggers</b> / <b>Managing Risk Parameters on a Live SSSL entry</b> / <b>Defining your DTs - SSSL LGC Reversal</b> / <b>Homework Assignment - The Sweep DT</b> / <b>Refining DTs and Entries using the same DT</b> / <b>Refining your Levels for Higher Accuracy</b>（皆TraderxB, LGR Traders 2022）。Module 1.3 Assignment、Flows Discussion and LGCs、Quick Note on Data Collection、Ramblings on Price and DTs、Navigating DTs and LG to LG for short term and long term flows五支已轉錄閱讀，但內容跟其他已收錄影片重複度過高，未貢獻獨立概念故未收錄進本文，僅供之後查證用。ltf_sensitivity_around_htf_price_points的內容已併入第12.4節。Category D（BTCPERP / FTM / XAUUSD — LG to LG Concept三支）與Category E（Directional Trigger Practice：1INCHPERP／ETHPERP／SOLUSDT／SXPPERP四支＋Replay Mode 1 week of XRPPERP）皆已轉錄閱讀，八支中六支純粹是同一套LG to LG／SSSL邏輯在不同標的上的重複實戰示範，未貢獻獨立概念；SXPPERP的「慣性心法」quote併入第06節，XRPPERP的一週戰績併入第14節，其餘不逐支收錄。Category F（每日盤面分析類15支）已全數轉錄閱讀並收錄成第18～22節的案例研究：<b>BTC analysis June 3rd</b> / <b>BTC analysis from 1W to 4H - June 6th</b> / <b>BTC Analysis - June 10th</b> / <b>Quick BTC Analysis - May 23rd</b> / <b>Quick BTC Analysis - May 26th</b> / <b>Flows Practice for Directional Confidence</b> / <b>Flows Practice BTCPERP</b> / <b>Flows Talk Friday</b> / <b>Quick Flow Analysis - BTCUSD</b> / <b>Price Discussion on BTCUSD</b> / <b>EURUSD Replay and Discussion</b> / <b>Spot Trading Walkthrough</b> / <b>Weekend Assignment - June 10th</b> / <b>Weekend Assignment - June 4th</b> / <b>Rambles on EURUSD - May 27th</b>（皆TraderxB, LGR Traders 2022）。這批影片並非單純重複示範：spike的正式定義、逆勢減碼風控、Reclaim四步驟定義、多時間框對齊的唯一完整實況、以及Replay Mode刻意練習的具體成果數字，都是其他章節沒有的內容。
     <br><br>
-    章節順序依教學邏輯排列（方向Module 1 → 進場Module 2 → 補充 → 案例研究），非處理時間順序；2026-09-25重排。第17節巢狀結構圖解為對話中整理出的跨章節推論，非官方教材原文，2026-09-25新增。2026-09-25再次調整：原第06/07節（LG to LG）與第12/13節（SSSL）本是PDF與影片深化的姊妹節，已合併為單節並改寫敘事語氣，全文不再需要對照原始影片即可獨立閱讀；各章節pill／quote／文末來源清單仍保留出處供查證，原19節精簡為17節。2026-09-25修正：先前footer提到的「Candle-By-Candle Series」經核對資料夾並無對應檔案，屬舊草稿殘留，已刪除。2026-09-25新增第18～22節：Category F全數15支影片轉錄閱讀完畢，逐支評估後以案例研究形式收錄，不採預設高重複度的判斷。2026-09-25新增第23～24節與開頭新手導覽框：整合原本分散在第12.1、19.1、20.2節的風控規則，並串成一份進場決策checklist；同時老實標出教材沒有涵蓋的部分（帳戶層級資金管理、資金費率、槓桿選擇、下單滑價），不臆測補上。2026-09-25第15節補圖：Discord逐字稿原本只有文字，另從2022-11-30當天的網頁匯出檔（lgr-discussion.html_Files資料夾）裡挑出5張辯論當下實際對照的原圖，各自對應到已收錄的quote；其餘20餘張同一組基礎圖表模板反覆貼標籤的重複圖、以及一張含意不明的手繪紅圈截圖，判斷價值不足或無法確認對應內容，未收錄。
+    章節順序依教學邏輯排列（方向Module 1 → 進場Module 2 → 補充 → 案例研究），非處理時間順序；2026-09-25重排。第17節巢狀結構圖解為對話中整理出的跨章節推論，非官方教材原文，2026-09-25新增。2026-09-25再次調整：原第06/07節（LG to LG）與第12/13節（SSSL）本是PDF與影片深化的姊妹節，已合併為單節並改寫敘事語氣，全文不再需要對照原始影片即可獨立閱讀；各章節pill／quote／文末來源清單仍保留出處供查證，原19節精簡為17節。2026-09-25修正：先前footer提到的「Candle-By-Candle Series」經核對資料夾並無對應檔案，屬舊草稿殘留，已刪除。2026-09-25新增第18～22節：Category F全數15支影片轉錄閱讀完畢，逐支評估後以案例研究形式收錄，不採預設高重複度的判斷。2026-09-25新增第23～24節與開頭新手導覽框：整合原本分散在第12.1、19.1、20.2節的風控規則，並串成一份進場決策checklist；同時老實標出教材沒有涵蓋的部分（帳戶層級資金管理、資金費率、槓桿選擇、下單滑價），不臆測補上。2026-09-25第15節補圖：Discord逐字稿原本只有文字，另從2022-11-30當天的網頁匯出檔（lgr-discussion.html_Files資料夾）裡挑出5張辯論當下實際對照的原圖，各自對應到已收錄的quote；其餘20餘張同一組基礎圖表模板反覆貼標籤的重複圖、以及一張含意不明的手繪紅圈截圖，判斷價值不足或無法確認對應內容，未收錄。2026-11-13新增第25節Re-entry總整理：Daniel指出整套系統應分成Direction/LG/SSL/Candle to Candle四塊教學心法，核對後確認第9.4、10、14節已經涵蓋「Candle to Candle重新進場」的內容，只是分散在Direction與Entry兩個模組裡沒有獨立命名；本節把三處內容抽出來重新收斂成一節，不是新增查無根據的規則，原章節內容照舊保留。
   </footer>
 
 </div>
@@ -1842,6 +1883,17 @@
       </div>
     </div>
     <a href="#en-s24"><span class="num">24</span>Entry Decision Checklist</a>
+    <div class="toc-item-wrap">
+      <div class="toc-item-row">
+        <a href="#en-s25"><span class="num">25</span>Re-entry, Consolidated</a>
+        <button class="toc-sub-toggle" type="button" aria-expanded="true" aria-controls="en-ts-25" aria-label="Expand/collapse Section 25 sub-items">▾</button>
+      </div>
+      <div class="toc-sub" id="en-ts-25">
+        <a href="#en-s25-1">25.1 Getting Back In Early: Parallel EQ</a>
+        <a href="#en-s25-2">25.2 When to Add: Only Inside Expansion 2</a>
+        <a href="#en-s25-3">25.3 Picking Among Multiple Candidates</a>
+      </div>
+    </div>
   </div>
 </nav>
 
@@ -1872,6 +1924,7 @@
       <li>Read <b style="color:var(--ink)">Sections 3-6</b> to grasp "why the market moves" and "reading direction with LG to LG" — these two sections are the backbone of the whole system; everything else is an extension of them.</li>
       <li>Skip the details in 7-10 for now and go straight to <b style="color:var(--ink)">Section 11's SSSL</b>, to understand "once you have direction, how do you actually enter."</li>
       <li>Read <b style="color:var(--ink)">Section 23's risk-management roundup</b> and <b style="color:var(--ink)">Section 24's entry decision checklist</b>, to string direction → entry → stop/target → position size into one line.</li>
+      <li>If you want "how to keep re-entering within the same flow once direction is confirmed," go straight to <b style="color:var(--ink)">Section 25's re-entry roundup</b>.</li>
       <li>Then go back and fill in the details in <b style="color:var(--ink)">Sections 7-10 and 12-14</b>.</li>
       <li>Use <b style="color:var(--ink)">the case studies in Sections 18-21</b> to practice by comparison — 18.1-18.3 are the gentlest cases to start with.</li>
       <li>Follow the method in <b style="color:var(--ink)">Section 22's Replay Mode</b> and start drilling it yourself — that's how the author himself trained into this.</li>
@@ -2751,7 +2804,7 @@
     </div>
   </section>
 
-  <div class="module-band">Synthesis Toolkit <span class="arrow">→</span> <b>Synthesis</b> <span class="arrow">·</span> Sections 23-24</div>
+  <div class="module-band">Synthesis Toolkit <span class="arrow">→</span> <b>Synthesis</b> <span class="arrow">·</span> Sections 23-25</div>
 
   <!-- 23 -->
   <section id="en-s23">
@@ -2830,11 +2883,40 @@
     <div class="rule-box"><b>A reminder:</b> this checklist helps you confirm you've checked everything you should — it doesn't do the subjective judgment for you. Where to mark the origin of expansion, whether the market is "really aggregating" right now — those still depend on the intuition built up practicing the cases in Sections 18-21. There's no shortcut.</div>
   </section>
 
+  <!-- 25 -->
+  <section id="en-s25">
+    <div class="sec-head">
+      <h2><span class="sec-num">25 /</span> <b>Re-entry: Getting Back In Within the Same Flow</b></h2>
+      <span class="pill unverified">Synthesis</span>
+    </div>
+    <p class="soft">This section isn't a new rule — it pulls together the "how do you keep re-entering within a confirmed flow" logic that was scattered across Sections 9.4, 10, and 14, so it can be read in one pass. Daniel DeGuzman breaks the whole system down into four teaching pillars: Direction (bias) / LG (target level) / SSL (entry) / <b>Candle to Candle (re-entry)</b> — this section maps to that fourth pillar, but the underlying content is still all from xB's original material; it's just re-converged from a different angle, not a new rule.</p>
+
+    <div class="subhead" id="en-s25-1"><span class="subnum">25.1</span><h3>Getting Back In Early: Parallel EQ</h3></div>
+    <p class="soft" style="margin-bottom:10px;">From Section 9.4. The most common mistake is seeing a counter-direction LGR and going fully passive into observation mode, waiting all the way until a same-direction LGC shows up before re-engaging — by which point the real entry point has already been missed. The fix is to set an alert directly at the LGR's low/EQ and enter as soon as it triggers, rather than waiting for a full counter-direction LGC to form.</p>
+    <div class="quote" style="margin-bottom:10px;">
+      <div class="quote-meta"><span class="who">TraderxB</span> · from the video transcript</div>
+      <div class="quote-text">"LGRs are not of any importance other than to tell you rebalance is coming... I take 80% of my setups at an LGC."</div>
+    </div>
+
+    <div class="subhead" id="en-s25-2"><span class="subnum">25.2</span><h3>When to Add: Only Inside Expansion 2</h3></div>
+    <p class="soft" style="margin-bottom:10px;">From Section 10's 5 Phase Cycle. Once you've confirmed you're inside Expansion 2 (the biggest, most inefficient leg of the cycle), <b>you don't need to wait for a full Aggregation Model to complete every time</b> — a partial rebalance (one sweep + LGC) is enough to keep adding to the position in the same direction; 95-100% of entries happen inside the LGC zone. Expansion 1 and Rebalance 1/2 still require full confirmation — the same loose standard doesn't carry over to those phases.</p>
+
+    <div class="subhead" id="en-s25-3"><span class="subnum">25.3</span><h3>Picking Among Multiple Candidates: Take the Most Obvious One</h3></div>
+    <p class="soft" style="margin-bottom:10px;">From Section 14's live case. When multiple SSSL candidates show up inside the same LGC zone at once, prioritize the "most obvious" one (the cleanest, with the most decisive wick failure), ranked by "order of magnitude" (the scale of the move that produced it). xB himself demonstrated 5 setups in a row, all winners, over about 2.5 days, and a separate Replay Mode run that went 4-for-4 for 12R total — both achieved by applying the same LG to LG + SSSL logic on repeat.</p>
+    <div class="quote">
+      <div class="quote-meta"><span class="who">TraderxB</span> · from the video transcript</div>
+      <div class="quote-text">"I think it's a good method, but sometimes it gets too almost too refined. I prefer looking at these big levels."</div>
+      <div class="quote-note">This contrasts with Daniel DeGuzman's "wait for two strikes" approach in Section 16 — xB himself actually leans against slicing the timeframe finer to find more entries.</div>
+    </div>
+
+    <div class="rule-box" style="margin-top:16px;"><b>How this differs from Section 9.3:</b> Section 9.3 is about "where candle-by-candle counting starts" — i.e., how much confidence you should have in the current direction. This section is about what to do once you already have that confidence — where to find the next entry within the same flow. Both involve reading candle-by-candle, but they answer different questions; don't conflate them.</div>
+  </section>
+
 
   <footer>
     Compiled from: <b>The_Liquidity_Gap-The_LG</b> / <b>LGRs_and_LGCs</b> / <b>The_Aggregation_Model</b> / <b>SSSL_Supplement</b> / <b>SSSL_Filtering-The_LE_Candle</b> / <b>LGR_System-Navigating_the_Content</b> / <b>Market_Navigation-Directional_Triggers</b> / <b>Defining your Swing and your LG Levels to Maximise Trading Reversals in Flows</b> / <b>Levels are NOT levels</b> / <b>Why Lower Highs and Higher Lows are so Damn Important to the LGR system</b> / <b>Expansion Phases, Rebalancing Phases, Flow Reversals, and Proportionate Relationships</b> / <b>Expansions and Proportions</b> / <b>Let's Talk LGCs</b> / <b>Ramblings on Logic, LG to LG, and Candle by Candle</b> / <b>Bringing it All Together</b> (Supplementary) (all TraderxB, LGR Traders 2022) / the <b>lgr-discussion</b> Discord transcript (2022-11-30) / locally transcribed via mlx-whisper, with screenshots, from: <b>5 Phase Expansion Cycle and Price Behaviour</b> / <b>The Aggregation Model - Aggregation 101</b> / <b>The Liquidity Gap- The LG</b> / <b>Module 1.2 Assignment</b> / <b>Module 1 - The LGR and The LGC</b> / <b>Module 1.4 - The Aggregation Model</b> / <b>LGR System Flow Sequencing</b> / <b>Entry Trigger 1 - The SSSL</b> / <b>Navigating Expansions with LGCs for SSSL Triggers</b> / <b>Managing Risk Parameters on a Live SSSL entry</b> / <b>Defining your DTs - SSSL LGC Reversal</b> / <b>Homework Assignment - The Sweep DT</b> / <b>Refining DTs and Entries using the same DT</b> / <b>Refining your Levels for Higher Accuracy</b> (all TraderxB, LGR Traders 2022). Module 1.3 Assignment, Flows Discussion and LGCs, Quick Note on Data Collection, Ramblings on Price and DTs, and Navigating DTs and LG to LG for short term and long term flows — five videos were transcribed and read, but their content overlaps too heavily with videos already covered and contributes no independent concepts, so they weren't written into this document; kept only for future reference. The content of ltf_sensitivity_around_htf_price_points has been folded into Section 12.4. Category D (BTCPERP / FTM / XAUUSD — LG to LG Concept, three videos) and Category E (Directional Trigger Practice: 1INCHPERP/ETHPERP/SOLUSDT/SXPPERP, four videos, plus Replay Mode 1 week of XRPPERP) have all been transcribed and read; six of the eight videos are pure repeat live demonstrations of the same LG to LG/SSSL logic on different instruments, contributing no independent concepts. SXPPERP's "inertia mindset" quote was folded into Section 6, and XRPPERP's week-long track record into Section 14; the rest weren't written up individually. Category F (15 daily-chart-analysis videos) has now all been transcribed, read, and written up as the case studies in Sections 18-22: <b>BTC analysis June 3rd</b> / <b>BTC analysis from 1W to 4H - June 6th</b> / <b>BTC Analysis - June 10th</b> / <b>Quick BTC Analysis - May 23rd</b> / <b>Quick BTC Analysis - May 26th</b> / <b>Flows Practice for Directional Confidence</b> / <b>Flows Practice BTCPERP</b> / <b>Flows Talk Friday</b> / <b>Quick Flow Analysis - BTCUSD</b> / <b>Price Discussion on BTCUSD</b> / <b>EURUSD Replay and Discussion</b> / <b>Spot Trading Walkthrough</b> / <b>Weekend Assignment - June 10th</b> / <b>Weekend Assignment - June 4th</b> / <b>Rambles on EURUSD - May 27th</b> (all TraderxB, LGR Traders 2022). This batch was not pure repetition: the formal definition of a spike, counter-trend risk reduction, the four-step definition of Reclaim, the only complete live walkthrough of multi-timeframe alignment, and the concrete track-record numbers from deliberate Replay Mode practice are all content not found in any other section.
     <br><br>
-    Sections are ordered by teaching logic (Direction Module 1 → Entry Module 2 → Supplementary → Case Studies), not by processing order; reordered 2026-09-25. Section 17's nested structure diagram is a cross-section synthesis worked out in conversation, not original course material; added 2026-09-25. Adjusted again on 2026-09-25: the former Sections 6/7 (LG to LG) and 12/13 (SSSL) were sibling PDF-plus-video-deep-dive sections that have been merged into single sections with the narrative voice rewritten so the whole document can be read independently without needing to check the original videos; each section's pill/quote/end-of-document source list still keeps its provenance for verification; the original 19 sections were trimmed to 17. Added Sections 18-22 on 2026-09-25: all 15 Category F videos have been transcribed and read, and each was assessed individually and written up as a case study rather than assumed to be highly redundant. Added Sections 23-24 and the beginner's guide box at the top on 2026-09-25: consolidated the risk-control rules that were scattered across Sections 12.1, 19.1, and 20.2, and strung them into a single entry decision checklist; also honestly flagged what the course material does not cover (account-level money management, funding rates, leverage selection, order slippage) rather than guessing at it. Added figures to Section 15 on 2026-09-25: the Discord transcript originally had text only; five images were pulled from the web export of that day's conversation (2022-11-30, the lgr-discussion.html_Files folder) showing the actual charts being debated at the time, each matched to a quote already in the document; the remaining 20-odd images were repeats of the same base chart template with different labels pasted on, plus one hand-drawn red-circle screenshot of unclear meaning — judged not valuable enough, or not confidently matchable to content, so they weren't included.
+    Sections are ordered by teaching logic (Direction Module 1 → Entry Module 2 → Supplementary → Case Studies), not by processing order; reordered 2026-09-25. Section 17's nested structure diagram is a cross-section synthesis worked out in conversation, not original course material; added 2026-09-25. Adjusted again on 2026-09-25: the former Sections 6/7 (LG to LG) and 12/13 (SSSL) were sibling PDF-plus-video-deep-dive sections that have been merged into single sections with the narrative voice rewritten so the whole document can be read independently without needing to check the original videos; each section's pill/quote/end-of-document source list still keeps its provenance for verification; the original 19 sections were trimmed to 17. Added Sections 18-22 on 2026-09-25: all 15 Category F videos have been transcribed and read, and each was assessed individually and written up as a case study rather than assumed to be highly redundant. Added Sections 23-24 and the beginner's guide box at the top on 2026-09-25: consolidated the risk-control rules that were scattered across Sections 12.1, 19.1, and 20.2, and strung them into a single entry decision checklist; also honestly flagged what the course material does not cover (account-level money management, funding rates, leverage selection, order slippage) rather than guessing at it. Added figures to Section 15 on 2026-09-25: the Discord transcript originally had text only; five images were pulled from the web export of that day's conversation (2022-11-30, the lgr-discussion.html_Files folder) showing the actual charts being debated at the time, each matched to a quote already in the document; the remaining 20-odd images were repeats of the same base chart template with different labels pasted on, plus one hand-drawn red-circle screenshot of unclear meaning — judged not valuable enough, or not confidently matchable to content, so they weren't included. Added Section 25 (Re-entry, Consolidated) on 2026-11-13: Daniel pointed out the whole system should be taught as four pillars — Direction / LG / SSL / Candle to Candle — and on review, Sections 9.4, 10, and 14 already covered the "Candle to Candle re-entry" content, just scattered across the Direction and Entry modules without its own name; this section pulls those three pieces together into one place. It isn't a new, unsourced rule, and the original sections are left unchanged.
   </footer>
 
 </div>
